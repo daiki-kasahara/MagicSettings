@@ -19,6 +19,7 @@ jobs:
 
     env:
       Solution_Name: MagicSettings.sln
+      Project_Name: MagicSettings
 
     steps:
     - name: Checkout
@@ -49,4 +50,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Upload app
-        path: ${{ env.Solution_Name }}\\bin
+        path: ${{ env.Solution_Name }}\\${{ env.Solution_Name }}\\bin\\${{ matrix.platform }}\\${{ matrix.configuration }}\\net8.0-windows10.0.19041.0
