@@ -1,4 +1,8 @@
-﻿using MagicSettings.ViewModels;
+﻿using MagicSettings.Contracts.Repositories;
+using MagicSettings.Contracts.Services;
+using MagicSettings.Repositories;
+using MagicSettings.Services;
+using MagicSettings.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 
@@ -13,7 +17,7 @@ public partial class App : Application
     public static ServiceProvider Provider { get; } = GetServiceProvider();
 
     // メインウィンドウ
-    private Window? m_window;
+    private static Window? m_window;
 
     public App()
     {
@@ -31,6 +35,9 @@ public partial class App : Application
         var services = new ServiceCollection();
         services.AddTransient<MainWindow>();
         services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<SettingsPageViewModel>();
+        services.AddTransient<IThemeService, ThemeService>();
+        services.AddTransient<IThemeRepository, ThemeRepository>();
 
         return services.BuildServiceProvider();
     }

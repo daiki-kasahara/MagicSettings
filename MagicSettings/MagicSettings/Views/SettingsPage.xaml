@@ -6,10 +6,29 @@
     xmlns:local="using:MagicSettings.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:MagicSettings.Models"
     mc:Ignorable="d">
 
     <Grid>
         <!--Todo: 仮-->
         <TextBlock Text="Settings"/>
+
+        <RadioButtons>
+            <RadioButton Content="Dark" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Dark)}" Checked="ThemeButton_Checked">
+                <RadioButton.Tag>
+                    <models:AppTheme>Dark</models:AppTheme>
+                </RadioButton.Tag>
+            </RadioButton>
+            <RadioButton Content="Light" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Light)}" Checked="ThemeButton_Checked">
+                <RadioButton.Tag>
+                    <models:AppTheme>Light</models:AppTheme>
+                </RadioButton.Tag>
+            </RadioButton>
+            <RadioButton Content="System" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.System)}" Checked="ThemeButton_Checked">
+                <RadioButton.Tag>
+                    <models:AppTheme>System</models:AppTheme>
+                </RadioButton.Tag>
+            </RadioButton>
+        </RadioButtons>
     </Grid>
 </Page>
