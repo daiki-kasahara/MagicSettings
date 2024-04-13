@@ -2,14 +2,12 @@ name: WinUI 3 unpackaged app
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-
   build:
-
     strategy:
       matrix:
         configuration: [Release]
@@ -19,34 +17,35 @@ jobs:
 
     env:
       Solution_Name: MagicSettings.sln
+      Project_Name: MagicSettings
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 8.0.x
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      - name: Restore the application
+        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+        env:
+          Configuration: ${{ matrix.configuration }}
 
-    - name: Create the app
-      run: msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform
-      env:
-        Configuration: ${{ matrix.configuration }}
-        Platform: ${{ matrix.platform }}
+      - name: Create the app
+        run: msbuild $env:Solution_Name /t:Publish /p:Configuration=$env:Configuration /p:Platform=$env:Platform
+        env:
+          Configuration: ${{ matrix.configuration }}
+          Platform: ${{ matrix.platform }}
 
-    - name: Upload app
-      uses: actions/upload-artifact@v2
-      with:
-        name: Upload app
-        path: ${{ env.Solution_Name }}\\bin
+      - name: Upload app
+        uses: actions/upload-artifact@v2
+        with:
+          name: Upload app
+          path: ${{ env.Project_Name }}\\${{ env.Project_Name }}\\bin\\${{ matrix.platform }}\\${{ matrix.configuration }}\\net8.0-windows10.0.19041.0
