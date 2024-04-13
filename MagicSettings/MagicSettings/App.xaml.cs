@@ -5,11 +5,14 @@ using Microsoft.UI.Xaml;
 namespace MagicSettings;
 
 /// <summary>
-/// アプリケーションクラス
+/// アプリのエントリポイント
 /// </summary>
 public partial class App : Application
 {
+    // DIコンテナ
     public static ServiceProvider Provider { get; } = GetServiceProvider();
+
+    // メインウィンドウ
     private Window? m_window;
 
     public App()

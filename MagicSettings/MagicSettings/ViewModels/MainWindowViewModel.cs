@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using MagicSettings.Models;
+using MagicSettings.Models.Navigation;
 using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace MagicSettings.ViewModels;
 
 internal class MainWindowViewModel
 {
-    public List<NavigationMenuItem> NavigationMenuItems { get; }
+    public List<MenuItem> NavigationMenuItems { get; }
 
     public MainWindowViewModel()
     {
@@ -14,9 +14,9 @@ internal class MainWindowViewModel
 
         NavigationMenuItems =
         [
-            new(loader.GetString("MainMenu_Home"), "\xE80F", "Home"),
-            new(loader.GetString("MainMenu_KeyBinding"), "\xE765", "KeyBinding"),
-            new(loader.GetString("MainMenu_Display"), "\xE770", "Display"),
+            new(loader.GetString($"MainMenu_{Tag.Home}"), "\xE80F", Tag.Home),
+            new(loader.GetString($"MainMenu_{Tag.KeyBinding}"), "\xE765", Tag.KeyBinding),
+            new(loader.GetString($"MainMenu_{Tag.Display}"), "\xE770", Tag.Display),
         ];
     }
 }

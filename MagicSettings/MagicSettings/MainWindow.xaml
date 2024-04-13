@@ -6,13 +6,13 @@
     xmlns:local="using:MagicSettings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:MagicSettings.Models"
+    xmlns:models="using:MagicSettings.Models.Navigation"
     mc:Ignorable="d">
 
     <Grid>
         <Grid.Resources>
-            <DataTemplate x:Key="NavigationViewMenuItem" x:DataType="models:NavigationMenuItem">
-                <NavigationViewItem Content="{x:Bind Name}">
+            <DataTemplate x:Key="NavigationViewMenuItem" x:DataType="models:MenuItem">
+                <NavigationViewItem Content="{x:Bind Name}" Tag="{x:Bind Tag}">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="{x:Bind Icon}" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
                     </NavigationViewItem.Icon>
@@ -22,8 +22,8 @@
         <NavigationView CompactModeThresholdWidth="0"
                         IsBackButtonVisible="Collapsed"
                         MenuItemTemplate="{StaticResource NavigationViewMenuItem}"
-                        MenuItemsSource="{x:Bind _viewModel.NavigationMenuItems}">
-
+                        MenuItemsSource="{x:Bind _viewModel.NavigationMenuItems}"
+                        ItemInvoked="NavigationView_ItemInvoked">
             <Frame x:Name="ContentFrame"/>
         </NavigationView>
     </Grid>
