@@ -8,8 +8,32 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <!--Todo: 仮-->
-        <TextBlock Text="Display"/>
-    </Grid>
+    <StackPanel Margin="20">
+        <TextBlock x:Uid="ScreenPage_Title" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <Expander IsExpanded="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <Expander.Header>
+                <Grid Padding="0,15,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" x:Uid="ScreenPage_BlueLightBlocking" VerticalAlignment="Center"/>
+                    <ToggleSwitch Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="0"/>
+                </Grid>
+            </Expander.Header>
+            <Expander.Content>
+                <Grid Margin="20,0,45,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" x:Uid="ScreenPage_BlueLightBlocking_Degree" VerticalAlignment="Center" />
+                    <Slider Grid.Column="1" HorizontalAlignment="Right" Minimum="0" Maximum="100" StepFrequency="10" Width="250"/>
+                </Grid>
+            </Expander.Content>
+        </Expander>
+    </StackPanel>
 </Page>

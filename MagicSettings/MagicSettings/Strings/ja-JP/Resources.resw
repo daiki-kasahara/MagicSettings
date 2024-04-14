@@ -126,6 +126,15 @@
   <data name="MainMenu_Screen" xml:space="preserve">
     <value>スクリーン</value>
   </data>
+  <data name="ScreenPage_BlueLightBlocking.Text" xml:space="preserve">
+    <value>ブルーライトカット</value>
+  </data>
+  <data name="ScreenPage_BlueLightBlocking_Degree.Text" xml:space="preserve">
+    <value>軽減率 (%)</value>
+  </data>
+  <data name="ScreenPage_Title.Text" xml:space="preserve">
+    <value>スクリーン</value>
+  </data>
   <data name="Window_Title" xml:space="preserve">
     <value>Magic Settings</value>
   </data>
