@@ -1,6 +1,6 @@
 ﻿using MagicSettings.Contracts.Services;
+using MagicSettings.Domains;
 using MagicSettings.Helper;
-using MagicSettings.Models;
 using MagicSettings.Models.Navigation;
 using MagicSettings.ViewModels;
 using MagicSettings.Views;

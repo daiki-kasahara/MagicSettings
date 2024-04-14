@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using MagicSettings.Contracts.Repositories;
 using MagicSettings.Contracts.Services;
-using MagicSettings.Models;
+using MagicSettings.Domains;
+using MagicSettings.Repositories.Contracts;
 
 namespace MagicSettings.Services;
 

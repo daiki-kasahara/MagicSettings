@@ -27,4 +27,9 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\MagicSettings.Domaines\MagicSettings.Domains.csproj" />
+    <ProjectReference Include="..\Libraries\MagicSettings.Repositories\MagicSettings.Repositories.csproj" />
+  </ItemGroup>
 </Project>

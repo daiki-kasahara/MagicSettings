@@ -14,7 +14,7 @@ namespace ScreenController::Services {
         Seventy,
         Eighty,
         Ninety,
-        OneHandled,
+        OneHundred,
     };
 
     class ScreenFilter

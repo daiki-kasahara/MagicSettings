@@ -53,7 +53,7 @@ auto ScreenFilter::Set(BlueLightBlockingFilter filter) noexcept -> void
     case BlueLightBlockingFilter::Ninety:
         value = 0.1f;
         break;
-    case BlueLightBlockingFilter::OneHandled:
+    case BlueLightBlockingFilter::OneHundred:
         value = 0.0f;
         break;
     default:

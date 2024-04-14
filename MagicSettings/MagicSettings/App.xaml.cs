@@ -1,7 +1,7 @@
-﻿using MagicSettings.Contracts.Repositories;
-using MagicSettings.Contracts.Services;
+﻿using MagicSettings.Contracts.Services;
 using MagicSettings.Helper;
 using MagicSettings.Repositories;
+using MagicSettings.Repositories.Contracts;
 using MagicSettings.Services;
 using MagicSettings.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,9 +35,16 @@ public partial class App : Application
     private static ServiceProvider GetServiceProvider()
     {
         var services = new ServiceCollection();
+
+        // Add View
         services.AddTransient<MainWindow>();
+
+        // Add View Model
         services.AddTransient<MainWindowViewModel>();
         services.AddTransient<SettingsPageViewModel>();
+        services.AddTransient<ScreenPageViewModel>();
+
+        // Add Model
         services.AddTransient<IThemeService, ThemeService>();
         services.AddTransient<IThemeRepository, ThemeRepository>();
 

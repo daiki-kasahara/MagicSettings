@@ -1,5 +1,5 @@
+using MagicSettings.Domains;
 using MagicSettings.Helper;
-using MagicSettings.Models;
 using MagicSettings.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
