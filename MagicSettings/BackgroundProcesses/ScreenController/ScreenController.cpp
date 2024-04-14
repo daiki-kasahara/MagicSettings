@@ -129,6 +129,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
+        g_screenFilter.Uninitialize();
         PostQuitMessage(0);
         break;
     case WM_PAINT:
