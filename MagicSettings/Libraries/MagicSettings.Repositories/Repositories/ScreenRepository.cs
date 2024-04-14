@@ -2,6 +2,7 @@
 using MagicSettings.Domains;
 using MagicSettings.Models.SettingsFile;
 using MagicSettings.Repositories.Contracts;
+using MagicSettings.Repositories.Helper;
 
 namespace MagicSettings.Repositories;
 
@@ -9,20 +10,20 @@ public class ScreenRepository : IScreenRepository
 {
     private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "screen.json");
 
-    public async Task<BlueLightBlocking> GetAsync()
+    public async Task<ScreenSettings> GetAsync()
     {
         try
         {
             if (!File.Exists(FilePath))
-                return BlueLightBlocking.Ten;
+                return new();
 
             using var openStream = File.OpenRead(FilePath);
-            return (await JsonSerializer.DeserializeAsync<ScreenSettings>(openStream))?.BlueLightBlocking ?? BlueLightBlocking.Ten;
+            return (await JsonSerializer.DeserializeAsync<ScreenSettings>(openStream)) ?? new();
         }
         catch (Exception)
         {
-            // 例外の場合、10を返す
-            return BlueLightBlocking.Ten;
+            // 例外の場合、デフォルト値を返す
+            return new();
         }
     }
 
@@ -32,13 +33,29 @@ public class ScreenRepository : IScreenRepository
         {
             Directory.CreateDirectory(Directory.GetParent(FilePath)!.FullName);
 
-            var screenSettings = new ScreenSettings()
-            {
-                BlueLightBlocking = value
-            };
+            var screenSettings = await GetAsync();
+            screenSettings.BlueLightBlocking = value;
 
             await using var createStream = File.Create(FilePath);
-            await JsonSerializer.SerializeAsync(createStream, screenSettings);
+            await JsonSerializer.SerializeAsync(createStream, screenSettings, JsonOptionHelper.GetOption());
+        }
+        catch (Exception)
+        {
+            // 例外の場合、何もしない
+        }
+    }
+
+    public async Task SaveAsync(bool isEnabled)
+    {
+        try
+        {
+            Directory.CreateDirectory(Directory.GetParent(FilePath)!.FullName);
+
+            var screenSettings = await GetAsync();
+            screenSettings.IsEnabledBlueLightBlocking = isEnabled;
+
+            await using var createStream = File.Create(FilePath);
+            await JsonSerializer.SerializeAsync(createStream, screenSettings, JsonOptionHelper.GetOption());
         }
         catch (Exception)
         {

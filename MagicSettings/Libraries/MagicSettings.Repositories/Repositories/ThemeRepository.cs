@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using MagicSettings.Domains;
 using MagicSettings.Repositories.Contracts;
+using MagicSettings.Repositories.Helper;
 
 namespace MagicSettings.Repositories;
 
@@ -37,7 +38,7 @@ public class ThemeRepository : IThemeRepository
             };
 
             await using var createStream = File.Create(FilePath);
-            await JsonSerializer.SerializeAsync(createStream, themeSettings);
+            await JsonSerializer.SerializeAsync(createStream, themeSettings, JsonOptionHelper.GetOption());
         }
         catch (Exception)
         {

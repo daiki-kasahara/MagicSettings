@@ -46,7 +46,9 @@ public partial class App : Application
 
         // Add Model
         services.AddTransient<IThemeService, ThemeService>();
+        services.AddTransient<IScreenRepository, ScreenRepository>();
         services.AddTransient<IThemeRepository, ThemeRepository>();
+        services.AddTransient<IScreenService, ScreenService>();
 
         return services.BuildServiceProvider();
     }
