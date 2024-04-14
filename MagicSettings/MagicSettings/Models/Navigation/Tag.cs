@@ -4,5 +4,5 @@ internal enum Tag
 {
     Home,
     KeyBinding,
-    Display,
+    Screen,
 }

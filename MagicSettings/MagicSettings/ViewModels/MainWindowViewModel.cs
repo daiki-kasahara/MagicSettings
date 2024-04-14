@@ -16,7 +16,7 @@ internal class MainWindowViewModel
         [
             new(loader.GetString($"MainMenu_{Tag.Home}"), "\xE80F", Tag.Home),
             new(loader.GetString($"MainMenu_{Tag.KeyBinding}"), "\xE765", Tag.KeyBinding),
-            new(loader.GetString($"MainMenu_{Tag.Display}"), "\xE770", Tag.Display),
+            new(loader.GetString($"MainMenu_{Tag.Screen}"), "\xE770", Tag.Screen),
         ];
     }
 }

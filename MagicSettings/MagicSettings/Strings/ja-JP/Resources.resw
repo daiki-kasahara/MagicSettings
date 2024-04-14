@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MainMenu_Display" xml:space="preserve">
-    <value>ディスプレイ</value>
-  </data>
   <data name="MainMenu_Home" xml:space="preserve">
     <value>ホーム</value>
   </data>
   <data name="MainMenu_KeyBinding" xml:space="preserve">
     <value>キーバインディング</value>
+  </data>
+  <data name="MainMenu_Screen" xml:space="preserve">
+    <value>スクリーン</value>
   </data>
   <data name="Window_Title" xml:space="preserve">
     <value>Magic Settings</value>

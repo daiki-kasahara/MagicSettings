@@ -47,8 +47,8 @@ internal sealed partial class MainWindow : Window
             case Tag.KeyBinding:
                 ContentFrame.Navigate(typeof(KeyBindingPage));
                 break;
-            case Tag.Display:
-                ContentFrame.Navigate(typeof(DisplayPage));
+            case Tag.Screen:
+                ContentFrame.Navigate(typeof(ScreenPage));
                 break;
             default:
                 return;
