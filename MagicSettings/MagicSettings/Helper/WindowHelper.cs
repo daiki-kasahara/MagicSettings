@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -66,5 +67,22 @@ internal class WindowHelper
             }
         }
         return null;
+    }
+
+    public static void SetForeground(Window? window)
+    {
+        if (window is null)
+            return;
+
+        IntPtr hWnd = WindowNative.GetWindowHandle(window);
+        NativeMethods.SetForegroundWindow(hWnd);
+    }
+
+    private class NativeMethods
+    {
+        [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
+        [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
     }
 }

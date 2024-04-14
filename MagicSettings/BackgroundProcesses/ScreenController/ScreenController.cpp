@@ -1,15 +1,20 @@
 ﻿#include "framework.h"
 #include "ScreenController.h"
+
+#include <future>
+
 #include "ScreenFilter.h"
 
 using namespace ScreenController::Services;
 
 #define MAX_LOADSTRING 100
 
-// グローバル変数:
+// グローバル変数
 HINSTANCE g_hInst;
 WCHAR g_szWindowClass[MAX_LOADSTRING];
 ScreenFilter g_screenFilter = ScreenFilter();
+HANDLE g_hMutex;
+std::thread g_pipeThread;
 
 // プロトタイプ宣言
 auto MyRegisterClass(HINSTANCE hInstance) -> ATOM;
@@ -84,18 +89,28 @@ auto MyRegisterClass(HINSTANCE hInstance) -> ATOM
 /// <returns></returns>
 auto InitInstance(HINSTANCE hInstance, int nCmdShow) -> bool
 {
-   g_hInst = hInstance;
+    g_hMutex = CreateMutexW(nullptr, 0, L"MagicSettings.ScreenController");
+    g_hInst = hInstance;
 
-   auto hWnd = CreateWindowW(g_szWindowClass, nullptr, WS_OVERLAPPEDWINDOW,
+    // 起動していたらすぐに終了させる
+    if (::GetLastError() == ERROR_ALREADY_EXISTS && g_hMutex != nullptr)
+    {
+        ReleaseMutex(g_hMutex);
+        CloseHandle(g_hMutex);
+        return false;
+    }
+
+
+    auto hWnd = CreateWindowW(g_szWindowClass, nullptr, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-   if (!hWnd)
-       return false;
+    if (!hWnd)
+        return false;
 
-   ShowWindow(hWnd, SW_HIDE);
-   UpdateWindow(hWnd);
+    ShowWindow(hWnd, SW_HIDE);
+    UpdateWindow(hWnd);
 
-   return true;
+    return true;
 }
 
 /// <summary>
@@ -130,6 +145,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_DESTROY:
         g_screenFilter.Uninitialize();
+
+        if (g_hMutex != nullptr)
+        {
+            ReleaseMutex(g_hMutex);
+            CloseHandle(g_hMutex);
+        }
+
         PostQuitMessage(0);
         break;
     case WM_PAINT:
