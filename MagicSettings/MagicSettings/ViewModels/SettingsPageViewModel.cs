@@ -14,4 +14,11 @@ internal partial class SettingsPageViewModel(IThemeService themeService) : Obser
     {
         Theme = await themeService.GetCurrentThemeAsync();
     }
+
+    public async Task SetCurrentThemeAsync(AppTheme theme)
+    {
+        Theme = theme;
+        await themeService.SetCurrentThemeAsync(theme);
+    }
+
 }

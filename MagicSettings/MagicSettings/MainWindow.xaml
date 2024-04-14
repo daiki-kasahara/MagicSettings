@@ -9,7 +9,8 @@
     xmlns:models="using:MagicSettings.Models.Navigation"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          Loaded="MainRootLoadedAsync">
         <Grid.Resources>
             <DataTemplate x:Key="NavigationViewMenuItem" x:DataType="models:MenuItem">
                 <NavigationViewItem Content="{x:Bind Name}" Tag="{x:Bind Tag}">

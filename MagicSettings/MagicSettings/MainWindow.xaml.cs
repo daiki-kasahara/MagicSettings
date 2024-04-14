@@ -1,4 +1,7 @@
-﻿using MagicSettings.Models.Navigation;
+﻿using MagicSettings.Contracts.Services;
+using MagicSettings.Helper;
+using MagicSettings.Models;
+using MagicSettings.Models.Navigation;
 using MagicSettings.ViewModels;
 using MagicSettings.Views;
 using Microsoft.UI.Xaml;
@@ -13,18 +16,20 @@ namespace MagicSettings;
 internal sealed partial class MainWindow : Window
 {
     private readonly MainWindowViewModel _viewModel;
+    private readonly IThemeService _themeService;
 
-    public MainWindow(MainWindowViewModel viewModel)
+    public MainWindow(MainWindowViewModel viewModel, IThemeService themeService)
     {
         this.InitializeComponent();
 
         _viewModel = viewModel;
+        _themeService = themeService;
 
         var loader = new ResourceLoader();
         Title = loader.GetString("Window_Title");
     }
 
-    private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+    private void NavigationView_ItemInvoked(NavigationView _, NavigationViewItemInvokedEventArgs args)
     {
         if (args.IsSettingsInvoked)
         {
@@ -48,5 +53,20 @@ internal sealed partial class MainWindow : Window
             default:
                 return;
         }
+    }
+
+    private async void MainRootLoadedAsync(object _, RoutedEventArgs __)
+    {
+        var theme = await _themeService.GetCurrentThemeAsync();
+
+        var requestedTheme = theme switch
+        {
+            AppTheme.Dark => ElementTheme.Dark,
+            AppTheme.Light => ElementTheme.Light,
+            AppTheme.System => ElementTheme.Default,
+            _ => ElementTheme.Default,
+        };
+
+        WindowHelper.RootTheme = requestedTheme;
     }
 }

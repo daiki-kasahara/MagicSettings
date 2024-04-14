@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:MagicSettings.Models"
+    Loaded="PageLoadedAsync"
     mc:Ignorable="d">
 
     <Grid>
@@ -14,17 +15,20 @@
         <TextBlock Text="Settings"/>
 
         <RadioButtons>
-            <RadioButton Content="Dark" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Dark)}" Checked="ThemeButton_Checked">
+            <RadioButton Content="Dark" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Dark), Mode=OneWay}"
+                         Checked="ThemeButtonCheckedAsync">
                 <RadioButton.Tag>
                     <models:AppTheme>Dark</models:AppTheme>
                 </RadioButton.Tag>
             </RadioButton>
-            <RadioButton Content="Light" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Light)}" Checked="ThemeButton_Checked">
+            <RadioButton Content="Light" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Light), Mode=OneWay}"
+                         Checked="ThemeButtonCheckedAsync">
                 <RadioButton.Tag>
                     <models:AppTheme>Light</models:AppTheme>
                 </RadioButton.Tag>
             </RadioButton>
-            <RadioButton Content="System" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.System)}" Checked="ThemeButton_Checked">
+            <RadioButton Content="System" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.System), Mode=OneWay}"
+                         Checked="ThemeButtonCheckedAsync">
                 <RadioButton.Tag>
                     <models:AppTheme>System</models:AppTheme>
                 </RadioButton.Tag>

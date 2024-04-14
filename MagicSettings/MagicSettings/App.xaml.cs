@@ -1,5 +1,6 @@
 ﻿using MagicSettings.Contracts.Repositories;
 using MagicSettings.Contracts.Services;
+using MagicSettings.Helper;
 using MagicSettings.Repositories;
 using MagicSettings.Services;
 using MagicSettings.ViewModels;
@@ -27,6 +28,7 @@ public partial class App : Application
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         m_window = Provider.GetRequiredService<MainWindow>();
+        WindowHelper.TrackWindow(m_window);
         m_window.Activate();
     }
 
