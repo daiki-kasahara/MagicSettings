@@ -6,6 +6,8 @@ using MagicSettings.Services;
 using MagicSettings.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
+using ProcessManager;
+using ProcessManager.Contracts;
 
 namespace MagicSettings;
 
@@ -49,6 +51,7 @@ public partial class App : Application
         services.AddTransient<IScreenRepository, ScreenRepository>();
         services.AddTransient<IThemeRepository, ThemeRepository>();
         services.AddTransient<IScreenService, ScreenService>();
+        services.AddTransient<IProcessLauncher, ProcessLauncher>();
 
         return services.BuildServiceProvider();
     }
