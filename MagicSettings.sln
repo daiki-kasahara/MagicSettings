@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicSettings", "MagicSettings\MagicSettings\MagicSettings.csproj", "{74F9D127-BC90-4192-BA9C-64A89CC9E4D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettings", "MagicSettings\MagicSettings\MagicSettings.csproj", "{74F9D127-BC90-4192-BA9C-64A89CC9E4D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackgroundProcesses", "BackgroundProcesses", "{DD18BDBE-E4CF-481B-B9E3-1495520A7BAF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScreenController", "MagicSettings\BackgroundProcesses\ScreenController\ScreenController.vcxproj", "{E23A719C-B592-48A8-A32E-07662819AEF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{74F9D127-BC90-4192-BA9C-64A89CC9E4D7}.Debug|x64.Build.0 = Debug|x64
 		{74F9D127-BC90-4192-BA9C-64A89CC9E4D7}.Release|x64.ActiveCfg = Release|x64
 		{74F9D127-BC90-4192-BA9C-64A89CC9E4D7}.Release|x64.Build.0 = Release|x64
+		{E23A719C-B592-48A8-A32E-07662819AEF4}.Debug|x64.ActiveCfg = Debug|x64
+		{E23A719C-B592-48A8-A32E-07662819AEF4}.Debug|x64.Build.0 = Debug|x64
+		{E23A719C-B592-48A8-A32E-07662819AEF4}.Release|x64.ActiveCfg = Release|x64
+		{E23A719C-B592-48A8-A32E-07662819AEF4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E23A719C-B592-48A8-A32E-07662819AEF4} = {DD18BDBE-E4CF-481B-B9E3-1495520A7BAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82056EBC-29D8-43AE-B47D-8F9350AC2C1D}
