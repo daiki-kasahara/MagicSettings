@@ -19,6 +19,15 @@
     <Filter Include="ヘッダー ファイル\Services">
       <UniqueIdentifier>{c2318448-ab0f-4d84-a9c9-41789585bcf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Repositories">
+      <UniqueIdentifier>{7bf1a11f-8eea-404e-9fda-0aa3b0b242ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Repositories">
+      <UniqueIdentifier>{b5e6728c-fda4-4fa6-98b4-b4f2deeb4a2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Domains">
+      <UniqueIdentifier>{4bd592b4-7cf0-40e2-9b45-73eaa53bb0fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -36,6 +45,18 @@
     <ClInclude Include="Services/ScreenFilter.h">
       <Filter>ヘッダー ファイル\Services</Filter>
     </ClInclude>
+    <ClInclude Include="PipeServer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Repositories\ScreenSettingsRepository.h">
+      <Filter>ヘッダー ファイル\Repositories</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenSettings.h">
+      <Filter>ヘッダー ファイル\Domains</Filter>
+    </ClInclude>
+    <ClInclude Include="Domains\BlueLightBlockingFilter.h">
+      <Filter>ヘッダー ファイル\Domains</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ScreenController.cpp">
@@ -44,10 +65,19 @@
     <ClCompile Include="Services/ScreenFilter.cpp">
       <Filter>ソース ファイル\Services</Filter>
     </ClCompile>
+    <ClCompile Include="PipeServer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Repositories\ScreenSettingsRepository.cpp">
+      <Filter>ソース ファイル\Repositories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ScreenController.rc">
       <Filter>リソース ファイル</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

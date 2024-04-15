@@ -7,13 +7,13 @@ internal class ResponseMessage
     [JsonIgnore]
     public bool Result
     {
-        get => ResultCode is 0;
+        get => ReturnCode is 0;
     }
 
-    public int ResultCode { get; set; } = -1;
+    public int ReturnCode { get; set; } = -1;
 
-    public string Value { get; set; } = string.Empty;
+    public string ReturnParameters { get; set; } = string.Empty;
 
-    public static bool operator true(ResponseMessage x) => x.ResultCode is 0;
-    public static bool operator false(ResponseMessage x) => x.ResultCode is not 0;
+    public static bool operator true(ResponseMessage x) => x.ReturnCode is 0;
+    public static bool operator false(ResponseMessage x) => x.ReturnCode is not 0;
 }

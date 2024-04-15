@@ -1,21 +1,10 @@
 #pragma once
-#include <magnification.h>
+
+#include "BlueLightBlockingFilter.h"
+
+using namespace ScreenController::Domains;
 
 namespace ScreenController::Services {
-    enum class BlueLightBlockingFilter
-    {
-        None,
-        Ten,
-        Twenty,
-        Thirty,
-        Forty,
-        Fifty,
-        Sixty,
-        Seventy,
-        Eighty,
-        Ninety,
-        OneHundred,
-    };
 
     class ScreenFilter
     {

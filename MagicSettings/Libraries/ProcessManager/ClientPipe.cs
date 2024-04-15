@@ -1,7 +1,6 @@
 ﻿using System.IO.Pipes;
 using System.Security.Principal;
 using System.Text;
-using System.Text.Json;
 using ProcessManager.PipeMessage;
 
 namespace ProcessManager;
@@ -13,25 +12,29 @@ public class ClientPipe
         try
         {
             using var pipeClient = new NamedPipeClientStream(".", $"MagicSettings-{process}", PipeDirection.InOut, PipeOptions.None, TokenImpersonationLevel.Impersonation);
-            await pipeClient.ConnectAsync();
+            await pipeClient.ConnectAsync(1000);
             var ss = new StreamString(pipeClient);
 
             while (true)
             {
                 // 入力された文字列を送信する
-                var request = new RequestMessage("terminate");
+                var request = new RequestMessage("Terminate");
+                var aa = request.Serialize();
                 var write = ss.WriteString(request.Serialize());
                 // 応答待ち
-                var read = ss.ReadString();
+                // Todo: 修正する
+                //var read = ss.ReadString();
 
-                try
-                {
-                    return JsonSerializer.Deserialize<ResponseMessage>(read)?.Result ?? false;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                //try
+                //{
+                //    return JsonSerializer.Deserialize<ResponseMessage>(read)?.Result ?? false;
+                //}
+                //catch (Exception)
+                //{
+                //    return false;
+                //}
+
+                return true;
             }
         }
         catch (OverflowException ofex)
@@ -45,24 +48,22 @@ public class ClientPipe
         }
     }
 
-    public class StreamString
+    private class StreamString
     {
-        private Stream ioStream;
-        private UnicodeEncoding streamEncoding;
+        private readonly Stream ioStream;
+        private readonly UTF8Encoding streamEncoding;
 
         public StreamString(Stream ioStream)
         {
             this.ioStream = ioStream;
-            streamEncoding = new UnicodeEncoding();
+            streamEncoding = new UTF8Encoding();
         }
 
         public string ReadString()
         {
-            int len = 0;
-
-            len = ioStream.ReadByte() * 256;
+            var len = ioStream.ReadByte() * 256;
             len += ioStream.ReadByte();
-            byte[] inBuffer = new byte[len];
+            var inBuffer = new byte[len];
             ioStream.Read(inBuffer, 0, len);
 
             return streamEncoding.GetString(inBuffer);
@@ -70,8 +71,8 @@ public class ClientPipe
 
         public int WriteString(string outString)
         {
-            byte[] outBuffer = streamEncoding.GetBytes(outString);
-            int len = outBuffer.Length;
+            var outBuffer = streamEncoding.GetBytes(outString);
+            var len = outBuffer.Length;
             if (len > UInt16.MaxValue)
             {
                 len = (int)UInt16.MaxValue;

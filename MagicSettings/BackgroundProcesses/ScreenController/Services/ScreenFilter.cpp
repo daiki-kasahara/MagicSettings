@@ -1,4 +1,5 @@
 #include "ScreenFilter.h"
+#include <magnification.h>
 
 using namespace ScreenController::Services;
 

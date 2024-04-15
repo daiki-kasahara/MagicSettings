@@ -12,6 +12,8 @@ internal class ScreenService : IScreenService
 {
     private readonly IScreenRepository _screenRepository;
     private readonly IProcessLauncher _launcher;
+    // Todo: DIする
+    private readonly ClientPipe _pipe = new();
 
     public ScreenService(IScreenRepository repository, IProcessLauncher launcher)
     {
@@ -23,7 +25,7 @@ internal class ScreenService : IScreenService
 
     public async Task<bool> SetBlueLightBlockingAsync(BlueLightBlocking value)
     {
-        // Todo: ウィンドウメッセージ送信
+        // Todo: プロセス通信
         await _screenRepository.SaveAsync(value);
         return true;
     }
@@ -31,8 +33,15 @@ internal class ScreenService : IScreenService
     public async Task<bool> SetEnabledBlueLightBlockingAsync(bool value)
     {
         // プロセス起動
-        if (!await _launcher.LaunchAsync(MyProcesses.ScreenController))
-            return false;
+        if (value)
+        {
+            if (!await _launcher.LaunchAsync(MyProcesses.ScreenController))
+                return false;
+        }
+        else
+        {
+            await _pipe.SendTerminateMessage(MyProcesses.ScreenController);
+        }
 
         await _screenRepository.SaveAsync(value);
         return true;

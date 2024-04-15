@@ -1,24 +1,20 @@
 ﻿using System.Diagnostics;
-using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Text.Unicode;
 
 namespace ProcessManager.PipeMessage;
 
 internal class RequestMessage(string command, string arguments = "")
 {
-    public string Command { get; } = command;
+    public string Cmd { get; } = command;
 
-    public string Arguments { get; } = arguments;
+    public string Args { get; } = arguments;
 
-    private readonly JsonSerializerOptions _options = new()
-    {
-        AllowTrailingCommas = true,
-        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-        WriteIndented = true,
-    };
+    //private readonly JsonSerializerOptions _options = new()
+    //{
+    //    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+    //};
 
-    public string Serialize() => JsonSerializer.Serialize(this, _options);
+    public string Serialize() => JsonSerializer.Serialize(this);
 
     public static RequestMessage? Deserialize(string? serialized)
     {

@@ -1,20 +1,23 @@
 ﻿#include "framework.h"
 #include "ScreenController.h"
+#include <nlohmann/json.hpp>
 
-#include <future>
-
+#include "PipeServer.h"
 #include "ScreenFilter.h"
+#include "ScreenSettingsRepository.h"
 
+using namespace ScreenController::Repositories;
 using namespace ScreenController::Services;
 
 #define MAX_LOADSTRING 100
+#define WM_MY_CUSTOM_EXIT_MESSAGE (WM_APP + 1)
 
 // グローバル変数
 HINSTANCE g_hInst;
 WCHAR g_szWindowClass[MAX_LOADSTRING];
-ScreenFilter g_screenFilter = ScreenFilter();
+ScreenFilter g_screenFilter{};
+PipeServer g_pipeServer;
 HANDLE g_hMutex;
-std::thread g_pipeThread;
 
 // プロトタイプ宣言
 auto MyRegisterClass(HINSTANCE hInstance) -> ATOM;
@@ -24,9 +27,9 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPWSTR    lpCmdLine,
+    _In_ int       nCmdShow)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -36,7 +39,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MyRegisterClass(hInstance);
 
     // アプリケーション初期化の実行:
-    if (!InitInstance (hInstance, nCmdShow))
+    if (!InitInstance(hInstance, nCmdShow))
         return FALSE;
 
     auto hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_SCREENCONTROLLER));
@@ -52,7 +55,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 
-    return (int) msg.wParam;
+    return (int)msg.wParam;
 }
 
 /// <summary>
@@ -66,17 +69,17 @@ auto MyRegisterClass(HINSTANCE hInstance) -> ATOM
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = nullptr;
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = nullptr;
-    wcex.lpszClassName  = g_szWindowClass;
-    wcex.hIconSm        = nullptr;
+    wcex.style = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc = WndProc;
+    wcex.cbClsExtra = 0;
+    wcex.cbWndExtra = 0;
+    wcex.hInstance = hInstance;
+    wcex.hIcon = nullptr;
+    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.lpszMenuName = nullptr;
+    wcex.lpszClassName = g_szWindowClass;
+    wcex.hIconSm = nullptr;
 
     return RegisterClassExW(&wcex);
 }
@@ -102,13 +105,29 @@ auto InitInstance(HINSTANCE hInstance, int nCmdShow) -> bool
 
 
     auto hWnd = CreateWindowW(g_szWindowClass, nullptr, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
+        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
     if (!hWnd)
         return false;
 
     ShowWindow(hWnd, SW_HIDE);
     UpdateWindow(hWnd);
+
+    auto ExecuteUpdateProc = []() -> std::string
+        {
+            auto repository = ScreenSettingsRepository();
+
+            g_screenFilter.Set(repository.Get());
+
+            nlohmann::json json;
+            json["ReturnCode"] = 0;
+            json["ReturnParameters"] = "";
+
+            return json.dump();
+        };
+
+    g_pipeServer = PipeServer(hWnd);
+    g_pipeServer.SetProcedure(ExecuteUpdateProc);
+    g_pipeServer.OpenPipe();
 
     return true;
 }
@@ -133,18 +152,28 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
     break;
     case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
+    {
+        int wmId = LOWORD(wParam);
 
-            switch (wmId)
-            {
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
+        switch (wmId)
+        {
+        default:
+            return DefWindowProc(hWnd, message, wParam, lParam);
         }
+    }
+    break;
+    case WM_MY_CUSTOM_EXIT_MESSAGE:
+    {
+        g_pipeServer.ClosePipe();
+        PostMessage(hWnd, WM_DESTROY, 0, 0);
         break;
+    }
     case WM_DESTROY:
+    {
         g_screenFilter.Uninitialize();
+
+        //if (wParam != 1)
+        //    g_pipeServer.ClosePipe();
 
         if (g_hMutex != nullptr)
         {
@@ -154,6 +183,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         PostQuitMessage(0);
         break;
+    }
     case WM_PAINT:
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
