@@ -12,12 +12,15 @@
     <WindowsPackageType>None</WindowsPackageType>
     <SelfContained>true</SelfContained>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <AssemblyName>MagicSettings</AssemblyName>
     <Nullable>enable</Nullable>
     <Authors>Daiki Kasahara</Authors>
     <NeutralLanguage>ja-JP</NeutralLanguage>
     <AssemblyVersion>1.0.100.0</AssemblyVersion>
     <FileVersion>1.0.100.0</FileVersion>
+    <BaseOutputPath>$(SolutionDir)bin\$(PlatformShortName)</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
