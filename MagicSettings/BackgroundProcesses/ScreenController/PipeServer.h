@@ -14,6 +14,7 @@ private:
     inline static const std::string CloseCmd = "Close";
     inline static const std::string UpdateCmd = "Update";
     inline static const std::string TerminateCmd = "Terminate";
+    inline static const std::string CheckCmd = "Check";
 
     static const DWORD ReadElapsed = 100;
     static const DWORD WriteElapsed = 100;

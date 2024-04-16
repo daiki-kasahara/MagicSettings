@@ -133,6 +133,11 @@ auto PipeServer::PipeThread() noexcept -> void
         else if (cmd == TerminateCmd)
         {
             // アプリを終了する
+            nlohmann::json json;
+            json["ReturnCode"] = 0;
+            json["ReturnParameters"] = "";
+            std::ignore = WriteMessage(_pipeHandle, json.dump());
+
             FlushFileBuffers(_pipeHandle);
             DisconnectNamedPipe(_pipeHandle);
             PostMessage(_hWnd, WM_CUSTOM_EXIT_MESSAGE, 0, 0);
@@ -146,6 +151,18 @@ auto PipeServer::PipeThread() noexcept -> void
             CloseHandle(_pipeHandle);
             _pipeHandle = nullptr;
             return;
+        }
+        else if (cmd == CheckCmd)
+        {
+            // 何もせず成功を返す
+            nlohmann::json json;
+            json["ReturnCode"] = 0;
+            json["ReturnParameters"] = "";
+            std::ignore = WriteMessage(_pipeHandle, json.dump());
+
+            FlushFileBuffers(_pipeHandle);
+            DisconnectNamedPipe(_pipeHandle);
+            continue;
         }
         else
         {
