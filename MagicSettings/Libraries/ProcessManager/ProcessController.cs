@@ -1,11 +1,14 @@
 ﻿using System.Diagnostics;
 using ProcessManager.Contracts;
+using ProcessManager.PipeMessage;
 
 namespace ProcessManager;
 
-public class ProcessLauncher : IProcessLauncher
+public class ProcessController : IProcessController
 {
     private static readonly string DirPath = AppContext.BaseDirectory;
+
+    private readonly ClientPipe _pipe = new();
 
     public async Task<bool> LaunchAsync(MyProcesses process)
     {
@@ -22,9 +25,7 @@ public class ProcessLauncher : IProcessLauncher
             };
             proc.Start();
 
-            // Todo: 接続確認できるまでwaitする
-
-            return true;
+            return await _pipe.CheckExistedMessageAsync(process);
         }
         catch (Exception)
         {
@@ -32,9 +33,7 @@ public class ProcessLauncher : IProcessLauncher
         }
     }
 
-    public async Task<bool> TerminateAsync(MyProcesses processes)
-    {
-        // Todo: パイプ通信で終了処理をおくる
-        return true;
-    }
+    public async Task<bool> SendMessageAsync(MyProcesses process, RequestMessage requestMessage) => await _pipe.SendRequestMessageAsync(process, requestMessage);
+
+    public async Task<bool> TerminateAsync(MyProcesses process) => await _pipe.SendTerminateMessageAsync(process);
 }

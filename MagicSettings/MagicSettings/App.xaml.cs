@@ -77,7 +77,7 @@ public partial class App : Application
         services.AddTransient<IScreenRepository, ScreenRepository>();
         services.AddTransient<IThemeRepository, ThemeRepository>();
         services.AddTransient<IScreenService, ScreenService>();
-        services.AddTransient<IProcessLauncher, ProcessLauncher>();
+        services.AddTransient<IProcessController, ProcessController>();
 
         return services.BuildServiceProvider();
     }

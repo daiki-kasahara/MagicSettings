@@ -12,14 +12,12 @@ namespace MagicSettings.Services;
 internal class ScreenService : IScreenService
 {
     private readonly IScreenRepository _screenRepository;
-    private readonly IProcessLauncher _launcher;
-    // Todo: DIする
-    private readonly ClientPipe _pipe = new();
+    private readonly IProcessController _controller;
 
-    public ScreenService(IScreenRepository repository, IProcessLauncher launcher)
+    public ScreenService(IScreenRepository repository, IProcessController controller)
     {
         _screenRepository = repository;
-        _launcher = launcher;
+        _controller = controller;
     }
 
     public async Task<ScreenSettings> GetScreenSettingsAsync() => await _screenRepository.GetAsync();
@@ -27,8 +25,7 @@ internal class ScreenService : IScreenService
     public async Task<bool> SetBlueLightBlockingAsync(BlueLightBlocking value)
     {
         await _screenRepository.SaveAsync(value);
-        await _pipe.SendRequestMessageAsync(MyProcesses.ScreenController, new RequestMessage("Update"));
-        return true;
+        return await _controller.SendMessageAsync(MyProcesses.ScreenController, new RequestMessage("Update"));
     }
 
     public async Task<bool> SetEnabledBlueLightBlockingAsync(bool value)
@@ -36,12 +33,12 @@ internal class ScreenService : IScreenService
         // プロセス起動
         if (value)
         {
-            if (!await _launcher.LaunchAsync(MyProcesses.ScreenController))
+            if (!await _controller.LaunchAsync(MyProcesses.ScreenController))
                 return false;
         }
         else
         {
-            await _pipe.SendTerminateMessageAsync(MyProcesses.ScreenController);
+            await _controller.TerminateAsync(MyProcesses.ScreenController);
         }
 
         await _screenRepository.SaveAsync(value);

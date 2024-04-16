@@ -9,10 +9,16 @@ namespace MagicSettings.ViewModels;
 internal partial class ScreenPageViewModel : ObservableObject
 {
     [ObservableProperty]
-    private bool _IsEnabledBlueLightBlocking;
+    private bool _isEnabledBlueLightBlocking;
 
     [ObservableProperty]
     private int _reductionRate;
+
+    [ObservableProperty]
+    private bool _hasError = false;
+
+    [ObservableProperty]
+    private bool _isBusy = false;
 
     private readonly IScreenService _screenService;
 
@@ -23,10 +29,14 @@ internal partial class ScreenPageViewModel : ObservableObject
 
     public async Task InitializeAsync()
     {
+        IsBusy = false;
+
         var settings = await _screenService.GetScreenSettingsAsync();
 
         IsEnabledBlueLightBlocking = settings.IsEnabledBlueLightBlocking;
         ReductionRate = (int)settings.BlueLightBlocking;
+
+        IsBusy = true;
     }
 
     public async Task<bool> SetEnabledBlueLightBlockingAsync(bool value)
@@ -35,9 +45,18 @@ internal partial class ScreenPageViewModel : ObservableObject
         if (IsEnabledBlueLightBlocking == value)
             return true;
 
-        if (!await _screenService.SetEnabledBlueLightBlockingAsync(value))
-            return false;
+        IsBusy = false;
 
+        if (!await _screenService.SetEnabledBlueLightBlockingAsync(value))
+        {
+            HasError = true;
+            IsBusy = true;
+            OnPropertyChanged(nameof(IsEnabledBlueLightBlocking));
+            return false;
+        }
+
+        HasError = false;
+        IsBusy = true;
         IsEnabledBlueLightBlocking = value;
         return true;
     }
@@ -49,11 +68,24 @@ internal partial class ScreenPageViewModel : ObservableObject
             return true;
 
         if (!Enum.IsDefined(typeof(BlueLightBlocking), value))
+        {
+            HasError = true;
+            OnPropertyChanged(nameof(ReductionRate));
             return false;
+        }
+
+        IsBusy = false;
 
         if (!await _screenService.SetBlueLightBlockingAsync((BlueLightBlocking)value))
+        {
+            HasError = true;
+            IsBusy = true;
+            OnPropertyChanged(nameof(ReductionRate));
             return false;
+        }
 
+        HasError = false;
+        IsBusy = true;
         ReductionRate = value;
         return true;
     }

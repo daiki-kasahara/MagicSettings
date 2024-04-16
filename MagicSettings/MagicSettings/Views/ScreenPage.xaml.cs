@@ -36,4 +36,10 @@ public sealed partial class ScreenPage : Page
 
         _procedureThrottle.PostAsyncAction(async () => await _viewModel.SetBlueLightBlockingAsync((int)slider.Value), TimeSpan.FromMilliseconds(500));
     }
+
+    #region Converter
+
+    bool MultiBoolConverter(bool b1, bool b2) => b1 && b2;
+
+    #endregion
 }

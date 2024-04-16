@@ -6,83 +6,42 @@ using ProcessManager.PipeMessage;
 
 namespace ProcessManager;
 
-public class ClientPipe
+internal class ClientPipe
 {
-    public async Task<bool> SendTerminateMessageAsync(MyProcesses process)
+    public async Task<bool> CheckExistedMessageAsync(MyProcesses process) =>
+        await SendMessageToServerAsync(process, new("Check"), 5000);
+
+    public async Task<bool> SendTerminateMessageAsync(MyProcesses process) =>
+        await SendMessageToServerAsync(process, new("Terminate"), 1000);
+
+    public async Task<bool> SendRequestMessageAsync(MyProcesses process, RequestMessage requestMessage) =>
+        await SendMessageToServerAsync(process, requestMessage, 1000);
+
+    private async Task<bool> SendMessageToServerAsync(MyProcesses process, RequestMessage message, int timeout)
     {
         try
         {
             using var pipeClient = new NamedPipeClientStream(".", $"MagicSettings-{process}", PipeDirection.InOut, PipeOptions.None, TokenImpersonationLevel.Impersonation);
-            await pipeClient.ConnectAsync(1000);
+            await pipeClient.ConnectAsync(timeout);
             var ss = new StreamString(pipeClient);
 
-            while (true)
+            // 入力された文字列を送信する
+            var write = ss.WriteString(message.Serialize());
+
+            // 応答待ち
+            var read = ss.ReadString();
+
+            try
             {
-                // 入力された文字列を送信する
-                var request = new RequestMessage("Terminate");
-                var write = ss.WriteString(request.Serialize());
-                // 応答待ち
-                // Todo: 修正する
-                //var read = ss.ReadString();
-
-                //try
-                //{
-                //    return JsonSerializer.Deserialize<ResponseMessage>(read)?.Result ?? false;
-                //}
-                //catch (Exception)
-                //{
-                //    return false;
-                //}
-
-                return true;
+                return JsonSerializer.Deserialize<ResponseMessage>(read)?.Result ?? false;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
-        catch (OverflowException ofex)
+        catch (Exception)
         {
-            return false;
-        }
-        catch (IOException ioe)
-        {
-            // 送信失敗
-            return false;
-        }
-    }
-
-    public async Task<bool> SendRequestMessageAsync(MyProcesses process, RequestMessage requestMessage)
-    {
-        try
-        {
-            using var pipeClient = new NamedPipeClientStream(".", $"MagicSettings-{process}", PipeDirection.InOut, PipeOptions.None, TokenImpersonationLevel.Impersonation);
-            await pipeClient.ConnectAsync(1000);
-            var ss = new StreamString(pipeClient);
-
-            while (true)
-            {
-                // 入力された文字列を送信する
-                var write = ss.WriteString(requestMessage.Serialize());
-                // 応答待ち
-                // Todo: 修正する
-                var read = ss.ReadString();
-
-                try
-                {
-                    return JsonSerializer.Deserialize<ResponseMessage>(read)?.Result ?? false;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-        }
-        catch (OverflowException ofex)
-        {
-            return false;
-        }
-        catch (IOException ioe)
-        {
-            // 送信失敗
             return false;
         }
     }
