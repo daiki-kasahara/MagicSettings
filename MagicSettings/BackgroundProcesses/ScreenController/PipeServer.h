@@ -24,7 +24,6 @@ public:
 public:
     auto OpenPipe() noexcept -> bool;
     auto ClosePipe() noexcept -> bool;
-    auto SetUpdateProcedure(std::function<std::string()> updateFunc) -> void;
 
 private:
     auto PipeThread() noexcept -> void;
@@ -34,6 +33,5 @@ private:
 private:
     HANDLE _pipeHandle = nullptr;
     std::optional<std::thread> _pipeThreadHandle = std::nullopt;
-    std::optional<std::function<std::string()>> _updateFunc;
     HWND _hWnd;
 };

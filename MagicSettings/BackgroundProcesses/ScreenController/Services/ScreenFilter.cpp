@@ -18,7 +18,7 @@ auto ScreenFilter::Uninitialize() noexcept -> void
     MagUninitialize();
 }
 
-auto ScreenFilter::Set(BlueLightBlockingFilter filter) noexcept -> void
+auto ScreenFilter::Set(BlueLightBlockingFilter filter) noexcept -> bool
 {
     auto value = 1.0f;
 
@@ -67,5 +67,5 @@ auto ScreenFilter::Set(BlueLightBlockingFilter filter) noexcept -> void
                                                  0.0f,  0.0f,  0.0f,  1.0f,  0.0f,
                                                  0.0f,  0.0f,  0.0f,  0.0f,  1.0f };
 
-    MagSetFullscreenColorEffect(&MagEffectNormal);
+    return MagSetFullscreenColorEffect(&MagEffectNormal);
 }

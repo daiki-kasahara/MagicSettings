@@ -64,11 +64,6 @@ auto PipeServer::ClosePipe() noexcept -> bool
     return true;
 }
 
-auto PipeServer::SetUpdateProcedure(std::function<std::string()> updateFunc) -> void
-{
-    _updateFunc = updateFunc;
-}
-
 auto PipeServer::PipeThread() noexcept -> void
 {
     while (1)
@@ -123,19 +118,13 @@ auto PipeServer::PipeThread() noexcept -> void
         if (cmd == UpdateCmd)
         {
             // 設定情報を更新する
-            std::string returnMessage;
-            if (_updateFunc)
-            {
-                auto func = _updateFunc.value();
-                std::ignore = WriteMessage(_pipeHandle, func());
-            }
-            else
-            {
-                nlohmann::json json;
-                json["ReturnCode"] = 1;
-                json["ReturnParameters"] = "";
-                std::ignore = WriteMessage(_pipeHandle, json.dump());
-            }
+            // メインメスレッドでしかフィルター更新できないため自分自身にSendMessageする
+            auto ret = SendMessage(_hWnd, WM_CUSTOM_UPDATE_MESSAGE, 0, 0);
+
+            nlohmann::json json;
+            json["ReturnCode"] = ret;
+            json["ReturnParameters"] = "";
+            std::ignore = WriteMessage(_pipeHandle, json.dump());
 
             FlushFileBuffers(_pipeHandle);
             DisconnectNamedPipe(_pipeHandle);

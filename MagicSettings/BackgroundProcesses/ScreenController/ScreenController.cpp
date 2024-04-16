@@ -111,19 +111,7 @@ auto InitInstance(HINSTANCE hInstance, int nCmdShow) -> bool
 
     ShowWindow(hWnd, SW_HIDE);
 
-    auto ExecuteUpdateProc = []() -> std::string
-        {
-            g_screenFilter.Set(GetFilterValue());
-
-            nlohmann::json json;
-            json["ReturnCode"] = 0;
-            json["ReturnParameters"] = "";
-
-            return json.dump();
-        };
-
     g_pipeServer = PipeServer(hWnd);
-    g_pipeServer.SetUpdateProcedure(ExecuteUpdateProc);
     g_isPipeRunning = g_pipeServer.OpenPipe();
 
     return true;
@@ -181,6 +169,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         DestroyWindow(hWnd);
         break;
+    }
+    case WM_CUSTOM_UPDATE_MESSAGE:
+    {
+        return g_screenFilter.Set(GetFilterValue()) ? 0 : 1;
     }
     case WM_PAINT:
     default:
