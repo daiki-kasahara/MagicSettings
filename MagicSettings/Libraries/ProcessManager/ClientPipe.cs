@@ -1,13 +1,14 @@
 ﻿using System.IO.Pipes;
 using System.Security.Principal;
 using System.Text;
+using System.Text.Json;
 using ProcessManager.PipeMessage;
 
 namespace ProcessManager;
 
 public class ClientPipe
 {
-    public async Task<bool> SendTerminateMessage(MyProcesses process)
+    public async Task<bool> SendTerminateMessageAsync(MyProcesses process)
     {
         try
         {
@@ -19,7 +20,6 @@ public class ClientPipe
             {
                 // 入力された文字列を送信する
                 var request = new RequestMessage("Terminate");
-                var aa = request.Serialize();
                 var write = ss.WriteString(request.Serialize());
                 // 応答待ち
                 // Todo: 修正する
@@ -33,6 +33,45 @@ public class ClientPipe
                 //{
                 //    return false;
                 //}
+
+                return true;
+            }
+        }
+        catch (OverflowException ofex)
+        {
+            return false;
+        }
+        catch (IOException ioe)
+        {
+            // 送信失敗
+            return false;
+        }
+    }
+
+    public async Task<bool> SendRequestMessageAsync(MyProcesses process, RequestMessage requestMessage)
+    {
+        try
+        {
+            using var pipeClient = new NamedPipeClientStream(".", $"MagicSettings-{process}", PipeDirection.InOut, PipeOptions.None, TokenImpersonationLevel.Impersonation);
+            await pipeClient.ConnectAsync(1000);
+            var ss = new StreamString(pipeClient);
+
+            while (true)
+            {
+                // 入力された文字列を送信する
+                var write = ss.WriteString(requestMessage.Serialize());
+                // 応答待ち
+                // Todo: 修正する
+                var read = ss.ReadString();
+
+                try
+                {
+                    return JsonSerializer.Deserialize<ResponseMessage>(read)?.Result ?? false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
 
                 return true;
             }

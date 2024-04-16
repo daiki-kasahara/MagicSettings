@@ -5,6 +5,7 @@ using MagicSettings.Models.SettingsFile;
 using MagicSettings.Repositories.Contracts;
 using ProcessManager;
 using ProcessManager.Contracts;
+using ProcessManager.PipeMessage;
 
 namespace MagicSettings.Services;
 
@@ -25,8 +26,8 @@ internal class ScreenService : IScreenService
 
     public async Task<bool> SetBlueLightBlockingAsync(BlueLightBlocking value)
     {
-        // Todo: プロセス通信
         await _screenRepository.SaveAsync(value);
+        await _pipe.SendRequestMessageAsync(MyProcesses.ScreenController, new RequestMessage("Update"));
         return true;
     }
 
@@ -40,7 +41,7 @@ internal class ScreenService : IScreenService
         }
         else
         {
-            await _pipe.SendTerminateMessage(MyProcesses.ScreenController);
+            await _pipe.SendTerminateMessageAsync(MyProcesses.ScreenController);
         }
 
         await _screenRepository.SaveAsync(value);
