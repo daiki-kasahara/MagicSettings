@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettings.Repositories"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettings.Domains", "MagicSettings\Libraries\MagicSettings.Domaines\MagicSettings.Domains.csproj", "{9518A66A-C893-43BC-A405-637E1B06A700}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessManager", "MagicSettings\Libraries\ProcessManager\ProcessManager.csproj", "{BD4581C0-B900-4F2B-B821-17A427E42385}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessManager", "MagicSettings\Libraries\ProcessManager\ProcessManager.csproj", "{BD4581C0-B900-4F2B-B821-17A427E42385}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

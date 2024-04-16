@@ -9,13 +9,6 @@ namespace ScreenController::Repositories
 {
     class ScreenSettingsRepository
     {
-    private:
-        std::string FilePath;
-
-    public:
-        ScreenSettingsRepository();
-        ~ScreenSettingsRepository() {};
-
     public:
         auto Get() -> BlueLightBlockingFilter;
     };

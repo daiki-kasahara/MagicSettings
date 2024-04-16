@@ -1,38 +1,24 @@
 ﻿#include "ScreenSettingsRepository.h"
-#include <filesystem>
+#include <windows.h>
 #include <fstream>
-#include <sstream>
+#include <format>
 #include <nlohmann/json.hpp>
 
 using namespace ScreenController::Repositories;
 
-ScreenSettingsRepository::ScreenSettingsRepository()
+std::string GetFilePath()
 {
-    FilePath = std::filesystem::current_path().generic_string();
-}
 
-std::string ReadFileToString(const std::string& filename) {
-
-    std::ifstream file(filename);
-
-    if (!file.is_open()) {
+    char path[MAX_PATH];
+    if (!GetModuleFileNameA(NULL, path, MAX_PATH) != 0)
         return "";
-    }
 
-    // ファイルの末尾まで移動して、サイズを取得する
-    file.seekg(0, std::ios::end);
-    std::streampos fileSize = file.tellg();
-    file.seekg(0, std::ios::beg);
+    std::string fullPath(path);
+    size_t lastSlashPos = fullPath.find_last_of("\\");
+    if (lastSlashPos == std::string::npos)
+        return "";
 
-    // ファイルサイズに合わせてstringをリサイズして読み込む
-    std::string content;
-    content.resize(fileSize);
-
-    // ファイル全体を一括で読み込む
-    file.read(&content[0], fileSize);
-
-    file.close();
-    return content;
+    return std::format("{}\\Settings\\screen.json", fullPath.substr(0, lastSlashPos));
 }
 
 auto ScreenSettingsRepository::Get() -> BlueLightBlockingFilter
@@ -40,7 +26,7 @@ auto ScreenSettingsRepository::Get() -> BlueLightBlockingFilter
     nlohmann::json json;
     try
     {
-        json = nlohmann::json::parse(ReadFileToString(FilePath));
+        json = nlohmann::json::parse(std::ifstream(GetFilePath()));
     }
     catch (const std::exception&)
     {

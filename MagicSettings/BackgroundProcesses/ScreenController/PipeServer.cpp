@@ -1,33 +1,13 @@
 ﻿#include "PipeServer.h"
 #include <vector>
-#include <format>
 #include <nlohmann/json.hpp>
-
-#include "ScreenSettingsRepository.h"
-
-#define WM_MY_CUSTOM_EXIT_MESSAGE (WM_APP + 1)
-
-using namespace ScreenController::Repositories;
+#include "ScreenController.h"
 
 auto PipeServer::OpenPipe() noexcept -> bool
 {
     // すでにパイプオープンしていたら何もせずに true を返す
     if (_pipeThreadHandle.has_value())
         return true;
-
-    // システム権限以外のクライアントとやり取りできるようにするための準備
-    //auto sd = SECURITY_DESCRIPTOR{ 0 };
-    //auto sa = SECURITY_ATTRIBUTES{ 0 };
-
-    //if (!InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION))
-    //    return false;
-
-    //if (!SetSecurityDescriptorDacl(&sd, TRUE, nullptr, FALSE))
-    //    return false;
-
-    //sa.nLength = sizeof(SECURITY_ATTRIBUTES);
-    //sa.lpSecurityDescriptor = &sd;
-    //sa.bInheritHandle = FALSE;
 
     // パイプ作成
     _pipeHandle = CreateNamedPipeW(
@@ -66,6 +46,7 @@ auto PipeServer::ClosePipe() noexcept -> bool
     if (hPipe == INVALID_HANDLE_VALUE)
         return false;
 
+    // パイプ終了メッセージを送信
     nlohmann::json json;
     json["Cmd"] = "Close";
     json["Args"] = "";
@@ -73,19 +54,19 @@ auto PipeServer::ClosePipe() noexcept -> bool
 
     auto ret = WriteMessage(hPipe, jsonString);
 
-    CloseHandle(hPipe);
-    hPipe = nullptr;
-
     // パイプ送信に成功した時のみ、スレッドの終了を待機する
     if (ret && _pipeThreadHandle.has_value() && _pipeThreadHandle.value().joinable())
         _pipeThreadHandle.value().join();
 
+    CloseHandle(hPipe);
+    hPipe = nullptr;
+
     return true;
 }
 
-auto PipeServer::SetProcedure(std::function<std::string()> fn) -> void
+auto PipeServer::SetUpdateProcedure(std::function<std::string()> updateFunc) -> void
 {
-    _fn = fn;
+    _updateFunc = updateFunc;
 }
 
 auto PipeServer::PipeThread() noexcept -> void
@@ -141,10 +122,11 @@ auto PipeServer::PipeThread() noexcept -> void
 
         if (cmd == UpdateCmd)
         {
+            // 設定情報を更新する
             std::string returnMessage;
-            if (_fn)
+            if (_updateFunc)
             {
-                auto func = _fn.value();
+                auto func = _updateFunc.value();
                 std::ignore = WriteMessage(_pipeHandle, func());
             }
             else
@@ -154,15 +136,22 @@ auto PipeServer::PipeThread() noexcept -> void
                 json["ReturnParameters"] = "";
                 std::ignore = WriteMessage(_pipeHandle, json.dump());
             }
+
+            FlushFileBuffers(_pipeHandle);
+            DisconnectNamedPipe(_pipeHandle);
+            continue;
         }
         else if (cmd == TerminateCmd)
         {
-            PostMessage(_hWnd, WM_MY_CUSTOM_EXIT_MESSAGE, 0, 0);
-            return;
+            // アプリを終了する
+            FlushFileBuffers(_pipeHandle);
+            DisconnectNamedPipe(_pipeHandle);
+            PostMessage(_hWnd, WM_CUSTOM_EXIT_MESSAGE, 0, 0);
+            continue;
         }
         else if (cmd == CloseCmd)
         {
-            // 終了処理
+            // パイプを終了する
             FlushFileBuffers(_pipeHandle);
             DisconnectNamedPipe(_pipeHandle);
             CloseHandle(_pipeHandle);
@@ -221,6 +210,7 @@ auto PipeServer::ReadMessage() const noexcept -> std::optional<std::string>
     auto bufL = BYTE{ 0 };
     auto recvBuffer = DWORD{ 0 };
 
+    // クライアントからのリクエストのバッファ情報を受信
     if (!ReadMessageFromPipe(_pipeHandle, &bufH, sizeof(bufH), &recvBuffer, 1000, nullptr))
         return std::nullopt;
 
@@ -234,6 +224,7 @@ auto PipeServer::ReadMessage() const noexcept -> std::optional<std::string>
 
     auto buff = std::vector<char>(recvBufferLength);
 
+    // クライアントからのリクエストを受信
     if (!ReadMessageFromPipe(_pipeHandle, buff.data(), recvBufferLength, &recvBuffer, 5000, nullptr))
         return std::nullopt;
 
@@ -279,6 +270,7 @@ auto PipeServer::WriteMessage(HANDLE pipeHandle, std::string message) const noex
             return result;
         };
 
+    // レスポンスメッセージのバッファを計算してクライアントに送信
     auto messageLength = DWORD{ 0 };
     if (message.length() <= USHRT_MAX)
     {
@@ -302,6 +294,7 @@ auto PipeServer::WriteMessage(HANDLE pipeHandle, std::string message) const noex
     if (!WriteMessageToPipe(pipeHandle, &bufL, sizeof(bufL), &bytesWritten, 1000, nullptr))
         return false;
 
+    // レスポンスをクライアントに送信
     if (bufSize != 0)
         return WriteMessageToPipe(pipeHandle, message.c_str(), bufSize, &bytesWritten, 5000, nullptr);
 
