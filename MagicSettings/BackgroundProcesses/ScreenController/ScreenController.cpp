@@ -138,15 +138,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
     case WM_COMMAND:
     {
-        int wmId = LOWORD(wParam);
-
-        switch (wmId)
-        {
-        default:
-            return DefWindowProc(hWnd, message, wParam, lParam);
-        }
+        return DefWindowProc(hWnd, message, wParam, lParam);
     }
-    break;
     case WM_DESTROY:
     {
         g_screenFilter.Uninitialize();
