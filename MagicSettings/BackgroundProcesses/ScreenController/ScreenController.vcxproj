@@ -65,7 +65,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>magnification.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ManifestFile>$(SolutionDir)bin\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt).manifest</ManifestFile>
+      <ManifestFile>$(IntDir)$(TargetName)$(TargetExt).manifest</ManifestFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -86,7 +86,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>magnification.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ManifestFile>$(SolutionDir)bin\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt).manifest</ManifestFile>
+      <ManifestFile>$(IntDir)$(TargetName)$(TargetExt).manifest</ManifestFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
