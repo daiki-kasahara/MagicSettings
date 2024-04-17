@@ -12,12 +12,15 @@
     <WindowsPackageType>None</WindowsPackageType>
     <SelfContained>true</SelfContained>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <AssemblyName>MagicSettings</AssemblyName>
     <Nullable>enable</Nullable>
     <Authors>Daiki Kasahara</Authors>
     <NeutralLanguage>ja-JP</NeutralLanguage>
     <AssemblyVersion>1.0.100.0</AssemblyVersion>
     <FileVersion>1.0.100.0</FileVersion>
+    <BaseOutputPath>$(SolutionDir)bin\$(PlatformShortName)</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,5 +29,11 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
     <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\MagicSettings.Domaines\MagicSettings.Domains.csproj" />
+    <ProjectReference Include="..\Libraries\MagicSettings.Repositories\MagicSettings.Repositories.csproj" />
+    <ProjectReference Include="..\Libraries\ProcessManager\ProcessManager.csproj" />
   </ItemGroup>
 </Project>

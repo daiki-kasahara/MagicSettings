@@ -1,14 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Text.Json;
-using System.Threading.Tasks;
-using MagicSettings.Contracts.Repositories;
-using MagicSettings.Models;
-using MagicSettings.Models.SettingsFile;
+﻿using System.Text.Json;
+using MagicSettings.Domains;
+using MagicSettings.Repositories.Contracts;
+using MagicSettings.Repositories.Helper;
 
 namespace MagicSettings.Repositories;
 
-internal class ThemeRepository : IThemeRepository
+public class ThemeRepository : IThemeRepository
 {
     private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "theme.json");
 
@@ -41,7 +38,7 @@ internal class ThemeRepository : IThemeRepository
             };
 
             await using var createStream = File.Create(FilePath);
-            await JsonSerializer.SerializeAsync(createStream, themeSettings);
+            await JsonSerializer.SerializeAsync(createStream, themeSettings, JsonOptionHelper.GetOption());
         }
         catch (Exception)
         {

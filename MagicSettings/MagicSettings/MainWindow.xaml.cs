@@ -1,6 +1,6 @@
 ﻿using MagicSettings.Contracts.Services;
+using MagicSettings.Domains;
 using MagicSettings.Helper;
-using MagicSettings.Models;
 using MagicSettings.Models.Navigation;
 using MagicSettings.ViewModels;
 using MagicSettings.Views;
@@ -47,8 +47,8 @@ internal sealed partial class MainWindow : Window
             case Tag.KeyBinding:
                 ContentFrame.Navigate(typeof(KeyBindingPage));
                 break;
-            case Tag.Display:
-                ContentFrame.Navigate(typeof(DisplayPage));
+            case Tag.Screen:
+                ContentFrame.Navigate(typeof(ScreenPage));
                 break;
             default:
                 return;
