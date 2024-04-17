@@ -6,9 +6,26 @@
     xmlns:local="using:MagicSettings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:MagicSettings.Models.Navigation"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          Loaded="MainRootLoadedAsync">
+        <Grid.Resources>
+            <DataTemplate x:Key="NavigationViewMenuItem" x:DataType="models:MenuItem">
+                <NavigationViewItem Content="{x:Bind Name}" Tag="{x:Bind Tag}">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="{x:Bind Icon}" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </DataTemplate>
+        </Grid.Resources>
+        <NavigationView CompactModeThresholdWidth="0"
+                        IsBackButtonVisible="Collapsed"
+                        MenuItemTemplate="{StaticResource NavigationViewMenuItem}"
+                        MenuItemsSource="{x:Bind _viewModel.NavigationMenuItems}"
+                        ItemInvoked="NavigationView_ItemInvoked">
+            <Frame x:Name="ContentFrame"/>
+        </NavigationView>
+    </Grid>
 </Window>

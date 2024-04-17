@@ -1,36 +1,72 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using MagicSettings.Contracts.Services;
+using MagicSettings.Domains;
+using MagicSettings.Helper;
+using MagicSettings.Models.Navigation;
+using MagicSettings.ViewModels;
+using MagicSettings.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Microsoft.Windows.ApplicationModel.Resources;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+namespace MagicSettings;
 
-namespace MagicSettings
+/// <summary>
+/// メインウィンドウ
+/// </summary>
+internal sealed partial class MainWindow : Window
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainWindow : Window
+    private readonly MainWindowViewModel _viewModel;
+    private readonly IThemeService _themeService;
+
+    public MainWindow(MainWindowViewModel viewModel, IThemeService themeService)
     {
-        public MainWindow()
+        this.InitializeComponent();
+
+        _viewModel = viewModel;
+        _themeService = themeService;
+
+        var loader = new ResourceLoader();
+        Title = loader.GetString("Window_Title");
+    }
+
+    private void NavigationView_ItemInvoked(NavigationView _, NavigationViewItemInvokedEventArgs args)
+    {
+        if (args.IsSettingsInvoked)
         {
-            this.InitializeComponent();
+            ContentFrame.Navigate(typeof(SettingsPage));
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        if (args.InvokedItemContainer.Tag is not Tag tag)
+            return;
+
+        switch (tag)
         {
-            myButton.Content = "Clicked";
+            case Tag.Home:
+                ContentFrame.Navigate(typeof(HomePage));
+                break;
+            case Tag.KeyBinding:
+                ContentFrame.Navigate(typeof(KeyBindingPage));
+                break;
+            case Tag.Screen:
+                ContentFrame.Navigate(typeof(ScreenPage));
+                break;
+            default:
+                return;
         }
+    }
+
+    private async void MainRootLoadedAsync(object _, RoutedEventArgs __)
+    {
+        var theme = await _themeService.GetCurrentThemeAsync();
+
+        var requestedTheme = theme switch
+        {
+            AppTheme.Dark => ElementTheme.Dark,
+            AppTheme.Light => ElementTheme.Light,
+            AppTheme.System => ElementTheme.Default,
+            _ => ElementTheme.Default,
+        };
+
+        WindowHelper.RootTheme = requestedTheme;
     }
 }

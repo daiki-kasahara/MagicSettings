@@ -1,50 +1,84 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Diagnostics;
+using MagicSettings.Contracts.Services;
+using MagicSettings.Helper;
+using MagicSettings.Repositories;
+using MagicSettings.Repositories.Contracts;
+using MagicSettings.Services;
+using MagicSettings.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Microsoft.Windows.AppLifecycle;
+using ProcessManager;
+using ProcessManager.Contracts;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+namespace MagicSettings;
 
-namespace MagicSettings
+/// <summary>
+/// アプリのエントリポイント
+/// </summary>
+public partial class App : Application
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
-    public partial class App : Application
+    // DIコンテナ
+    public static ServiceProvider Provider { get; } = GetServiceProvider();
+
+    // メインウィンドウ
+    private static Window? _window;
+    private static DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+    public App()
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
-        public App()
+        this.InitializeComponent();
+    }
+
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
+    {
+        var mainInstance = AppInstance.FindOrRegisterForKey("MagicSettings");
+        if (!mainInstance.IsCurrent)
         {
-            this.InitializeComponent();
+            var activatedEventArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+            await mainInstance.RedirectActivationToAsync(activatedEventArgs);
+
+            Process.GetCurrentProcess().Kill();
+            return;
         }
 
-        /// <summary>
-        /// Invoked when the application is launched.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
-        {
-            m_window = new MainWindow();
-            m_window.Activate();
-        }
+        _window = Provider.GetRequiredService<MainWindow>();
+        WindowHelper.TrackWindow(_window);
+        _window.Activate();
 
-        private Window m_window;
+        mainInstance.Activated += MainInstance_Activated;
+    }
+
+    private void MainInstance_Activated(object? sender, AppActivationArguments e)
+    {
+        _dispatcherQueue.TryEnqueue(() =>
+        {
+            _window?.Activate();
+            WindowHelper.SetForeground(_window);
+        });
+    }
+
+    private static ServiceProvider GetServiceProvider()
+    {
+        var services = new ServiceCollection();
+
+        // Add View
+        services.AddTransient<MainWindow>();
+
+        // Add View Model
+        services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<SettingsPageViewModel>();
+        services.AddTransient<ScreenPageViewModel>();
+
+        // Add Model
+        services.AddTransient<IThemeService, ThemeService>();
+        services.AddTransient<IScreenRepository, ScreenRepository>();
+        services.AddTransient<IThemeRepository, ThemeRepository>();
+        services.AddTransient<IScreenService, ScreenService>();
+        services.AddTransient<IProcessController, ProcessController>();
+
+        return services.BuildServiceProvider();
     }
 }
