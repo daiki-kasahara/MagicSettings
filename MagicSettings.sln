@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettings.Domains", "Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessManager", "MagicSettings\Libraries\ProcessManager\ProcessManager.csproj", "{BD4581C0-B900-4F2B-B821-17A427E42385}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicSettings.KeyBindingListener", "MagicSettings\BackgroundProcesses\MagicSettings.KeyBindingListener\MagicSettings.KeyBindingListener.csproj", "{3707434E-96C6-4A81-87A8-2D567E09C662}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -43,6 +45,9 @@ Global
 		{BD4581C0-B900-4F2B-B821-17A427E42385}.Debug|x64.Build.0 = Debug|x64
 		{BD4581C0-B900-4F2B-B821-17A427E42385}.Release|x64.ActiveCfg = Release|x64
 		{BD4581C0-B900-4F2B-B821-17A427E42385}.Release|x64.Build.0 = Release|x64
+		{3707434E-96C6-4A81-87A8-2D567E09C662}.Debug|x64.ActiveCfg = Debug|x64
+		{3707434E-96C6-4A81-87A8-2D567E09C662}.Release|x64.ActiveCfg = Release|x64
+		{3707434E-96C6-4A81-87A8-2D567E09C662}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +57,7 @@ Global
 		{D38A1FB6-886E-4460-9044-C7851338AAD3} = {32AAFD78-88AA-4CE3-974D-68E361A3B405}
 		{9518A66A-C893-43BC-A405-637E1B06A700} = {32AAFD78-88AA-4CE3-974D-68E361A3B405}
 		{BD4581C0-B900-4F2B-B821-17A427E42385} = {32AAFD78-88AA-4CE3-974D-68E361A3B405}
+		{3707434E-96C6-4A81-87A8-2D567E09C662} = {DD18BDBE-E4CF-481B-B9E3-1495520A7BAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82056EBC-29D8-43AE-B47D-8F9350AC2C1D}
