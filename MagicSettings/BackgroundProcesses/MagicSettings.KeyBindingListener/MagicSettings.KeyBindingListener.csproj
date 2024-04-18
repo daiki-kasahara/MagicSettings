@@ -2,11 +2,24 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <Platforms>x64</Platforms>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <SelfContained>true</SelfContained>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <AssemblyName>MagicSettings.KeyBindingListener</AssemblyName>
+    <Nullable>enable</Nullable>
+    <Authors>Daiki Kasahara</Authors>
+    <NeutralLanguage>ja-JP</NeutralLanguage>
+    <AssemblyVersion>1.0.100.0</AssemblyVersion>
+    <FileVersion>1.0.100.0</FileVersion>
+    <BaseOutputPath>$(SolutionDir)bin\$(PlatformShortName)</BaseOutputPath>
   </PropertyGroup>
 
 </Project>
