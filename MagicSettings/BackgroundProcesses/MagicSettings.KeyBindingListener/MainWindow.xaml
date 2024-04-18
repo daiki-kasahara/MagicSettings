@@ -5,7 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MagicSettings.KeyBindingListener"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        ShowInTaskbar="False"
+        WindowState="Minimized"
+        WindowStyle="None"
+        Opacity="0"
+        AllowsTransparency="True"
+        Loaded="Window_Loaded"
+        Visibility="Collapsed"
+        Closed="Window_Closed">
     <Grid>
 
     </Grid>
