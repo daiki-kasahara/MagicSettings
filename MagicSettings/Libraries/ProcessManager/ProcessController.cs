@@ -17,7 +17,7 @@ public class ProcessController : IProcessController
             using var proc = new Process();
             proc.StartInfo = new ProcessStartInfo()
             {
-                FileName = Path.Combine(DirPath, $"{process}.exe"),
+                FileName = Path.Combine(DirPath, $"MagicSettings.{process}.exe"),
                 UseShellExecute = true,
                 CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
