@@ -1,7 +1,7 @@
-﻿<Application x:Class="MagicSettings.KeyBindingListener.App"
+﻿<Application x:Class="KeyBindingListener.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MagicSettings.KeyBindingListener"
+             xmlns:local="clr-namespace:KeyBindingListener"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
