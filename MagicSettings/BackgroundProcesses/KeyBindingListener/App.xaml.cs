@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MagicSettings.KeyBindingListener;
+namespace KeyBindingListener;
 
 public partial class App : Application
 {

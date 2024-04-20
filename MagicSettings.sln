@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettings.Domains", "Ma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessManager", "MagicSettings\Libraries\ProcessManager\ProcessManager.csproj", "{BD4581C0-B900-4F2B-B821-17A427E42385}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicSettings.KeyBindingListener", "MagicSettings\BackgroundProcesses\MagicSettings.KeyBindingListener\MagicSettings.KeyBindingListener.csproj", "{3707434E-96C6-4A81-87A8-2D567E09C662}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyBindingListener", "MagicSettings\BackgroundProcesses\KeyBindingListener\KeyBindingListener.csproj", "{3707434E-96C6-4A81-87A8-2D567E09C662}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
