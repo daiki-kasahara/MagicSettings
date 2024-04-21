@@ -18,7 +18,7 @@ internal partial class ScreenPageViewModel : ObservableObject
     private bool _hasError = false;
 
     [ObservableProperty]
-    private bool _isBusy = false;
+    private bool _canExecute = false;
 
     private readonly IScreenService _screenService;
 
@@ -29,14 +29,14 @@ internal partial class ScreenPageViewModel : ObservableObject
 
     public async Task InitializeAsync()
     {
-        IsBusy = false;
+        CanExecute = false;
 
         var settings = await _screenService.GetScreenSettingsAsync();
 
         IsEnabledBlueLightBlocking = settings.IsEnabledBlueLightBlocking;
         ReductionRate = (int)settings.BlueLightBlocking;
 
-        IsBusy = true;
+        CanExecute = true;
     }
 
     public async Task<bool> SetEnabledBlueLightBlockingAsync(bool value)
@@ -45,18 +45,18 @@ internal partial class ScreenPageViewModel : ObservableObject
         if (IsEnabledBlueLightBlocking == value)
             return true;
 
-        IsBusy = false;
+        CanExecute = false;
 
         if (!await _screenService.SetEnabledBlueLightBlockingAsync(value))
         {
             HasError = true;
-            IsBusy = true;
+            CanExecute = true;
             OnPropertyChanged(nameof(IsEnabledBlueLightBlocking));
             return false;
         }
 
         HasError = false;
-        IsBusy = true;
+        CanExecute = true;
         IsEnabledBlueLightBlocking = value;
         return true;
     }
@@ -74,18 +74,18 @@ internal partial class ScreenPageViewModel : ObservableObject
             return false;
         }
 
-        IsBusy = false;
+        CanExecute = false;
 
         if (!await _screenService.SetBlueLightBlockingAsync((BlueLightBlocking)value))
         {
             HasError = true;
-            IsBusy = true;
+            CanExecute = true;
             OnPropertyChanged(nameof(ReductionRate));
             return false;
         }
 
         HasError = false;
-        IsBusy = true;
+        CanExecute = true;
         ReductionRate = value;
         return true;
     }

@@ -9,13 +9,13 @@ namespace ProcessManager;
 internal class ClientPipe
 {
     public async Task<bool> CheckExistedMessageAsync(MyProcesses process) =>
-        await SendMessageToServerAsync(process, new("Check"), 5000);
+        await SendMessageToServerAsync(process, new("Check"), 10000);
 
     public async Task<bool> SendTerminateMessageAsync(MyProcesses process) =>
-        await SendMessageToServerAsync(process, new("Terminate"), 1000);
+        await SendMessageToServerAsync(process, new("Terminate"), 5000);
 
     public async Task<bool> SendRequestMessageAsync(MyProcesses process, RequestMessage requestMessage) =>
-        await SendMessageToServerAsync(process, requestMessage, 1000);
+        await SendMessageToServerAsync(process, requestMessage, 5000);
 
     private async Task<bool> SendMessageToServerAsync(MyProcesses process, RequestMessage message, int timeout)
     {
