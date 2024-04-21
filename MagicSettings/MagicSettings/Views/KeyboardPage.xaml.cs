@@ -1,18 +1,21 @@
 using MagicSettings.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace MagicSettings.Views;
 
-public sealed partial class KeyBindingPage : Page
+public sealed partial class KeyboardPage : Page
 {
-    private readonly KeyBindingPageViewModel _viewModel;
+    private readonly KeyboardPageViewModel _viewModel;
 
-    public KeyBindingPage()
+    public KeyboardPage()
     {
         this.InitializeComponent();
-        _viewModel = App.Provider.GetRequiredService<KeyBindingPageViewModel>();
+        _viewModel = App.Provider.GetRequiredService<KeyboardPageViewModel>();
     }
+
+    private async void PageLoadedAsync(object _, RoutedEventArgs __) => await _viewModel.InitializeAsync();
 
     private async void KeyBindingToggled(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="MagicSettings.Views.KeyboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MagicSettings.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Loaded="PageLoadedAsync"
+    mc:Ignorable="d">
+
+    <StackPanel Margin="20">
+        <TextBlock x:Uid="Keyboard_Title" FontSize="28" FontWeight="Bold"/>
+        <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.HasError, Mode=TwoWay}" Margin="0,10,0,10"/>
+
+        <Expander IsExpanded="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+            <Expander.Header>
+                <Grid Padding="0,15,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" x:Uid="Keyboard_KeyBinding" VerticalAlignment="Center"/>
+                    <ToggleSwitch Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="0"
+                                  IsOn="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
+                                  IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
+                                  Toggled="KeyBindingToggled"/>
+                </Grid>
+            </Expander.Header>
+            <Expander.Content>
+                <Grid Margin="20,0,45,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                </Grid>
+            </Expander.Content>
+        </Expander>
+    </StackPanel>
+</Page>

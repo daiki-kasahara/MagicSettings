@@ -120,11 +120,14 @@
   <data name="Error_FailedToSet.Message" xml:space="preserve">
     <value>設定に失敗しました</value>
   </data>
+  <data name="Keyboard_Title.Text" xml:space="preserve">
+    <value>キーボード</value>
+  </data>
   <data name="MainMenu_Home" xml:space="preserve">
     <value>ホーム</value>
   </data>
-  <data name="MainMenu_KeyBinding" xml:space="preserve">
-    <value>キーバインディング</value>
+  <data name="MainMenu_Keyboard" xml:space="preserve">
+    <value>キーボード</value>
   </data>
   <data name="MainMenu_Screen" xml:space="preserve">
     <value>スクリーン</value>
