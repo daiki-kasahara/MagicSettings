@@ -19,9 +19,13 @@
     <NeutralLanguage>ja-JP</NeutralLanguage>
     <AssemblyVersion>1.0.100.0</AssemblyVersion>
     <FileVersion>1.0.100.0</FileVersion>
-    <BaseOutputPath>$(SolutionDir)bin\$(PlatformShortName)</BaseOutputPath>
+    <BaseOutputPath>$(ProjectDir)bin\$(PlatformShortName)</BaseOutputPath>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\ProcessManager\ProcessManager.csproj" />
+  </ItemGroup>
 
 </Project>

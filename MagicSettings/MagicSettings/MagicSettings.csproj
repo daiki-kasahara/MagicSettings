@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BackgroundProcesses\KeyBindingListener\KeyBindingListener.csproj" />
     <ProjectReference Include="..\Libraries\MagicSettings.Domaines\MagicSettings.Domains.csproj" />
     <ProjectReference Include="..\Libraries\MagicSettings.Repositories\MagicSettings.Repositories.csproj" />
     <ProjectReference Include="..\Libraries\ProcessManager\ProcessManager.csproj" />
