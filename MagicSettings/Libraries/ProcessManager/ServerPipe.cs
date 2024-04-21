@@ -8,6 +8,9 @@ namespace ProcessManager;
 public class ServerPipe(MyProcesses process)
 {
     private static readonly int PipeNumber = 1;
+    private static readonly string CheckCmd = "Check";
+    private static readonly string CloseCmd = "Close";
+    private static readonly string TerminateCmd = "Terminate";
 
     private readonly string _pipeName = $"MagicSettings-{process}";
     private readonly MyProcesses _process = process;
@@ -21,7 +24,7 @@ public class ServerPipe(MyProcesses process)
         if (_pipeTask is not null)
             return true;
 
-        _pipeTask = PipeThread();
+        _pipeTask = Task.Run(PipeThread);
 
         return true;
     }
@@ -31,7 +34,7 @@ public class ServerPipe(MyProcesses process)
         if (_pipeTask is null)
             return true;
 
-        return await _clientPipe.SendTerminateMessageAsync(_process);
+        return await _clientPipe.SendRequestMessageAsync(_process, new RequestMessage(CloseCmd));
     }
 
     private async Task PipeThread()
@@ -48,19 +51,32 @@ public class ServerPipe(MyProcesses process)
 
                     await pipeServer.WaitForConnectionAsync();
 
-                    var reader = new StreamString(pipeServer);
+                    var stream = new StreamString(pipeServer);
 
-                    var readString = reader.ReadString();
+                    var readString = stream.ReadString();
 
                     try
                     {
-                        var request = JsonSerializer.Deserialize<RequestMessage>(readString);
+                        var rowRequest = JsonSerializer.Deserialize<RowRequestMessage>(readString);
 
-                        if (request is null || OnAction is null)
+                        if (rowRequest is null || OnAction is null)
                             continue;
 
-                        if (request.Cmd is "Terminate")
+                        var request = new RequestMessage(rowRequest.Cmd, rowRequest.Args);
+
+                        if (request.Cmd == CloseCmd)
                             return;
+
+                        if (request.Cmd == CheckCmd)
+                        {
+                            stream.WriteString(JsonSerializer.Serialize(new ResponseMessage() { ReturnCode = 0 }));
+                            continue;
+                        }
+
+                        if (request.Cmd == TerminateCmd)
+                        {
+                            stream.WriteString(JsonSerializer.Serialize(new ResponseMessage() { ReturnCode = 0 }));
+                        }
 
                         OnAction(request);
                     }
