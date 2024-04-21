@@ -3,14 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using MagicSettings.Contracts.Services;
-using MagicSettings.Repositories.Models.SettingsFile;
+using MagicSettings.Models;
 using Windows.System;
 
 namespace MagicSettings.ViewModels;
 
 internal partial class KeyboardPageViewModel : ObservableObject
 {
-    public ObservableCollection<(string, KeyboardAction)>? KeyActions;
+    public ObservableCollection<KeyBindAction>? KeyActions;
 
     [ObservableProperty]
     private bool _isEnabledKeyBinding;
@@ -37,13 +37,30 @@ internal partial class KeyboardPageViewModel : ObservableObject
         IsEnabledKeyBinding = settings.IsEnabledKeyboardBinding;
         if (settings.KeyboardActions is not null)
         {
-            KeyActions = new ObservableCollection<(string, KeyboardAction)>(
+            KeyActions = new ObservableCollection<KeyBindAction>(
                 settings.KeyboardActions
-                .Select(x => (((VirtualKey)x.Key).ToString(), new KeyboardAction()))
-                .OrderBy(x => x.Item1));
+                .Select(x => new KeyBindAction()
+                {
+                    VirtualKey = (VirtualKey)x.Key,
+                    ActionType = x.Value.ActionType,
+                    IsEnabled = x.Value.IsEnabled,
+                    ProgramPath = x.Value.ProgramPath,
+                    UrlPath = x.Value.UrlPath,
+                })
+                .OrderBy(x => x.VirtualKey.ToString()));
         }
 
         CanExecute = true;
+    }
+
+    public async Task AddNewAction(KeyBindAction keyBindAction)
+    {
+
+    }
+
+    public async Task UpdateAction(KeyBindAction oldAction, KeyBindAction newAction)
+    {
+
     }
 
     public async Task<bool> SetEnabledKeyBindingAsync(bool value)

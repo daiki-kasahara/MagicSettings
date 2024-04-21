@@ -13,6 +13,8 @@ public class KeyboardAction
 {
     public KeyboardActionType? ActionType { get; set; }
 
+    public bool IsEnabled { get; set; }
+
     public string? ProgramPath { get; set; }
 
     public string? UrlPath { get; set; }
