@@ -25,14 +25,21 @@ public partial class MainWindow : Window
 
         _serverPipe.OnAction += (RequestMessage message) =>
         {
-            Console.WriteLine(message);
+            if (message.Cmd == "Terminate")
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    System.Windows.Application.Current.Shutdown();
+                }));
+            }
         };
         _serverPipe.OpenPipe();
     }
 
-    private async void Window_Closed(object sender, EventArgs e)
+    private void Window_Closed(object sender, EventArgs e)
     {
         _keyboardHookHelper.UnHook();
-        await _serverPipe.ClosePipe();
+
+        Task.Run(_serverPipe.ClosePipe).Wait();
     }
 }

@@ -10,8 +10,8 @@
         WindowStyle="None"
         Opacity="0"
         AllowsTransparency="True"
-        Loaded="Window_Loaded"
         Visibility="Collapsed"
+        Loaded="Window_Loaded"
         Closed="Window_Closed">
     <Grid>
 
