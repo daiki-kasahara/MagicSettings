@@ -21,6 +21,7 @@
     <FileVersion>1.0.100.0</FileVersion>
     <BaseOutputPath>$(SolutionDir)bin\$(PlatformShortName)</BaseOutputPath>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
 </Project>

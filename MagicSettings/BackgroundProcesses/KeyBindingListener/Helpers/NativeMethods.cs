@@ -4,11 +4,11 @@ namespace KeyBindingListener.Helpers;
 
 internal static class NativeMethods
 {
-    public static readonly int WH_KEYBOARD_LL = 0x0D;
-    public static readonly int WM_KEYBOARD_DOWN = 0x100;
-    public static readonly int WM_KEYBOARD_UP = 0x101;
-    public static readonly int WM_SYSKEY_DOWN = 0x104;
-    public static readonly int WM_SYSKEY_UP = 0x105;
+    public const int WH_KEYBOARD_LL = 0x0D;
+    public const int WM_KEYBOARD_DOWN = 0x100;
+    public const int WM_KEYBOARD_UP = 0x101;
+    public const int WM_SYSKEY_DOWN = 0x104;
+    public const int WM_SYSKEY_UP = 0x105;
 
     public delegate IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam);
 
