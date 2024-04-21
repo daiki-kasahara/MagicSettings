@@ -17,6 +17,11 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
+    /// <summary>
+    /// アプリの開始処理
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         _keyboardHookHelper.OnKeyDown += _keyHookService.OnKeyDown;
@@ -27,6 +32,7 @@ public partial class MainWindow : Window
         {
             if (message.Cmd == "Terminate")
             {
+                // メインスレッドでアプリの終了処理を実行する
                 Dispatcher.Invoke(new Action(() =>
                 {
                     System.Windows.Application.Current.Shutdown();
@@ -36,10 +42,15 @@ public partial class MainWindow : Window
         _serverPipe.OpenPipe();
     }
 
+    /// <summary>
+    /// アプリの終了処理
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Window_Closed(object sender, EventArgs e)
     {
         _keyboardHookHelper.UnHook();
 
-        Task.Run(_serverPipe.ClosePipe).Wait();
+        _serverPipe.ClosePipe();
     }
 }

@@ -12,13 +12,17 @@ public class ServerPipe(MyProcesses process)
     private static readonly string CloseCmd = "Close";
     private static readonly string TerminateCmd = "Terminate";
 
+    public Action<RequestMessage>? OnAction;
+
     private readonly string _pipeName = $"MagicSettings-{process}";
     private readonly MyProcesses _process = process;
     private Task? _pipeTask;
     private readonly ClientPipe _clientPipe = new();
 
-    public Action<RequestMessage>? OnAction;
-
+    /// <summary>
+    /// サーバーパイプを開く
+    /// </summary>
+    /// <returns></returns>
     public bool OpenPipe()
     {
         if (_pipeTask is not null)
@@ -29,72 +33,67 @@ public class ServerPipe(MyProcesses process)
         return true;
     }
 
-    public async Task<bool> ClosePipe()
+    /// <summary>
+    /// サーバーパイプを閉じる
+    /// </summary>
+    /// <returns></returns>
+    public bool ClosePipe()
     {
         if (_pipeTask is null)
             return true;
 
-        return await _clientPipe.SendRequestMessageAsync(_process, new RequestMessage(CloseCmd));
+        return Task.Run(async () => await _clientPipe.SendRequestMessageAsync(_process, new RequestMessage(CloseCmd))).Result;
     }
 
     private async Task PipeThread()
     {
-        NamedPipeServerStream? pipeServer = null;
-
         while (true)
         {
             try
             {
-                // 同じパイプに対しての接続は1件まで
-                using (pipeServer = new NamedPipeServerStream(_pipeName, PipeDirection.InOut, PipeNumber))
+                using var serverPipe = new NamedPipeServerStream(_pipeName, PipeDirection.InOut, PipeNumber);
+                await serverPipe.WaitForConnectionAsync();
+
+                var stream = new StreamString(serverPipe);
+                var readString = stream.ReadString();
+
+                try
                 {
+                    var rowRequest = JsonSerializer.Deserialize<RowRequestMessage>(readString);
 
-                    await pipeServer.WaitForConnectionAsync();
+                    if (rowRequest is null || OnAction is null)
+                        continue;
 
-                    var stream = new StreamString(pipeServer);
+                    var request = new RequestMessage(rowRequest.Cmd, rowRequest.Args);
 
-                    var readString = stream.ReadString();
+                    // Closeコマンドを受信したらパイプスレッドを終了する
+                    if (request.Cmd == CloseCmd)
+                        return;
 
-                    try
+                    // Checkコマンドを受信したら応答だけする
+                    if (request.Cmd == CheckCmd)
                     {
-                        var rowRequest = JsonSerializer.Deserialize<RowRequestMessage>(readString);
-
-                        if (rowRequest is null || OnAction is null)
-                            continue;
-
-                        var request = new RequestMessage(rowRequest.Cmd, rowRequest.Args);
-
-                        if (request.Cmd == CloseCmd)
-                            return;
-
-                        if (request.Cmd == CheckCmd)
-                        {
-                            stream.WriteString(JsonSerializer.Serialize(new ResponseMessage() { ReturnCode = 0 }));
-                            continue;
-                        }
-
-                        if (request.Cmd == TerminateCmd)
-                        {
-                            stream.WriteString(JsonSerializer.Serialize(new ResponseMessage() { ReturnCode = 0 }));
-                        }
-
-                        OnAction(request);
-                    }
-                    catch (Exception)
-                    {
+                        stream.WriteString(new ResponseMessage() { ReturnCode = 0 }.Serialize());
                         continue;
                     }
+
+                    // Terminateコマンドを受信したら応答だけして、終了処理はコールバック関数で処理する
+                    if (request.Cmd == TerminateCmd)
+                    {
+                        stream.WriteString(new ResponseMessage() { ReturnCode = 0 }.Serialize());
+                    }
+
+                    OnAction(request);
+                }
+                catch (Exception)
+                {
+                    continue;
                 }
             }
             catch (IOException ofex)
             {
                 // クライアントが切断
-                Console.WriteLine("受信：クライアント側が切断しました");
                 Console.WriteLine(ofex.Message);
-            }
-            finally
-            {
-                Console.WriteLine("受信：パイプ終了");
             }
         }
     }

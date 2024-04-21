@@ -7,12 +7,13 @@ public partial class App : System.Windows.Application
     private Mutex? _mutex;
     private Window? _window;
 
-    private void Application_Startup(object sender, System.Windows.StartupEventArgs e)
+    private void Application_Startup(object sender, StartupEventArgs e)
     {
         _mutex = new Mutex(false, "MagicSettings.KeyBindingListener");
 
         if (!_mutex.WaitOne(0, false))
         {
+            // すでにプロセスが起動している場合は終了する
             _mutex.Close();
             _mutex = null;
 

@@ -2,6 +2,9 @@
 
 namespace KeyBindingListener.Helpers;
 
+/// <summary>
+/// アンマネージコードをラップしたクラス
+/// </summary>
 internal static class NativeMethods
 {
     public const int WH_KEYBOARD_LL = 0x0D;

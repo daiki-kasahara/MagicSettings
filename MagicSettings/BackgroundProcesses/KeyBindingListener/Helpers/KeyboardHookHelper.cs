@@ -4,6 +4,9 @@ using KeyBindingListener.Events;
 
 namespace KeyBindingListener.Helpers;
 
+/// <summary>
+/// キーボードフックを開始・終了するクラス
+/// </summary>
 internal class KeyboardHookHelper
 {
     // キーボードイベントハンドラ
@@ -16,6 +19,9 @@ internal class KeyboardHookHelper
     // フック時のコールバック関数
     private NativeMethods.HookCallback? _callback = null;
 
+    /// <summary>
+    /// すべてのキーボードイベントをフックする
+    /// </summary>
     public void Hook()
     {
         _callback = CallbackProc;
@@ -33,12 +39,22 @@ internal class KeyboardHookHelper
        );
     }
 
+    /// <summary>
+    /// フックの終了
+    /// </summary>
     public void UnHook()
     {
         NativeMethods.UnhookWindowsHookEx(_hookHandle);
         _hookHandle = IntPtr.Zero;
     }
 
+    /// <summary>
+    /// キーボードのコールバック
+    /// </summary>
+    /// <param name="nCode"></param>
+    /// <param name="wParam"></param>
+    /// <param name="lParam"></param>
+    /// <returns></returns>
     private IntPtr CallbackProc(int nCode, IntPtr wParam, IntPtr lParam)
     {
         var args = new KeyboardHookEventArgs();

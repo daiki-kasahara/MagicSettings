@@ -3,11 +3,19 @@ using KeyBindingListener.Events;
 
 namespace KeyBindingListener.Services;
 
+/// <summary>
+/// キーボードイベントのメイン処理
+/// </summary>
 internal class KeyHookService
 {
     private static bool IsWinKey = false;
     private static bool IsAltKey = false;
 
+    /// <summary>
+    /// キーダウンイベント発火時の処理
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="ea">キー情報</param>
     public void OnKeyDown(object? _, KeyboardHookEventArgs ea)
     {
         switch (ea.Key)
@@ -17,7 +25,7 @@ internal class KeyHookService
                     IsWinKey = true;
                     break;
                 }
-            case Keys.LMenu:
+            case Keys.LMenu or Keys.RMenu:
                 {
                     IsAltKey = true;
                     break;
@@ -43,6 +51,11 @@ internal class KeyHookService
         ea.RetCode = 0;
     }
 
+    /// <summary>
+    /// キーボードアップイベント発火時の処理
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="ea">キー情報</param>
     public void OnKeyUp(object? _, KeyboardHookEventArgs ea)
     {
         switch (ea.Key)
@@ -52,7 +65,7 @@ internal class KeyHookService
                     IsWinKey = false;
                     break;
                 }
-            case Keys.Alt:
+            case Keys.LMenu or Keys.RMenu:
                 {
                     IsAltKey = false;
                     break;
