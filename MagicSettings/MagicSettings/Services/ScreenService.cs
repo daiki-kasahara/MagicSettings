@@ -30,6 +30,8 @@ internal class ScreenService : IScreenService
 
     public async Task<bool> SetEnabledBlueLightBlockingAsync(bool value)
     {
+        await _screenRepository.SaveAsync(value);
+
         // プロセス起動
         if (value)
         {
@@ -40,8 +42,6 @@ internal class ScreenService : IScreenService
         {
             await _controller.TerminateAsync(MyProcesses.ScreenController);
         }
-
-        await _screenRepository.SaveAsync(value);
         return true;
     }
 }
