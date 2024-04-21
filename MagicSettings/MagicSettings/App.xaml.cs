@@ -71,12 +71,14 @@ public partial class App : Application
         services.AddTransient<MainWindowViewModel>();
         services.AddTransient<SettingsPageViewModel>();
         services.AddTransient<ScreenPageViewModel>();
+        services.AddTransient<KeyBindingPageViewModel>();
 
         // Add Model
         services.AddTransient<IThemeService, ThemeService>();
         services.AddTransient<IScreenRepository, ScreenRepository>();
         services.AddTransient<IThemeRepository, ThemeRepository>();
         services.AddTransient<IScreenService, ScreenService>();
+        services.AddTransient<IKeyBindingService, KeyBindingService>();
         services.AddTransient<IProcessController, ProcessController>();
 
         return services.BuildServiceProvider();

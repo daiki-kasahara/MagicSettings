@@ -10,6 +10,7 @@
 
     <Grid>
         <!--Todo: 仮-->
-        <TextBlock Text="KeyBinding"/>
+        <ToggleSwitch Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="0"
+                      Toggled="KeyBindingToggled"/>
     </Grid>
 </Page>
