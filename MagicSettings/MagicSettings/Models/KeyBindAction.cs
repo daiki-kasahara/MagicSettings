@@ -1,17 +1,39 @@
-﻿using MagicSettings.Domains;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
+using MagicSettings.Domains;
 using Windows.System;
 
 namespace MagicSettings.Models;
 
-internal class KeyBindAction
+internal partial class KeyBindAction : ObservableObject
 {
-    public VirtualKey VirtualKey { get; set; }
+    [ObservableProperty]
+    private VirtualKey _virtualKey;
 
-    public KeyboardActionType? ActionType { get; set; }
+    [ObservableProperty]
+    private KeyboardActionType? _actionType;
 
-    public bool IsEnabled { get; set; }
+    [ObservableProperty]
+    private bool _isEnabled;
 
-    public string? ProgramPath { get; set; }
+    [ObservableProperty]
+    private string? _programPath;
 
-    public string? UrlPath { get; set; }
+    [ObservableProperty]
+    private string? _urlPath;
+
+    #region Converter
+
+    public string ActionTextConverter(KeyboardActionType? actionType, string? programPath, string? url)
+    {
+        return actionType switch
+        {
+            KeyboardActionType.A => $"{actionType}",
+            KeyboardActionType.StartProgram => $"{actionType}{Environment.NewLine}{programPath}",
+            KeyboardActionType.OpenUrl => $"{actionType}{Environment.NewLine}{url}",
+            _ => $"{actionType}",
+        };
+    }
+
+    #endregion
 }

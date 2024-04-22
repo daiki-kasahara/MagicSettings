@@ -1,8 +1,8 @@
 using System;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI.Controls;
 using MagicSettings.Models;
 using MagicSettings.ViewModels;
+using MagicSettings.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -12,37 +12,12 @@ namespace MagicSettings.Views;
 
 public sealed partial class KeyboardPage : Page
 {
-    public ICommand AddCommand => new RelayCommand(AddAsync);
-
-    public ICommand UpdateCommand => new RelayCommand(Update);
-
     private readonly KeyboardPageViewModel _viewModel;
 
     public KeyboardPage()
     {
         this.InitializeComponent();
         _viewModel = App.Provider.GetRequiredService<KeyboardPageViewModel>();
-    }
-
-    private async void AddAsync()
-    {
-        if (KeyBindDialog.DataContext is not KeyBindAction newAction)
-            return;
-
-        await _viewModel.AddNewAction(newAction);
-        KeyBindDialog.Hide();
-    }
-
-    private async void Update()
-    {
-        if (KeyBindDialog.DataContext is not KeyBindAction newAction)
-            return;
-
-        if (KeyBindDialog.Tag is not KeyBindAction oldAction)
-            return;
-
-        await _viewModel.UpdateAction(oldAction, newAction);
-        KeyBindDialog.Hide();
     }
 
     private async void PageLoadedAsync(object _, RoutedEventArgs __) => await _viewModel.InitializeAsync();
@@ -55,20 +30,91 @@ public sealed partial class KeyboardPage : Page
         await _viewModel.SetEnabledKeyBindingAsync(toggleSwitch.IsOn);
     }
 
-    private async void NewKeyBindButton_Click(object sender, RoutedEventArgs e)
+    private async void AddKeyBindButton_Click(object sender, RoutedEventArgs e)
     {
         var resourceLoader = new ResourceLoader();
-        KeyBindDialog.Title = resourceLoader.GetString("KeyBindDialog_Add_Title");
-        KeyBindDialog.DataContext = new KeyBindAction();
-        KeyBindDialog.Tag = string.Empty;
 
-        KeyBindDialog.PrimaryButtonText = resourceLoader.GetString("KeyBindDialog_Add");
-        KeyBindDialog.PrimaryButtonCommand = AddCommand;
-        await KeyBindDialog.ShowAsync();
+        var dialog = new ContentDialog
+        {
+            Content = App.Provider.GetRequiredService<KeyBindEditor>(),
+            CloseButtonText = resourceLoader.GetString("KeyBindDialog_Cancel"),
+            PrimaryButtonText = resourceLoader.GetString("KeyBindDialog_Add"),
+            PrimaryButtonStyle = (Style)Application.Current.Resources["AccentButtonStyle"],
+            RequestedTheme = this.ActualTheme,
+            Title = resourceLoader.GetString("KeyBindDialog_Add_Title"),
+            XamlRoot = this.XamlRoot,
+        };
+
+        var ret = await dialog.ShowAsync();
+
+        if (ret != ContentDialogResult.Primary)
+            return;
+
+        if (dialog.Content is not KeyBindEditor keyBindEditor)
+            return;
+
+        var newAction = new KeyBindAction()
+        {
+            ActionType = keyBindEditor.ViewModel.Action,
+            IsEnabled = true,
+            VirtualKey = keyBindEditor.ViewModel.Key,
+            ProgramPath = keyBindEditor.ViewModel.ProgramPath,
+            UrlPath = keyBindEditor.ViewModel.UrlPath,
+        };
+
+        await _viewModel.AddNewActionAsync(newAction);
     }
 
-    private void KeyBindDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+    private async void UpdateKeyBindButton_Click(object sender, RoutedEventArgs e)
     {
+        if (sender is not SettingsCard settingsCard || settingsCard.DataContext is not KeyBindAction updateAction)
+            return;
 
+        var resourceLoader = new ResourceLoader();
+        var content = App.Provider.GetRequiredService<KeyBindEditor>();
+
+        content.ViewModel.Action = updateAction.ActionType ?? Domains.KeyboardActionType.A;
+        content.ViewModel.Key = updateAction.VirtualKey;
+        content.ViewModel.ProgramPath = updateAction.ProgramPath ?? string.Empty;
+        content.ViewModel.UrlPath = updateAction.UrlPath ?? string.Empty;
+        content.ViewModel.IsEnabledKeyCustom = false;
+
+        var dialog = new ContentDialog
+        {
+            Content = content,
+            CloseButtonText = resourceLoader.GetString("KeyBindDialog_Cancel"),
+            PrimaryButtonText = resourceLoader.GetString("KeyBindDialog_Update"),
+            PrimaryButtonStyle = (Style)Application.Current.Resources["AccentButtonStyle"],
+            RequestedTheme = this.ActualTheme,
+            Title = resourceLoader.GetString("KeyBindDialog_Update_Title"),
+            XamlRoot = this.XamlRoot,
+        };
+
+        var ret = await dialog.ShowAsync();
+
+        if (ret != ContentDialogResult.Primary)
+            return;
+
+        if (dialog.Content is not KeyBindEditor keyBindEditor)
+            return;
+
+        var newAction = new KeyBindAction()
+        {
+            ActionType = keyBindEditor.ViewModel.Action,
+            IsEnabled = true,
+            VirtualKey = keyBindEditor.ViewModel.Key,
+            ProgramPath = keyBindEditor.ViewModel.ProgramPath,
+            UrlPath = keyBindEditor.ViewModel.UrlPath,
+        };
+
+        await _viewModel.UpdateActionAsync(newAction);
+    }
+
+    private async void RemoveKeyBindButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not MenuFlyoutItem menuFlyoutItem || menuFlyoutItem.DataContext is not KeyBindAction action)
+            return;
+
+        await _viewModel.RemoveActionAsync(action.VirtualKey);
     }
 }

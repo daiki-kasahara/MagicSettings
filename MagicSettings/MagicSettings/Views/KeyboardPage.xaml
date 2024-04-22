@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tkcontrols="using:CommunityToolkit.WinUI.Controls"
     xmlns:models="using:MagicSettings.Models"
-    xmlns:ctm="using:MagicSettings.Views.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     Loaded="PageLoadedAsync"
     mc:Ignorable="d">
@@ -22,41 +21,47 @@
                                  HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}">
             <Button x:Uid="Keyboard_KeyBingind_New"
                     HorizontalAlignment="Right"
-                    Click="NewKeyBindButton_Click"
+                    Click="AddKeyBindButton_Click"
                     Style="{StaticResource AccentButtonStyle}" />
         </tkcontrols:SettingsCard>
         <ItemsControl HorizontalAlignment="Stretch"
                       AutomationProperties.Name="{Binding ElementName=KeyBindingSetting, Path=Header}"
                       IsTabStop="False"
-                      ItemsSource="{x:Bind _viewModel.KeyActions, Mode=TwoWay}">
+                      ItemsSource="{x:Bind _viewModel.KeyActions, Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="models:KeyBindAction">
-                    <tkcontrols:SettingsCard Margin="0,0,0,2"
+                    <tkcontrols:SettingsCard Margin="0,0,0,5"
+                                             Click="UpdateKeyBindButton_Click"
                                              IsActionIconVisible="False"
                                              IsClickEnabled="True">
                         <tkcontrols:SettingsCard.Header>
-                            <TextBlock Text="{x:Bind ActionType, Mode=OneWay}"/>
+                            <TextBlock Text="{x:Bind VirtualKey, Mode=OneWay}"/>
                         </tkcontrols:SettingsCard.Header>
+                        <tkcontrols:SettingsCard.Description>
+                            <TextBlock Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, UrlPath), Mode=OneWay}"/>
+                        </tkcontrols:SettingsCard.Description>
                         <tkcontrols:SettingsCard.Resources>
                             <x:Double x:Key="SettingsCardLeftIndention">42</x:Double>
                             <x:Double x:Key="SettingsCardActionButtonWidth">0</x:Double>
                         </tkcontrols:SettingsCard.Resources>
-                        <StackPanel Orientation="Horizontal" Spacing="4">
-                            <ToggleSwitch x:Uid="Enable_ColorFormat"
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleSwitch x:Uid="Keyboard_KeyBinding_IsEnabled"
                                           IsOn="{x:Bind IsEnabled, Mode=OneWay}"
-                                          OffContent="" OnContent="" />
+                                          OffContent="" OnContent="" Margin="0,0,15,0"/>
 
                             <Button x:Uid="More_Options_Button"
-                                    Grid.Column="1"
                                     VerticalAlignment="Center"
-                                    Content="&#xE712;"
                                     Background="Transparent">
                                 <Button.Flyout>
                                     <MenuFlyout>
                                         <MenuFlyoutItem x:Uid="Keyboard_KeyBinding_RemoveItem"
+                                                        Click="RemoveKeyBindButton_Click"
                                                         Icon="{ui:FontIcon Glyph=&#xE74D;}" />
                                     </MenuFlyout>
                                 </Button.Flyout>
+                                <Button.Content>
+                                    <FontIcon Glyph="&#xE712;"/>
+                                </Button.Content>
                                 <ToolTipService.ToolTip>
                                     <TextBlock x:Uid="More_Options_ButtonTooltip" />
                                 </ToolTipService.ToolTip>
@@ -66,42 +71,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
-        <ContentDialog x:Name="KeyBindDialog"
-                       x:Uid="KeyBindDialog"
-                       Closed="KeyBindDialog_Closed"
-                       PrimaryButtonStyle="{ThemeResource AccentButtonStyle}">
-            <ContentDialog.DataContext>
-                <models:KeyBindAction />
-            </ContentDialog.DataContext>
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" HorizontalScrollMode="Auto">
-                <ctm:KeyBindEditor/>
-            </ScrollViewer>
-        </ContentDialog>
-        <!--<Expander IsExpanded="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-            <Expander.Header>
-                <Grid Padding="0,15,0,15">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0" x:Uid="Keyboard_KeyBinding" VerticalAlignment="Center"/>
-                    <ToggleSwitch Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="0"
-                                  IsOn="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
-                                  IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
-                                  Toggled="KeyBindingToggled"/>
-                </Grid>
-            </Expander.Header>
-            <Expander.Content>
-                <Grid Margin="20,0,45,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                </Grid>
-            </Expander.Content>
-        </Expander>-->
     </StackPanel>
 </Page>

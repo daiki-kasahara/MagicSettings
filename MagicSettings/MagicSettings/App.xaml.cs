@@ -6,6 +6,7 @@ using MagicSettings.Repositories;
 using MagicSettings.Repositories.Contracts;
 using MagicSettings.Services;
 using MagicSettings.ViewModels;
+using MagicSettings.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -26,6 +27,8 @@ public partial class App : Application
     // メインウィンドウ
     private static Window? _window;
     private static DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+    public static nint GetWindowHandle() => WinRT.Interop.WindowNative.GetWindowHandle(_window);
 
     public App()
     {
@@ -66,12 +69,14 @@ public partial class App : Application
 
         // Add View
         services.AddTransient<MainWindow>();
+        services.AddTransient<KeyBindEditor>();
 
         // Add View Model
         services.AddTransient<MainWindowViewModel>();
         services.AddTransient<ScreenPageViewModel>();
         services.AddTransient<SettingsPageViewModel>();
         services.AddTransient<KeyboardPageViewModel>();
+        services.AddTransient<KeyBindEditorViewModel>();
 
         // Add Model
         services.AddTransient<IKeyboardBindingRepository, KeyboardBindingRepository>();
