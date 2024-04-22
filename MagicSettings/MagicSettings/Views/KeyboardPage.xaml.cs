@@ -123,6 +123,6 @@ public sealed partial class KeyboardPage : Page
         if (sender is not ToggleSwitch toggleSwitch || toggleSwitch.DataContext is not KeyBindAction action)
             return;
 
-        await _viewModel.UpdateActionAsync(action.VirtualKey, toggleSwitch.IsOn);
+        await _viewModel.UpdateActionEnabledAsync(action.VirtualKey, toggleSwitch.IsOn);
     }
 }
