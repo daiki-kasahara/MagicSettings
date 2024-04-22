@@ -56,7 +56,7 @@
                                 <tkcontrols:SettingsCard.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <Border BorderThickness="2"
-                                                BorderBrush="{Binding ElementName=KeyBindItemHeader, Path=Foreground}"
+                                                BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}"
                                                 CornerRadius="8"
                                                 Margin="0,0,20,0"
                                                 Width="40" Height="40">
