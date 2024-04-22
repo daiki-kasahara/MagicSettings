@@ -23,10 +23,11 @@ internal sealed partial class KeyBindEditor : UserControl
 
     private void KeyInputKeyDown(object sender, KeyRoutedEventArgs e)
     {
-        if (e.Key is VirtualKey.LeftWindows or VirtualKey.RightWindows or VirtualKey.LeftMenu or VirtualKey.RightMenu)
+        if (!Enum.IsDefined(typeof(VKeys), (int)e.Key) ||
+            e.Key is VirtualKey.LeftWindows or VirtualKey.RightWindows or VirtualKey.LeftMenu or VirtualKey.RightMenu)
             return;
 
-        ViewModel.Key = e.Key;
+        ViewModel.Key = (VKeys)e.Key;
     }
 
     private async void PickAFileButton_Click(object sender, RoutedEventArgs e)

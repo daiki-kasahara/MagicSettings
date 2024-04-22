@@ -21,10 +21,11 @@
     <FileVersion>1.0.100.0</FileVersion>
     <BaseOutputPath>$(ProjectDir)bin\$(PlatformShortName)</BaseOutputPath>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-    <UseWindowsForms>True</UseWindowsForms>
+    <UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\MagicSettings.Domaines\MagicSettings.Domains.csproj" />
     <ProjectReference Include="..\..\Libraries\ProcessManager\ProcessManager.csproj" />
   </ItemGroup>
 

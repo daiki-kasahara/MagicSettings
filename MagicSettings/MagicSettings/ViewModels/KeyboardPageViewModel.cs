@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using MagicSettings.Contracts.Services;
+using MagicSettings.Domains;
 using MagicSettings.Models;
-using Windows.System;
 
 namespace MagicSettings.ViewModels;
 
@@ -36,7 +36,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
             {
                 KeyActions.Add(new KeyBindAction()
                 {
-                    VirtualKey = (VirtualKey)item.Key,
+                    VirtualKey = (VKeys)item.Key,
                     ActionType = item.Value.ActionType,
                     IsEnabled = item.Value.IsEnabled,
                     ProgramPath = item.Value.ProgramPath,
@@ -94,7 +94,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
         }
     }
 
-    public async Task UpdateActionAsync(VirtualKey key, bool isEnabled)
+    public async Task UpdateActionAsync(VKeys key, bool isEnabled)
     {
         var target = KeyActions?.FirstOrDefault(x => x.VirtualKey == key);
 
@@ -119,7 +119,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
         }
     }
 
-    public async Task RemoveActionAsync(VirtualKey key)
+    public async Task RemoveActionAsync(VKeys key)
     {
         var target = KeyActions?.FirstOrDefault(x => x.VirtualKey == key);
         if (target is null)

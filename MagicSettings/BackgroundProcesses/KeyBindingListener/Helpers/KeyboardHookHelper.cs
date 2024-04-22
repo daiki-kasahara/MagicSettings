@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using KeyBindingListener.Events;
+using MagicSettings.Domains;
 
 namespace KeyBindingListener.Helpers;
 
@@ -58,7 +59,7 @@ internal class KeyboardHookHelper
     private IntPtr CallbackProc(int nCode, IntPtr wParam, IntPtr lParam)
     {
         var args = new KeyboardHookEventArgs();
-        var key = (Keys)(short)Marshal.ReadInt32(lParam);
+        var key = (VKeys)(short)Marshal.ReadInt32(lParam);
         args.Key = key;
 
         int wp;

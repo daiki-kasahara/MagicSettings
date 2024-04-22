@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using KeyBindingListener.Events;
+using MagicSettings.Domains;
 
 namespace KeyBindingListener.Services;
 
@@ -20,17 +21,17 @@ internal class KeyHookService
     {
         switch (ea.Key)
         {
-            case Keys.LWin or Keys.RWin:
+            case VKeys.LeftWindows or VKeys.RightWindows:
                 {
                     IsWinKey = true;
                     break;
                 }
-            case Keys.LMenu or Keys.RMenu:
+            case VKeys.LeftMenu or VKeys.RightMenu:
                 {
                     IsAltKey = true;
                     break;
                 }
-            case Keys.D:
+            case VKeys.D:
                 {
                     if (IsWinKey && IsAltKey)
                         Process.Start(new ProcessStartInfo
@@ -60,12 +61,12 @@ internal class KeyHookService
     {
         switch (ea.Key)
         {
-            case Keys.LWin or Keys.RWin:
+            case VKeys.LeftWindows or VKeys.RightWindows:
                 {
                     IsWinKey = false;
                     break;
                 }
-            case Keys.LMenu or Keys.RMenu:
+            case VKeys.LeftMenu or VKeys.RightMenu:
                 {
                     IsAltKey = false;
                     break;

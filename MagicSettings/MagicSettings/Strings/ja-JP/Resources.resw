@@ -133,7 +133,7 @@
     <value>キャンセル</value>
   </data>
   <data name="KeyBindDialog_Key.Text" xml:space="preserve">
-    <value>キー</value>
+    <value>キー (A~Zのみ)</value>
   </data>
   <data name="KeyBindDialog_OpenFile.Content" xml:space="preserve">
     <value>ファイルを開く</value>

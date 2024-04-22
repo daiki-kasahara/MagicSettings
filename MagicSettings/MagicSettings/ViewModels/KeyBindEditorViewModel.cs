@@ -1,13 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MagicSettings.Domains;
-using Windows.System;
 
 namespace MagicSettings.ViewModels;
 
 internal partial class KeyBindEditorViewModel : ObservableObject
 {
     [ObservableProperty]
-    private VirtualKey _key;
+    private VKeys _key = VKeys.A;
 
     [ObservableProperty]
     private KeyboardActionType _action;
