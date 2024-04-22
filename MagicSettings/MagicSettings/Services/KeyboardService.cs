@@ -26,4 +26,10 @@ internal class KeyboardService(IKeyboardBindingRepository keyboardRepository, IP
         return isEnabled ? await _controller.LaunchAsync(MyProcesses.KeyBindingListener) :
             await _controller.TerminateAsync(MyProcesses.KeyBindingListener);
     }
+
+    public async Task<bool> DeleteKeyBindingActionAsync(int key)
+    {
+        await _keyboardRepository.DeleteAsync(key);
+        return true;
+    }
 }

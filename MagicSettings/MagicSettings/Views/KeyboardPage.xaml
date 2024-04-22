@@ -16,9 +16,18 @@
         <TextBlock x:Uid="Keyboard_Title" FontSize="28" FontWeight="Bold"/>
         <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.HasError, Mode=TwoWay}" Margin="0,10,0,10"/>
 
+        <tkcontrols:SettingsCard x:Uid="Keyboard_IsEnabledKeyBindingTitle" HeaderIcon="{ui:FontIcon Glyph=&#xE945;}">
+            <ToggleSwitch x:Uid="Keyboard_IsEnabledKeyBinding"
+                          IsOn="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
+                          Toggled="KeyBindingToggled"/>
+        </tkcontrols:SettingsCard>
+
+        <Border Height="1" BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderThemeBrush}" Margin="5,25" />
+
         <tkcontrols:SettingsCard x:Name="KeyBindingSetting"
                                  x:Uid="Keyboard_KeyBinding_Enabled"
-                                 HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}">
+                                 HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}"
+                                 Margin="0,0,0,2">
             <Button x:Uid="Keyboard_KeyBingind_New"
                     HorizontalAlignment="Right"
                     Click="AddKeyBindButton_Click"
@@ -30,7 +39,7 @@
                       ItemsSource="{x:Bind _viewModel.KeyActions, Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate x:DataType="models:KeyBindAction">
-                    <tkcontrols:SettingsCard Margin="0,0,0,5"
+                    <tkcontrols:SettingsCard Margin="0,0,0,2"
                                              Click="UpdateKeyBindButton_Click"
                                              IsActionIconVisible="False"
                                              IsClickEnabled="True">
@@ -47,6 +56,7 @@
                         <StackPanel Orientation="Horizontal">
                             <ToggleSwitch x:Uid="Keyboard_KeyBinding_IsEnabled"
                                           IsOn="{x:Bind IsEnabled, Mode=OneWay}"
+                                          Toggled="IsEnabledKeyBindItem_Toggled"
                                           OffContent="" OnContent="" Margin="0,0,15,0"/>
 
                             <Button x:Uid="More_Options_Button"

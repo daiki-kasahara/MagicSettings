@@ -9,4 +9,6 @@ public interface IKeyboardBindingRepository
     public Task SaveAsync(int key, KeyboardAction action);
 
     public Task SaveAsync(bool isEnabled);
+
+    public Task DeleteAsync(int key);
 }

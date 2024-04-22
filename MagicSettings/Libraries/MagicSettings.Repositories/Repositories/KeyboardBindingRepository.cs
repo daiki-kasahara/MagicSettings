@@ -34,8 +34,7 @@ public class KeyboardBindingRepository : IKeyboardBindingRepository
 
             var keyActions = await GetAsync();
 
-            if (keyActions.KeyboardActions is null)
-                return;
+            keyActions.KeyboardActions ??= [];
 
             if (!keyActions.KeyboardActions.TryAdd(key, action))
             {
@@ -59,6 +58,28 @@ public class KeyboardBindingRepository : IKeyboardBindingRepository
 
             var keyActions = await GetAsync();
             keyActions.IsEnabledKeyboardBinding = isEnabled;
+
+            await using var createStream = File.Create(FilePath);
+            await JsonSerializer.SerializeAsync(createStream, keyActions, JsonOptionHelper.GetOption());
+        }
+        catch (Exception)
+        {
+            // 例外の場合、何もしない
+        }
+    }
+
+    public async Task DeleteAsync(int key)
+    {
+        try
+        {
+            Directory.CreateDirectory(Directory.GetParent(FilePath)!.FullName);
+
+            var keyActions = await GetAsync();
+
+            if (keyActions.KeyboardActions is null)
+                return;
+
+            _ = keyActions.KeyboardActions.Remove(key);
 
             await using var createStream = File.Create(FilePath);
             await JsonSerializer.SerializeAsync(createStream, keyActions, JsonOptionHelper.GetOption());

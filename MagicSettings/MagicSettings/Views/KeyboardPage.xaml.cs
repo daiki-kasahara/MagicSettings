@@ -117,4 +117,12 @@ public sealed partial class KeyboardPage : Page
 
         await _viewModel.RemoveActionAsync(action.VirtualKey);
     }
+
+    private async void IsEnabledKeyBindItem_Toggled(object sender, RoutedEventArgs e)
+    {
+        if (sender is not ToggleSwitch toggleSwitch || toggleSwitch.DataContext is not KeyBindAction action)
+            return;
+
+        await _viewModel.UpdateActionAsync(action.VirtualKey, toggleSwitch.IsOn);
+    }
 }

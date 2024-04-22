@@ -127,7 +127,7 @@
     <value>追加</value>
   </data>
   <data name="KeyBindDialog_Add_Title" xml:space="preserve">
-    <value>新しいキーバインドを追加する</value>
+    <value>新しいキーバインディングを追加する</value>
   </data>
   <data name="KeyBindDialog_Cancel" xml:space="preserve">
     <value>キャンセル</value>
@@ -150,14 +150,23 @@
   <data name="KeyBindDialog_Url.Text" xml:space="preserve">
     <value>URL</value>
   </data>
+  <data name="Keyboard_IsEnabledKeyBinding.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>キーバインディングを有効にする</value>
+  </data>
+  <data name="Keyboard_IsEnabledKeyBindingTitle.Description" xml:space="preserve">
+    <value>有効にすると、下記で設定したキーバインディングが実行されるようになります。</value>
+  </data>
+  <data name="Keyboard_IsEnabledKeyBindingTitle.Header" xml:space="preserve">
+    <value>キーバインディングを有効にする</value>
+  </data>
   <data name="Keyboard_KeyBinding_Enabled.Description" xml:space="preserve">
-    <value>Win キー + Alt キー + 指定したキーでキーバインドを作成する</value>
+    <value>Win キー + Alt キー + 指定したキーでキーバインディングを作成する。</value>
   </data>
   <data name="Keyboard_KeyBinding_Enabled.Header" xml:space="preserve">
     <value>キーバインディング</value>
   </data>
   <data name="Keyboard_KeyBinding_IsEnabled.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
-    <value>キーバインドを有効にする</value>
+    <value>このキーバインドを有効にする</value>
   </data>
   <data name="Keyboard_KeyBinding_RemoveItem.Text" xml:space="preserve">
     <value>削除</value>

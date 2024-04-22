@@ -8,7 +8,7 @@ using Windows.System;
 
 namespace MagicSettings.ViewModels;
 
-internal partial class KeyboardPageViewModel : ObservableObject
+internal partial class KeyboardPageViewModel(IKeyboardService service) : ObservableObject
 {
     public ObservableCollection<KeyBindAction> KeyActions = [];
 
@@ -21,12 +21,7 @@ internal partial class KeyboardPageViewModel : ObservableObject
     [ObservableProperty]
     private bool _canExecute = false;
 
-    private readonly IKeyboardService _keyboardService;
-
-    public KeyboardPageViewModel(IKeyboardService service)
-    {
-        _keyboardService = service;
-    }
+    private readonly IKeyboardService _keyboardService = service;
 
     public async Task InitializeAsync()
     {
@@ -51,23 +46,24 @@ internal partial class KeyboardPageViewModel : ObservableObject
             _ = KeyActions.OrderBy(x => x.VirtualKey.ToString());
         }
 
-        // Todo: 動作確認用 消す
-        KeyActions.Add(new KeyBindAction()
-        {
-            ActionType = Domains.KeyboardActionType.A,
-            IsEnabled = true,
-            VirtualKey = VirtualKey.LeftButton,
-            ProgramPath = "aaa",
-            UrlPath = "bbb"
-        });
-
         CanExecute = true;
     }
 
     public async Task AddNewActionAsync(KeyBindAction keyBindAction)
     {
-        KeyActions?.Add(keyBindAction);
-        // Todo: ファイル保存処理
+        var ret = await _keyboardService.SetKeyBindingActionAsync((int)keyBindAction.VirtualKey,
+            new()
+            {
+                ActionType = keyBindAction.ActionType,
+                IsEnabled = keyBindAction.IsEnabled,
+                ProgramPath = keyBindAction.ProgramPath,
+                UrlPath = keyBindAction.UrlPath
+            });
+
+        if (ret)
+        {
+            KeyActions?.Add(keyBindAction);
+        }
     }
 
     public async Task UpdateActionAsync(KeyBindAction keyBindAction)
@@ -80,12 +76,47 @@ internal partial class KeyboardPageViewModel : ObservableObject
             return;
         }
 
-        target.ActionType = keyBindAction.ActionType;
-        target.IsEnabled = keyBindAction.IsEnabled;
-        target.ProgramPath = keyBindAction.ProgramPath;
-        target.UrlPath = keyBindAction.UrlPath;
+        var ret = await _keyboardService.SetKeyBindingActionAsync((int)keyBindAction.VirtualKey,
+            new()
+            {
+                ActionType = keyBindAction.ActionType,
+                IsEnabled = keyBindAction.IsEnabled,
+                ProgramPath = keyBindAction.ProgramPath,
+                UrlPath = keyBindAction.UrlPath
+            });
 
-        // Todo: ファイル保存処理
+        if (ret)
+        {
+            target.ActionType = keyBindAction.ActionType;
+            target.IsEnabled = keyBindAction.IsEnabled;
+            target.ProgramPath = keyBindAction.ProgramPath;
+            target.UrlPath = keyBindAction.UrlPath;
+        }
+    }
+
+    public async Task UpdateActionAsync(VirtualKey key, bool isEnabled)
+    {
+        var target = KeyActions?.FirstOrDefault(x => x.VirtualKey == key);
+
+        if (target is null)
+        {
+            // Todo: エラー処理
+            return;
+        }
+
+        var ret = await _keyboardService.SetKeyBindingActionAsync((int)key,
+            new()
+            {
+                ActionType = target.ActionType,
+                IsEnabled = isEnabled,
+                ProgramPath = target.ProgramPath,
+                UrlPath = target.UrlPath
+            });
+
+        if (ret)
+        {
+            target.IsEnabled = isEnabled;
+        }
     }
 
     public async Task RemoveActionAsync(VirtualKey key)
@@ -94,9 +125,10 @@ internal partial class KeyboardPageViewModel : ObservableObject
         if (target is null)
             return;
 
-        KeyActions?.Remove(target);
+        if (KeyActions?.Remove(target) is not true)
+            return;
 
-        // Todo: ファイル保存処理
+        await _keyboardService.DeleteKeyBindingActionAsync((int)key);
     }
 
     public async Task<bool> SetEnabledKeyBindingAsync(bool value)
