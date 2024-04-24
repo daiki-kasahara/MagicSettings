@@ -117,6 +117,78 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionType_MicrosoftStore" xml:space="preserve">
+    <value>Microsoft Storeを起動</value>
+  </data>
+  <data name="ActionType_OpenUrl" xml:space="preserve">
+    <value>Webページを表示</value>
+  </data>
+  <data name="ActionType_ScreenCapture" xml:space="preserve">
+    <value>スクリーンショット</value>
+  </data>
+  <data name="ActionType_Settings" xml:space="preserve">
+    <value>設定アプリの起動</value>
+  </data>
+  <data name="ActionType_SettingsBluetoothDevice" xml:space="preserve">
+    <value>Bluetoothデバイスの設定</value>
+  </data>
+  <data name="ActionType_SettingsCamera" xml:space="preserve">
+    <value>カメラの設定</value>
+  </data>
+  <data name="ActionType_SettingsKeyboard" xml:space="preserve">
+    <value>キーボードの設定</value>
+  </data>
+  <data name="ActionType_SettingsMouse" xml:space="preserve">
+    <value>マウスの設定</value>
+  </data>
+  <data name="ActionType_SettingsNetwork" xml:space="preserve">
+    <value>ネットワークの設定</value>
+  </data>
+  <data name="ActionType_SettingsSystemAppVolume" xml:space="preserve">
+    <value>アプリごとのボリューム設定</value>
+  </data>
+  <data name="ActionType_SettingsSystemBatterySaver" xml:space="preserve">
+    <value>バッテリー節約機能</value>
+  </data>
+  <data name="ActionType_SettingsSystemBatterySaverSettings" xml:space="preserve">
+    <value>バッテリー節約機能の設定</value>
+  </data>
+  <data name="ActionType_SettingsSystemBatteryUse" xml:space="preserve">
+    <value>バッテリーの使用状況</value>
+  </data>
+  <data name="ActionType_SettingsSystemDisplay" xml:space="preserve">
+    <value>ディスプレイ設定</value>
+  </data>
+  <data name="ActionType_SettingsSystemFocusAssist" xml:space="preserve">
+    <value>集中モードの設定</value>
+  </data>
+  <data name="ActionType_SettingsSystemInfo" xml:space="preserve">
+    <value>システム情報を表示</value>
+  </data>
+  <data name="ActionType_SettingsSystemNightMode" xml:space="preserve">
+    <value>ナイトモードの設定</value>
+  </data>
+  <data name="ActionType_SettingsSystemNotification" xml:space="preserve">
+    <value>通知の設定</value>
+  </data>
+  <data name="ActionType_SettingsSystemSound" xml:space="preserve">
+    <value>システムサウンドの設定</value>
+  </data>
+  <data name="ActionType_SettingsSystemSoundDevice" xml:space="preserve">
+    <value>サウンドデバイスの設定</value>
+  </data>
+  <data name="ActionType_SettingsSystemStorage" xml:space="preserve">
+    <value>ストレージ情報を表示</value>
+  </data>
+  <data name="ActionType_SettingsWifi" xml:space="preserve">
+    <value>Wi-Fiの設定</value>
+  </data>
+  <data name="ActionType_SnippingTool" xml:space="preserve">
+    <value>Snipping Toolの起動</value>
+  </data>
+  <data name="ActionType_StartProgram" xml:space="preserve">
+    <value>アプリの起動</value>
+  </data>
   <data name="Error_FailedToSet.Message" xml:space="preserve">
     <value>設定に失敗しました</value>
   </data>

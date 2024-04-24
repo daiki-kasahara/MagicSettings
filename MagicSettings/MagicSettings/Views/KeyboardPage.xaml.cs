@@ -73,7 +73,7 @@ public sealed partial class KeyboardPage : Page
         var resourceLoader = new ResourceLoader();
         var content = App.Provider.GetRequiredService<KeyBindEditor>();
 
-        content.ViewModel.Action = updateAction.ActionType ?? Domains.KeyboardActionType.A;
+        content.ViewModel.Action = updateAction.ActionType ?? Domains.KeyboardActionType.StartProgram;
         content.ViewModel.Key = updateAction.VirtualKey;
         content.ViewModel.ProgramPath = updateAction.ProgramPath ?? string.Empty;
         content.ViewModel.UrlPath = updateAction.UrlPath ?? string.Empty;
@@ -125,4 +125,10 @@ public sealed partial class KeyboardPage : Page
 
         await _viewModel.UpdateActionEnabledAsync(action.VirtualKey, toggleSwitch.IsOn);
     }
+
+    #region Converter
+
+    bool MultiBoolConverter(bool b1, bool b2) => b1 && b2;
+
+    #endregion
 }

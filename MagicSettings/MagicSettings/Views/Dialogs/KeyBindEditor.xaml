@@ -15,7 +15,9 @@
                      Margin="0,5,0,20" IsReadOnly="True" KeyDown="KeyInputKeyDown"/>
 
             <TextBlock x:Uid="KeyBindDialog_Action"/>
-            <ComboBox x:Name="ActionComboBox" Margin="0,5,0,20" SelectedItem="{x:Bind ViewModel.Action, Mode=TwoWay}"/>
+            <ComboBox x:Name="ActionComboBox" Margin="0,5,0,20"
+                      SelectedItem="{x:Bind EnumToStringConverter(ViewModel.Action), Mode=OneWay}"
+                      SelectionChanged="ActionComboBox_SelectionChanged"/>
 
             <StackPanel Margin="0,0,0,20" Visibility="{x:Bind ProgramVisibilityConverter(ViewModel.Action), Mode=OneWay}">
                 <TextBlock x:Uid="KeyBindDialog_Program"/>

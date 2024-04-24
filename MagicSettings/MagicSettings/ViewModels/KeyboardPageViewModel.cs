@@ -201,7 +201,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
 
         if (isSucceeded)
         {
-            KeyBindError = KeyActions.Remove(target) is true;
+            KeyBindError = KeyActions.Remove(target) is not true;
         }
         else
         {

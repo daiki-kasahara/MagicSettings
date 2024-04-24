@@ -1,10 +1,12 @@
 using System;
 using System.Linq;
 using MagicSettings.Domains;
+using MagicSettings.Extensions;
 using MagicSettings.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.Windows.ApplicationModel.Resources;
 using Windows.Storage.Pickers;
 using Windows.System;
 
@@ -18,7 +20,7 @@ internal sealed partial class KeyBindEditor : UserControl
     {
         this.InitializeComponent();
         this.ViewModel = viewModel;
-        this.ActionComboBox.ItemsSource = Enum.GetValues(typeof(KeyboardActionType)).Cast<KeyboardActionType>();
+        this.ActionComboBox.ItemsSource = ViewModel.KeyboardActions.Values;
     }
 
     private void KeyInputKeyDown(object sender, KeyRoutedEventArgs e)
@@ -48,7 +50,17 @@ internal sealed partial class KeyBindEditor : UserControl
         ViewModel.ProgramPath = file.Path;
     }
 
+    private void ActionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is not ComboBox comboBox || comboBox.SelectedItem is not string selectedItem)
+            return;
+
+        ViewModel.Action = ViewModel.KeyboardActions.First(x => x.Value == selectedItem).Key;
+    }
+
     #region Converter
+
+    private string EnumToStringConverter(KeyboardActionType type) => type.ToDisplayString(new ResourceLoader());
 
     private Visibility ProgramVisibilityConverter(KeyboardActionType type) => type is KeyboardActionType.StartProgram ? Visibility.Visible : Visibility.Collapsed;
 

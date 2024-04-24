@@ -24,8 +24,9 @@
 
                 <tkcontrols:SettingsCard x:Uid="Keyboard_IsEnabledKeyBindingTitle" HeaderIcon="{ui:FontIcon Glyph=&#xE945;}">
                     <ToggleSwitch x:Uid="Keyboard_IsEnabledKeyBinding"
-                          IsOn="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
-                          Toggled="KeyBindingToggled"/>
+                                  IsOn="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
+                                  IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
+                                  Toggled="KeyBindingToggled"/>
                 </tkcontrols:SettingsCard>
 
                 <Border Height="1" BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderThemeBrush}" Margin="5,25,5,5" />
@@ -35,7 +36,7 @@
                 <tkcontrols:SettingsCard x:Name="KeyBindingSetting"
                                          x:Uid="Keyboard_KeyBinding_Enabled"
                                          HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}"
-                                         IsEnabled="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
+                                         IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledKeyBinding, _viewModel.CanExecute), Mode=OneWay}"
                                          Margin="0,0,0,2">
                     <Button x:Uid="Keyboard_KeyBingind_New"
                             HorizontalAlignment="Right"
@@ -44,7 +45,7 @@
                 </tkcontrols:SettingsCard>
                 <ItemsControl HorizontalAlignment="Stretch"
                               AutomationProperties.Name="{Binding ElementName=KeyBindingSetting, Path=Header}"
-                              IsEnabled="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
+                              IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledKeyBinding, _viewModel.CanExecute), Mode=OneWay}"
                               IsTabStop="False"
                               ItemsSource="{x:Bind _viewModel.KeyActions, Mode=OneWay}">
                     <ItemsControl.ItemTemplate>
@@ -62,7 +63,7 @@
                                                 Width="40" Height="40">
                                             <TextBlock x:Name="KeyText" Text="{x:Bind VirtualKey, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                         </Border>
-                                        <TextBlock x:Name="KeyBindItemHeader" Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, UrlPath), Mode=OneWay}"/>
+                                        <TextBlock x:Name="KeyBindItemHeader" Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, UrlPath), Mode=OneWay}" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </tkcontrols:SettingsCard.Header>
                                 <tkcontrols:SettingsCard.Resources>
