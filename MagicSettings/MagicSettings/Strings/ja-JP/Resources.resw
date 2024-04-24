@@ -220,7 +220,7 @@
     <value>キーバインドを更新する</value>
   </data>
   <data name="KeyBindDialog_Url.Text" xml:space="preserve">
-    <value>URL</value>
+    <value>URL (http:またはhttps:から始まるURLのみ)</value>
   </data>
   <data name="Keyboard_IsEnabledKeyBinding.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>キーバインディングを有効にする</value>
