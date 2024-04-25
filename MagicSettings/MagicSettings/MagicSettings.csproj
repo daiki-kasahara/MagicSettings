@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.0.240109" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
@@ -32,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BackgroundProcesses\KeyBindingListener\KeyBindingListener.csproj" />
     <ProjectReference Include="..\Libraries\MagicSettings.Domaines\MagicSettings.Domains.csproj" />
     <ProjectReference Include="..\Libraries\MagicSettings.Repositories\MagicSettings.Repositories.csproj" />
     <ProjectReference Include="..\Libraries\ProcessManager\ProcessManager.csproj" />

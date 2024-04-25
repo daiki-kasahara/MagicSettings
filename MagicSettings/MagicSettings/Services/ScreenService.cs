@@ -9,16 +9,10 @@ using ProcessManager.PipeMessage;
 
 namespace MagicSettings.Services;
 
-internal class ScreenService : IScreenService
+internal class ScreenService(IScreenRepository repository, IProcessController controller) : IScreenService
 {
-    private readonly IScreenRepository _screenRepository;
-    private readonly IProcessController _controller;
-
-    public ScreenService(IScreenRepository repository, IProcessController controller)
-    {
-        _screenRepository = repository;
-        _controller = controller;
-    }
+    private readonly IScreenRepository _screenRepository = repository;
+    private readonly IProcessController _controller = controller;
 
     public async Task<ScreenSettings> GetScreenSettingsAsync() => await _screenRepository.GetAsync();
 
@@ -28,20 +22,10 @@ internal class ScreenService : IScreenService
         return await _controller.SendMessageAsync(MyProcesses.ScreenController, new RequestMessage("Update"));
     }
 
-    public async Task<bool> SetEnabledBlueLightBlockingAsync(bool value)
+    public async Task<bool> SetEnabledBlueLightBlockingAsync(bool isEnabled)
     {
-        // プロセス起動
-        if (value)
-        {
-            if (!await _controller.LaunchAsync(MyProcesses.ScreenController))
-                return false;
-        }
-        else
-        {
+        await _screenRepository.SaveAsync(isEnabled);
+        return isEnabled ? await _controller.LaunchAsync(MyProcesses.ScreenController) :
             await _controller.TerminateAsync(MyProcesses.ScreenController);
-        }
-
-        await _screenRepository.SaveAsync(value);
-        return true;
     }
 }

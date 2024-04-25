@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="MagicSettings.Views.Dialogs.KeyBindEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MagicSettings.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer>
+        <StackPanel Margin="5,0" Width="480">
+            <TextBlock x:Uid="KeyBindDialog_Key" />
+            <TextBox x:Name="KeyInput" Text="{x:Bind ViewModel.Key, Mode=OneWay}" IsEnabled="{x:Bind ViewModel.IsEnabledKeyCustom, Mode=OneWay}"
+                     Margin="0,5,0,20" IsReadOnly="True" KeyDown="KeyInputKeyDown"/>
+
+            <TextBlock x:Uid="KeyBindDialog_Action"/>
+            <ComboBox x:Name="ActionComboBox" Margin="0,5,0,20"
+                      SelectedItem="{x:Bind EnumToStringConverter(ViewModel.Action), Mode=OneWay}"
+                      SelectionChanged="ActionComboBox_SelectionChanged"/>
+
+            <StackPanel Margin="0,0,0,20" Visibility="{x:Bind ProgramVisibilityConverter(ViewModel.Action), Mode=OneWay}">
+                <TextBlock x:Uid="KeyBindDialog_Program"/>
+                <Button x:Name="PickAFileButton" x:Uid="KeyBindDialog_OpenFile" Margin="0,5,0,10"
+                        Click="PickAFileButton_Click"/>
+                <TextBox Text="{x:Bind ViewModel.ProgramPath, Mode=TwoWay}" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <StackPanel Visibility="{x:Bind UrlVisibilityConverter(ViewModel.Action), Mode=OneWay}">
+                <TextBlock x:Uid="KeyBindDialog_Url"/>
+                <TextBox Text="{x:Bind ViewModel.UrlPath, Mode=TwoWay}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
