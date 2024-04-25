@@ -1,15 +1,18 @@
-﻿using System.Diagnostics;
+﻿using KeyBindingListener.Contracts;
 using KeyBindingListener.Events;
+using MagicSettings.Domains;
 
 namespace KeyBindingListener.Services;
 
 /// <summary>
 /// キーボードイベントのメイン処理
 /// </summary>
-internal class KeyHookService
+public class KeyHookService(IKeyboardActionService keyboardActionService)
 {
     private static bool IsWinKey = false;
     private static bool IsAltKey = false;
+
+    private readonly IKeyboardActionService _keyboardActionService = keyboardActionService;
 
     /// <summary>
     /// キーダウンイベント発火時の処理
@@ -20,29 +23,27 @@ internal class KeyHookService
     {
         switch (ea.Key)
         {
-            case Keys.LWin or Keys.RWin:
+            case VKeys.LeftWindows or VKeys.RightWindows:
                 {
+                    // フラグを立てる
                     IsWinKey = true;
                     break;
                 }
-            case Keys.LMenu or Keys.RMenu:
+            case VKeys.LeftMenu or VKeys.RightMenu:
                 {
+                    // フラグを立てる
                     IsAltKey = true;
-                    break;
-                }
-            case Keys.D:
-                {
-                    if (IsWinKey && IsAltKey)
-                        Process.Start(new ProcessStartInfo
-                        {
-                            UseShellExecute = true,
-                            FileName = "ms-settings:privacy-webcam",
-                        });
-
                     break;
                 }
             default:
                 {
+                    // アクション実行条件を満たしているかチェック
+                    if (!IsWinKey || !IsAltKey || !Enum.IsDefined(ea.Key))
+                        break;
+
+                    // キーの応答を早くするため、非同期で実行し、結果は Wait しない
+                    Task.Run(() => _keyboardActionService.ActionAsync(ea.Key));
+
                     break;
                 }
         }
@@ -60,13 +61,15 @@ internal class KeyHookService
     {
         switch (ea.Key)
         {
-            case Keys.LWin or Keys.RWin:
+            case VKeys.LeftWindows or VKeys.RightWindows:
                 {
+                    // フラグを降ろす
                     IsWinKey = false;
                     break;
                 }
-            case Keys.LMenu or Keys.RMenu:
+            case VKeys.LeftMenu or VKeys.RightMenu:
                 {
+                    // フラグを降ろす
                     IsAltKey = false;
                     break;
                 }

@@ -8,13 +8,15 @@ namespace KeyBindingListener;
 
 public partial class MainWindow : Window
 {
-    private readonly KeyboardHookHelper _keyboardHookHelper = new();
-    private readonly KeyHookService _keyHookService = new();
+    private readonly KeyboardHookHelper _keyboardHookHelper;
+    private readonly KeyHookService _keyHookService;
     private readonly ServerPipe _serverPipe = new(MyProcesses.KeyBindingListener);
 
-    public MainWindow()
+    public MainWindow(KeyboardHookHelper keyboardHookHelper, KeyHookService keyHookService)
     {
         InitializeComponent();
+        _keyboardHookHelper = keyboardHookHelper;
+        _keyHookService = keyHookService;
     }
 
     /// <summary>
@@ -35,7 +37,7 @@ public partial class MainWindow : Window
                 // メインスレッドでアプリの終了処理を実行する
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    System.Windows.Application.Current.Shutdown();
+                    Application.Current.Shutdown();
                 }));
             }
         };
