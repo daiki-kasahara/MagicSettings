@@ -8,7 +8,7 @@ namespace KeyBindingListener.Helpers;
 /// <summary>
 /// キーボードフックを開始・終了するクラス
 /// </summary>
-internal class KeyboardHookHelper
+public class KeyboardHookHelper
 {
     // キーボードイベントハンドラ
     public event EventHandler<KeyboardHookEventArgs> OnKeyDown = delegate { };

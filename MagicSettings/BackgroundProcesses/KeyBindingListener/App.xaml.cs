@@ -1,9 +1,19 @@
 ﻿using System.Windows;
+using KeyBindingListener.Contracts;
+using KeyBindingListener.Factories;
+using KeyBindingListener.Helpers;
+using KeyBindingListener.Services;
+using MagicSettings.Repositories;
+using MagicSettings.Repositories.Contracts;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace KeyBindingListener;
 
-public partial class App : System.Windows.Application
+public partial class App : Application
 {
+    // DIコンテナ
+    public static ServiceProvider Provider { get; } = GetServiceProvider();
+
     private Mutex? _mutex;
     private Window? _window;
 
@@ -20,7 +30,22 @@ public partial class App : System.Windows.Application
             this.Shutdown();
         }
 
-        _window = new MainWindow();
+        _window = Provider.GetRequiredService<MainWindow>();
         _window.Show();
+    }
+
+    private static ServiceProvider GetServiceProvider()
+    {
+        var services = new ServiceCollection();
+
+        services.AddTransient<MainWindow>();
+        services.AddTransient<KeyHookService>();
+        services.AddTransient<KeyboardHookHelper>();
+        services.AddTransient<KeyHookService>();
+        services.AddTransient<IKeyboardBindingRepository, KeyboardBindingRepository>();
+        services.AddTransient<IKeyboardActionService, KeyboardActionService>();
+        services.AddTransient<IActionFactory, ActionFactory>();
+
+        return services.BuildServiceProvider();
     }
 }
