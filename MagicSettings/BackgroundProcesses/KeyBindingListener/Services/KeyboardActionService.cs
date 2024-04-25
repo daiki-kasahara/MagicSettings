@@ -23,6 +23,7 @@ public class KeyboardActionService(IKeyboardBindingRepository repository, IActio
     {
         var settings = await _keyboardRepository.GetAsync();
 
+        // 設定が無効もしくは、key に紐づく設定がされていない場合は何もしない
         if (!settings.IsEnabledKeyboardBinding || settings.KeyboardActions?.TryGetValue((int)key, out var keyboardAction) is not true)
             return;
 
@@ -36,7 +37,8 @@ public class KeyboardActionService(IKeyboardBindingRepository repository, IActio
             fileName = keyboardAction.UrlPath;
         }
 
-        if (keyboardAction.ActionType is null || fileName is null)
+        // アクション情報が null もしくは、Disableの場合、何もしない
+        if (keyboardAction.ActionType is null || fileName is null || !keyboardAction.IsEnabled)
             return;
 
         // アクションインスタンスを生成する
