@@ -276,6 +276,12 @@
   <data name="Screen_Title.Text" xml:space="preserve">
     <value>スクリーン</value>
   </data>
+  <data name="Settings_ThemeTitle.Text" xml:space="preserve">
+    <value>アプリのテーマ</value>
+  </data>
+  <data name="Settings_Title.Text" xml:space="preserve">
+    <value>設定</value>
+  </data>
   <data name="Window_Title" xml:space="preserve">
     <value>Magic Settings</value>
   </data>

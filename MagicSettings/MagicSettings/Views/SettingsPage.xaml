@@ -10,10 +10,10 @@
     Loaded="PageLoadedAsync"
     mc:Ignorable="d">
 
-    <Grid>
-        <!--Todo: 仮-->
-        <TextBlock Text="Settings"/>
+    <StackPanel Margin="20">
+        <TextBlock x:Uid="Settings_Title" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
 
+        <TextBlock x:Uid="Settings_ThemeTitle" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
         <RadioButtons>
             <RadioButton Content="Dark" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Dark), Mode=OneWay}"
                          Checked="ThemeButtonCheckedAsync">
@@ -34,5 +34,5 @@
                 </RadioButton.Tag>
             </RadioButton>
         </RadioButtons>
-    </Grid>
+    </StackPanel>
 </Page>
