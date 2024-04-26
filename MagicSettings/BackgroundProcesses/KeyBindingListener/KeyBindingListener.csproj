@@ -17,11 +17,13 @@
     <Nullable>enable</Nullable>
     <Authors>Daiki Kasahara</Authors>
     <NeutralLanguage>ja-JP</NeutralLanguage>
-    <AssemblyVersion>1.0.100.0</AssemblyVersion>
-    <FileVersion>1.0.100.0</FileVersion>
+    <AssemblyVersion>1.0.1000.0</AssemblyVersion>
+    <FileVersion>1.0.1000.0</FileVersion>
     <BaseOutputPath>$(ProjectDir)bin\$(PlatformShortName)</BaseOutputPath>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <UseWindowsForms>False</UseWindowsForms>
+    <Version>1.0.1000.0</Version>
+    <Copyright>© 2024 Daiki Kasahara</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
