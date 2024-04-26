@@ -264,13 +264,16 @@
   <data name="More_Options_ButtonTooltip.Text" xml:space="preserve">
     <value>その他のオプション</value>
   </data>
-  <data name="ScreenPage_BlueLightBlocking.Text" xml:space="preserve">
+  <data name="Screen_BlueLightBlockingExpander.Header" xml:space="preserve">
     <value>ブルーライトカット</value>
   </data>
-  <data name="ScreenPage_BlueLightBlocking_Degree.Text" xml:space="preserve">
+  <data name="Screen_BlueLightBlockingExpander.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ブルーライトカット</value>
+  </data>
+  <data name="Screen_BlueLightBlocking_Degree.Header" xml:space="preserve">
     <value>軽減率 (%)</value>
   </data>
-  <data name="ScreenPage_Title.Text" xml:space="preserve">
+  <data name="Screen_Title.Text" xml:space="preserve">
     <value>スクリーン</value>
   </data>
   <data name="Window_Title" xml:space="preserve">
