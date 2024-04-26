@@ -142,8 +142,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
     case WM_DESTROY:
     {
+        // フィルターのリセット
         g_screenFilter.Uninitialize();
 
+        // パイプを閉じる
         if (g_isPipeRunning)
         {
             g_pipeServer.ClosePipe();
@@ -154,6 +156,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             ReleaseMutex(g_hMutex);
             CloseHandle(g_hMutex);
         }
+
+        // 終了時は設定を無効にする
+        ScreenSettingsRepository().Set(false);
 
         PostQuitMessage(0);
         break;

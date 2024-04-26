@@ -45,3 +45,32 @@ auto ScreenSettingsRepository::Get() -> BlueLightBlockingFilter
         return BlueLightBlockingFilter::None;
     }
 }
+
+auto ScreenSettingsRepository::Set(bool isEnabled) -> void
+{
+    nlohmann::json json;
+    try
+    {
+        json = nlohmann::json::parse(std::ifstream(GetFilePath()));
+    }
+    catch (const std::exception&)
+    {
+        return;
+    }
+
+    if (json.is_null())
+        return;
+
+    try
+    {
+        json["IsEnabledBlueLightBlocking"] = isEnabled;
+        std::ofstream o(GetFilePath());
+        o << json;
+    }
+    catch (const std::exception&)
+    {
+        return;
+    }
+
+
+}
