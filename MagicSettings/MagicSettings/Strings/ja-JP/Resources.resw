@@ -249,9 +249,6 @@
   <data name="Keyboard_Title.Text" xml:space="preserve">
     <value>キーボード</value>
   </data>
-  <data name="MainMenu_Home" xml:space="preserve">
-    <value>ホーム</value>
-  </data>
   <data name="MainMenu_Keyboard" xml:space="preserve">
     <value>キーボード</value>
   </data>

@@ -14,7 +14,6 @@ internal class MainWindowViewModel
 
         NavigationMenuItems =
         [
-            new(loader.GetString($"MainMenu_{Tag.Home}"), "\xE80F", Tag.Home),
             new(loader.GetString($"MainMenu_{Tag.Keyboard}"), "\xE765", Tag.Keyboard),
             new(loader.GetString($"MainMenu_{Tag.Screen}"), "\xE770", Tag.Screen),
         ];

@@ -2,7 +2,6 @@
 
 internal enum Tag
 {
-    Home,
     Keyboard,
     Screen,
 }

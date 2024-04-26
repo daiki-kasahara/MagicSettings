@@ -20,7 +20,8 @@
                 </NavigationViewItem>
             </DataTemplate>
         </Grid.Resources>
-        <NavigationView CompactModeThresholdWidth="0"
+        <NavigationView x:Name="NavView"
+                        CompactModeThresholdWidth="0"
                         IsBackButtonVisible="Collapsed"
                         MenuItemTemplate="{StaticResource NavigationViewMenuItem}"
                         MenuItemsSource="{x:Bind _viewModel.NavigationMenuItems}"
