@@ -140,9 +140,10 @@ public class KeyboardBindingRepositoryTest
 
         // Action
         var repository = new KeyboardBindingRepository();
-        await repository.DeleteAsync(targetKey);
+        var exception = await Record.ExceptionAsync(async () => await repository.DeleteAsync(targetKey));
 
         // Assert
+        Assert.Null(exception);
     }
 
     [Fact]
@@ -161,8 +162,9 @@ public class KeyboardBindingRepositoryTest
 
         // Action
         var repository = new KeyboardBindingRepository();
-        await repository.DeleteAsync(targetKey);
+        var exception = await Record.ExceptionAsync(async () => await repository.DeleteAsync(targetKey));
 
         // Assert
+        Assert.Null(exception);
     }
 }
