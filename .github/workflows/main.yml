@@ -47,6 +47,15 @@ jobs:
           Configuration: ${{ matrix.configuration }}
           Platform: ${{ matrix.platform }}
 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create destination folder if not exists
+        run: mkdir -p "C:/Program Files/dotnet/sdk/8.0.202/Microsoft/VisualStudio/v17.0/AppxPackage"
+
+      - name: Copy files
+        run: cp -r "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Microsoft/VisualStudio/v17.0/AppxPackage/." "C:/Program Files/dotnet/sdk/8.0.202/Microsoft/VisualStudio/v17.0/AppxPackage"
+
       - name: Test
         id: test
         run: dotnet test MagicSettingsDotNetTest.sln --no-build --verbosity normal --collect:"XPlat Code Coverage"
