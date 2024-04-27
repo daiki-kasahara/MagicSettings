@@ -6,7 +6,7 @@ using MagicSettings.Domains;
 
 namespace MagicSettings.ViewModels;
 
-internal partial class ScreenPageViewModel : ObservableObject
+internal partial class ScreenPageViewModel(IScreenService service) : ObservableObject
 {
     [ObservableProperty]
     private bool _isEnabledBlueLightBlocking;
@@ -20,12 +20,7 @@ internal partial class ScreenPageViewModel : ObservableObject
     [ObservableProperty]
     private bool _canExecute = false;
 
-    private readonly IScreenService _screenService;
-
-    public ScreenPageViewModel(IScreenService service)
-    {
-        _screenService = service;
-    }
+    private readonly IScreenService _screenService = service;
 
     public async Task InitializeAsync()
     {

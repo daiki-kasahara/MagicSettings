@@ -8,8 +8,12 @@ using WinRT.Interop;
 
 namespace MagicSettings.Helper;
 
-internal class WindowHelper
+internal static class WindowHelper
 {
+    // 最小ウィンドウの大きさ
+    private static readonly int MinWidth = 800;
+    private static readonly int MinHeight = 500;
+
     public static ElementTheme RootTheme
     {
         get
@@ -37,6 +41,9 @@ internal class WindowHelper
     public static List<Window> ActiveWindows { get { return _activeWindows; } }
 
     private static readonly List<Window> _activeWindows = [];
+
+    private static NativeMethods.WinProc? newWndProc = null;
+    private static IntPtr oldWndProc = IntPtr.Zero;
 
     public static void TrackWindow(Window window)
     {
@@ -78,11 +85,76 @@ internal class WindowHelper
         NativeMethods.SetForegroundWindow(hWnd);
     }
 
+    public static void SetMinWindowSize(Window? window)
+    {
+        var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+        newWndProc = new NativeMethods.WinProc(NewWindowProc);
+        oldWndProc = NativeMethods.SetWindowLongPtr64(hwnd, NativeMethods.WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
+    }
+
+    private static IntPtr NewWindowProc(IntPtr hWnd, NativeMethods.WindowMessage Msg, IntPtr wParam, IntPtr lParam)
+    {
+        switch (Msg)
+        {
+            case NativeMethods.WindowMessage.WM_GETMINMAXINFO:
+                {
+                    var dpi = NativeMethods.GetDpiForWindow(hWnd);
+                    float scalingFactor = (float)dpi / 96;
+
+                    NativeMethods.MINMAXINFO minMaxInfo = Marshal.PtrToStructure<NativeMethods.MINMAXINFO>(lParam);
+                    minMaxInfo.ptMinTrackSize.x = (int)(MinWidth * scalingFactor);
+                    minMaxInfo.ptMinTrackSize.y = (int)(MinHeight * scalingFactor);
+                    Marshal.StructureToPtr(minMaxInfo, lParam, true);
+                    break;
+                }
+
+        }
+
+        return NativeMethods.CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
+    }
+
     private class NativeMethods
     {
+        [Flags]
+        public enum WindowLongIndexFlags : int
+        {
+            GWL_WNDPROC = -4,
+        }
+
+        public enum WindowMessage : int
+        {
+            WM_GETMINMAXINFO = 0x0024,
+        }
+
+        public struct POINT
+        {
+            public int x;
+            public int y;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MINMAXINFO
+        {
+            public POINT ptReserved;
+            public POINT ptMaxSize;
+            public POINT ptMaxPosition;
+            public POINT ptMinTrackSize;
+            public POINT ptMaxTrackSize;
+        }
+
+        public delegate IntPtr WinProc(IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
+
         [DllImport("user32.dll", ExactSpelling = true, SetLastError = true)]
         [DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        internal static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, WindowLongIndexFlags nIndex, WinProc newProc);
+        [DllImport("user32.dll")]
+        public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, WindowMessage Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        internal static extern int GetDpiForWindow(IntPtr hwnd);
     }
 }

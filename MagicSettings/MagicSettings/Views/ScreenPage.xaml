@@ -6,42 +6,32 @@
     xmlns:local="using:MagicSettings.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tkcontrols="using:CommunityToolkit.WinUI.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     Loaded="PageLoadedAsync"
     mc:Ignorable="d">
 
     <StackPanel Margin="20">
-        <TextBlock x:Uid="ScreenPage_Title" FontSize="28" FontWeight="Bold"/>
+        <TextBlock x:Uid="Screen_Title" FontSize="28" FontWeight="Bold"/>
 
         <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.HasError, Mode=TwoWay}" Margin="0,10,0,10"/>
-        <Expander IsExpanded="True" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-            <Expander.Header>
-                <Grid Padding="0,15,0,15">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0" x:Uid="ScreenPage_BlueLightBlocking" VerticalAlignment="Center"/>
-                    <ToggleSwitch Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="0"
-                                  IsOn="{x:Bind _viewModel.IsEnabledBlueLightBlocking, Mode=OneWay}"
-                                  IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
-                                  Toggled="BlueLightBlockingToggled"/>
-                </Grid>
-            </Expander.Header>
-            <Expander.Content>
-                <Grid Margin="20,0,45,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0" x:Uid="ScreenPage_BlueLightBlocking_Degree" VerticalAlignment="Center" />
-                    <Slider Grid.Column="1" HorizontalAlignment="Right" Minimum="10" Maximum="100" StepFrequency="10" Width="250"
+        <tkcontrols:SettingsExpander x:Name="BlueLightBlockingSetting"
+                                     x:Uid="Screen_BlueLightBlockingExpander"
+                                     HeaderIcon="{ui:FontIcon Glyph=&#xF08C;}"
+                                     Margin="0,0,0,2"
+                                     IsExpanded="True">
+            <ToggleSwitch MinWidth="0"
+                          IsOn="{x:Bind _viewModel.IsEnabledBlueLightBlocking, Mode=OneWay}"
+                          IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
+                          Toggled="BlueLightBlockingToggled"/>
+            <tkcontrols:SettingsExpander.Items>
+                <tkcontrols:SettingsCard x:Uid="Screen_BlueLightBlocking_Degree">
+                    <Slider Minimum="10" Maximum="100" StepFrequency="10" Width="250"
                             IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledBlueLightBlocking, _viewModel.CanExecute), Mode=OneWay}"
                             Value="{x:Bind _viewModel.ReductionRate, Mode=OneWay}"
                             ValueChanged="BlueLightBlockingValueChanged"/>
-                </Grid>
-            </Expander.Content>
-        </Expander>
+                </tkcontrols:SettingsCard>
+            </tkcontrols:SettingsExpander.Items>
+        </tkcontrols:SettingsExpander>
     </StackPanel>
 </Page>

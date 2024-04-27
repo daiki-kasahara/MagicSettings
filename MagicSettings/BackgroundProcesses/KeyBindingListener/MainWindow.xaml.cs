@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using KeyBindingListener.Helpers;
 using KeyBindingListener.Services;
+using MagicSettings.Repositories.Contracts;
 using ProcessManager;
 using ProcessManager.PipeMessage;
 
@@ -8,15 +9,17 @@ namespace KeyBindingListener;
 
 public partial class MainWindow : Window
 {
+    private readonly ServerPipe _serverPipe = new(MyProcesses.KeyBindingListener);
     private readonly KeyboardHookHelper _keyboardHookHelper;
     private readonly KeyHookService _keyHookService;
-    private readonly ServerPipe _serverPipe = new(MyProcesses.KeyBindingListener);
+    private readonly IKeyboardBindingRepository _keyboardBindingRepository;
 
-    public MainWindow(KeyboardHookHelper keyboardHookHelper, KeyHookService keyHookService)
+    public MainWindow(KeyboardHookHelper keyboardHookHelper, KeyHookService keyHookService, IKeyboardBindingRepository keyboardBindingRepository)
     {
         InitializeComponent();
         _keyboardHookHelper = keyboardHookHelper;
         _keyHookService = keyHookService;
+        _keyboardBindingRepository = keyboardBindingRepository;
     }
 
     /// <summary>
@@ -51,8 +54,13 @@ public partial class MainWindow : Window
     /// <param name="e"></param>
     private void Window_Closed(object sender, EventArgs e)
     {
+        // キーフックの終了
         _keyboardHookHelper.UnHook();
 
+        // パイプを閉じる
         _serverPipe.ClosePipe();
+
+        // 終了時は設定を無効にする
+        Task.Run(() => _keyboardBindingRepository.SaveAsync(false)).Wait();
     }
 }

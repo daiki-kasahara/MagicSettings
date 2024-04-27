@@ -4,6 +4,7 @@ using MagicSettings.Contracts.Services;
 using MagicSettings.Helper;
 using MagicSettings.Repositories;
 using MagicSettings.Repositories.Contracts;
+using MagicSettings.Repositories.Repositories;
 using MagicSettings.Services;
 using MagicSettings.ViewModels;
 using MagicSettings.Views.Dialogs;
@@ -49,6 +50,7 @@ public partial class App : Application
 
         _window = Provider.GetRequiredService<MainWindow>();
         WindowHelper.TrackWindow(_window);
+        WindowHelper.SetMinWindowSize(_window);
         _window.Activate();
 
         mainInstance.Activated += MainInstance_Activated;
@@ -79,6 +81,7 @@ public partial class App : Application
         services.AddTransient<KeyBindEditorViewModel>();
 
         // Add Model
+        services.AddTransient<IAssemblyInfoRepository, AssemblyInfoRepository>();
         services.AddTransient<IKeyboardBindingRepository, KeyboardBindingRepository>();
         services.AddTransient<IScreenRepository, ScreenRepository>();
         services.AddTransient<IThemeRepository, ThemeRepository>();
