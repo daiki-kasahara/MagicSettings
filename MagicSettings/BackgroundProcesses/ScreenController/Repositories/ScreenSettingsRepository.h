@@ -11,5 +11,7 @@ namespace ScreenController::Repositories
     {
     public:
         auto Get() -> BlueLightBlockingFilter;
+
+        auto Set(bool isEnabled) -> void;
     };
 }

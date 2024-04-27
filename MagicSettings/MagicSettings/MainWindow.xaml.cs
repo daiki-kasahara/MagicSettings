@@ -41,9 +41,6 @@ internal sealed partial class MainWindow : Window
 
         switch (tag)
         {
-            case Tag.Home:
-                ContentFrame.Navigate(typeof(HomePage));
-                break;
             case Tag.Keyboard:
                 ContentFrame.Navigate(typeof(KeyboardPage));
                 break;
@@ -68,5 +65,8 @@ internal sealed partial class MainWindow : Window
         };
 
         WindowHelper.RootTheme = requestedTheme;
+
+        ContentFrame.Navigate(typeof(KeyboardPage));
+        NavView.SelectedItem = _viewModel.NavigationMenuItems[0];
     }
 }

@@ -249,9 +249,6 @@
   <data name="Keyboard_Title.Text" xml:space="preserve">
     <value>キーボード</value>
   </data>
-  <data name="MainMenu_Home" xml:space="preserve">
-    <value>ホーム</value>
-  </data>
   <data name="MainMenu_Keyboard" xml:space="preserve">
     <value>キーボード</value>
   </data>
@@ -264,14 +261,23 @@
   <data name="More_Options_ButtonTooltip.Text" xml:space="preserve">
     <value>その他のオプション</value>
   </data>
-  <data name="ScreenPage_BlueLightBlocking.Text" xml:space="preserve">
+  <data name="Screen_BlueLightBlockingExpander.Header" xml:space="preserve">
     <value>ブルーライトカット</value>
   </data>
-  <data name="ScreenPage_BlueLightBlocking_Degree.Text" xml:space="preserve">
+  <data name="Screen_BlueLightBlockingExpander.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>ブルーライトカット</value>
+  </data>
+  <data name="Screen_BlueLightBlocking_Degree.Header" xml:space="preserve">
     <value>軽減率 (%)</value>
   </data>
-  <data name="ScreenPage_Title.Text" xml:space="preserve">
+  <data name="Screen_Title.Text" xml:space="preserve">
     <value>スクリーン</value>
+  </data>
+  <data name="Settings_ThemeTitle.Text" xml:space="preserve">
+    <value>アプリのテーマ</value>
+  </data>
+  <data name="Settings_Title.Text" xml:space="preserve">
+    <value>設定</value>
   </data>
   <data name="Window_Title" xml:space="preserve">
     <value>Magic Settings</value>
