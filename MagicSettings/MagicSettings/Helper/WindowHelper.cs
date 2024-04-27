@@ -42,7 +42,7 @@ internal static class WindowHelper
 
     private static readonly List<Window> _activeWindows = [];
 
-    private static NativeMethods.WinProc newWndProc = null;
+    private static NativeMethods.WinProc? newWndProc = null;
     private static IntPtr oldWndProc = IntPtr.Zero;
 
     public static void TrackWindow(Window window)
