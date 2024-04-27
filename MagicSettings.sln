@@ -23,7 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D1B79975
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettingsTest", "MagicSettings\Tests\TestProject1\MagicSettingsTest.csproj", "{C52CF3E5-6A5D-49AF-A565-5AA19363A5EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicSettings.RepositoriesTest", "MagicSettings\Tests\MagicSettings.RepositoriesTest\MagicSettings.RepositoriesTest.csproj", "{D8D9F29A-DED1-446C-B371-C1E0AB6083EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettings.RepositoriesTest", "MagicSettings\Tests\MagicSettings.RepositoriesTest\MagicSettings.RepositoriesTest.csproj", "{D8D9F29A-DED1-446C-B371-C1E0AB6083EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyBindingListenerTest", "MagicSettings\Tests\KeyBindingListenerTest\KeyBindingListenerTest.csproj", "{8F56B40B-FBD8-4159-89F1-38340DD0D1AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +60,12 @@ Global
 		{C52CF3E5-6A5D-49AF-A565-5AA19363A5EA}.Debug|x64.ActiveCfg = Debug|x64
 		{C52CF3E5-6A5D-49AF-A565-5AA19363A5EA}.Debug|x64.Build.0 = Debug|x64
 		{C52CF3E5-6A5D-49AF-A565-5AA19363A5EA}.Release|x64.ActiveCfg = Release|x64
-		{C52CF3E5-6A5D-49AF-A565-5AA19363A5EA}.Release|x64.Build.0 = Release|x64
 		{D8D9F29A-DED1-446C-B371-C1E0AB6083EF}.Debug|x64.ActiveCfg = Debug|x64
 		{D8D9F29A-DED1-446C-B371-C1E0AB6083EF}.Debug|x64.Build.0 = Debug|x64
 		{D8D9F29A-DED1-446C-B371-C1E0AB6083EF}.Release|x64.ActiveCfg = Release|x64
+		{8F56B40B-FBD8-4159-89F1-38340DD0D1AD}.Debug|x64.ActiveCfg = Debug|x64
+		{8F56B40B-FBD8-4159-89F1-38340DD0D1AD}.Debug|x64.Build.0 = Debug|x64
+		{8F56B40B-FBD8-4159-89F1-38340DD0D1AD}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +78,7 @@ Global
 		{3707434E-96C6-4A81-87A8-2D567E09C662} = {DD18BDBE-E4CF-481B-B9E3-1495520A7BAF}
 		{C52CF3E5-6A5D-49AF-A565-5AA19363A5EA} = {D1B79975-69D0-4AE7-8E7A-67F3BA8BC9D9}
 		{D8D9F29A-DED1-446C-B371-C1E0AB6083EF} = {D1B79975-69D0-4AE7-8E7A-67F3BA8BC9D9}
+		{8F56B40B-FBD8-4159-89F1-38340DD0D1AD} = {D1B79975-69D0-4AE7-8E7A-67F3BA8BC9D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82056EBC-29D8-43AE-B47D-8F9350AC2C1D}
