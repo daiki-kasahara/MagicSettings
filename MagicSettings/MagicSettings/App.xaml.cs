@@ -50,6 +50,7 @@ public partial class App : Application
 
         _window = Provider.GetRequiredService<MainWindow>();
         WindowHelper.TrackWindow(_window);
+        WindowHelper.SetMinWindowSize(_window);
         _window.Activate();
 
         mainInstance.Activated += MainInstance_Activated;
