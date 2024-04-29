@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using MagicSettings.Domains;
 using MagicSettings.Repositories;
 using MagicSettings.Repositories.Models.SettingsFile;
@@ -8,10 +9,6 @@ namespace MagicSettings.RepositoriesTest;
 public class KeyboardBindingRepositoryTest
 {
     private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "keybinding.json");
-    private class TestJsonObject
-    {
-        public int TestInt { get; set; }
-    }
 
     [Fact]
     public async Task GetAsyncTest()
@@ -51,15 +48,17 @@ public class KeyboardBindingRepositoryTest
     }
 
     [Fact]
-    public async Task GetAsyncTest_NotTargetString()
+    public async Task GetAsyncTest_Failed_InvalidJson()
     {
         // Arrange
-        var settings = new TestJsonObject();
         Directory.CreateDirectory(Directory.GetParent(FilePath)!.FullName);
 
-        using (var createStream = File.Create(FilePath))
+        using (var createStream = File.Create(FilePath)) { }
+
+        var enc = Encoding.UTF8;
+        using (var writer = new StreamWriter(FilePath, false, enc))
         {
-            await JsonSerializer.SerializeAsync(createStream, settings);
+            writer.WriteLine("InvalidJson");
         }
 
         // Action
@@ -88,6 +87,38 @@ public class KeyboardBindingRepositoryTest
 
         // Action
         var repository = new KeyboardBindingRepository();
+        await repository.SaveAsync(setKey, setAction);
+
+        // Assert
+        using var openStream = File.OpenRead(FilePath);
+        var actual = await JsonSerializer.DeserializeAsync<KeyboardBindingSettings>(openStream);
+        var actualAction = actual?.KeyboardActions?.FirstOrDefault(x => x.Key == setKey).Value;
+
+        Assert.NotNull(actualAction);
+        Assert.Equal(setAction.ActionType, actualAction.ActionType);
+        Assert.Equal(setAction.IsEnabled, actualAction.IsEnabled);
+        Assert.Equal(setAction.ProgramPath, actualAction.ProgramPath);
+        Assert.Equal(setAction.UrlPath, actualAction.UrlPath);
+    }
+
+    [Fact]
+    public async Task SaveAsyncTest_HasAlreadyExist()
+    {
+        // Arrange
+        if (File.Exists(FilePath))
+            File.Delete(FilePath);
+
+        var setKey = 1;
+        var setAction = new KeyboardAction();
+        setAction.ActionType = KeyboardActionType.StartProgram;
+        setAction.IsEnabled = true;
+        setAction.ProgramPath = "C:\\TestPath";
+        setAction.UrlPath = "https:\\test.test";
+        var filePath = Path.Combine(AppContext.BaseDirectory, "Settings", "keybinding.json");
+
+        // Action
+        var repository = new KeyboardBindingRepository();
+        await repository.SaveAsync(setKey, setAction);
         await repository.SaveAsync(setKey, setAction);
 
         // Assert
