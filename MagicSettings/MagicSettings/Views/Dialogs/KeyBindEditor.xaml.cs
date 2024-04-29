@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
@@ -31,35 +31,27 @@ internal sealed partial class KeyBindEditor : UserControl
 
         WeakReferenceMessenger.Default.Register<KeyBindEditor, PropertyChangedMessage<string>>(this, (recipient, message) =>
         {
-            try
+            switch (message.PropertyName)
             {
-                switch (message.PropertyName)
-                {
-                    case nameof(this.ViewModel.ProgramPath):
-                        {
-                            var popup = VisualTreeHelper.GetOpenPopupsForXamlRoot(this.XamlRoot).FirstOrDefault();
-                            if (popup is null || popup.Child is not ContentDialog dialog)
-                                return;
-
-                            dialog.IsPrimaryButtonEnabled = viewModel.Action != KeyboardActionType.StartProgram || ViewModel.ProgramPath != string.Empty;
-                            break;
-                        }
-                    case nameof(this.ViewModel.UrlPath):
-                        {
-                            var popup = VisualTreeHelper.GetOpenPopupsForXamlRoot(this.XamlRoot).FirstOrDefault();
-                            if (popup is null || popup.Child is not ContentDialog dialog)
-                                return;
-
-                            dialog.IsPrimaryButtonEnabled = viewModel.Action != KeyboardActionType.OpenUrl || (viewModel.UrlPath.StartsWith(Http) || viewModel.UrlPath.StartsWith(Https));
-                            break;
-                        }
-                    default:
+                case nameof(this.ViewModel.ProgramPath):
+                case nameof(this.ViewModel.UrlPath):
+                    {
+                        UpdatePrimaryButton();
                         break;
-                }
+                    }
+                default:
+                    break;
             }
-            catch (Exception)
-            {
-            }
+        });
+
+        WeakReferenceMessenger.Default.Register<KeyBindEditor, PropertyChangedMessage<VKeys>>(this, (recipient, message) =>
+        {
+            UpdatePrimaryButton();
+        });
+
+        WeakReferenceMessenger.Default.Register<KeyBindEditor, PropertyChangedMessage<KeyboardActionType>>(this, (recipient, message) =>
+        {
+            UpdatePrimaryButton();
         });
     }
 
@@ -112,6 +104,48 @@ internal sealed partial class KeyBindEditor : UserControl
             return;
 
         ViewModel.UrlPath = textBox.Text;
+    }
+
+    private void UpdatePrimaryButton()
+    {
+        try
+        {
+            var popup = VisualTreeHelper.GetOpenPopupsForXamlRoot(this.XamlRoot).FirstOrDefault(x => x.Child is ContentDialog);
+            if (popup is null || popup.Child is not ContentDialog dialog)
+                return;
+
+            switch (ViewModel.Action)
+            {
+                case KeyboardActionType.StartProgram:
+                    {
+                        // StartProgramの場合、キーが重複しておらず path が空文字列ではないときのみ設定可能
+                        // 更新の場合は、pathのチェックのみ
+                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && ViewModel.ProgramPath != string.Empty;
+
+                        break;
+                    }
+                case KeyboardActionType.OpenUrl:
+                    {
+                        // OpenUrlの場合、キーが重複しておらず url が特定の文字列で始まっているときのみ設定可能
+                        // 更新の場合は、urlのチェックのみ
+                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && (ViewModel.UrlPath.StartsWith(Http) || ViewModel.UrlPath.StartsWith(Https));
+
+                        break;
+                    }
+                default:
+                    {
+                        // その他のアクションの場合、キーが重複していないときのみ設定可能
+                        // 更新の場合は、無条件で設定可能
+                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom);
+
+                        break;
+                    }
+            }
+        }
+        catch (Exception)
+        {
+            return;
+        }
     }
 
     #region Converter

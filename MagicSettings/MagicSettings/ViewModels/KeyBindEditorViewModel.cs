@@ -17,6 +17,7 @@ internal partial class KeyBindEditorViewModel : ObservableObject
     private VKeys _key = VKeys.A;
 
     [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     private KeyboardActionType _action;
 
     [ObservableProperty]
