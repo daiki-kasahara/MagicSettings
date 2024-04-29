@@ -48,7 +48,7 @@ public class KeyboardBindingRepositoryTest
     }
 
     [Fact]
-    public async Task GetAsyncTest_Failed_InvaliedJson()
+    public async Task GetAsyncTest_Failed_InvalidJson()
     {
         // Arrange
         Directory.CreateDirectory(Directory.GetParent(FilePath)!.FullName);
