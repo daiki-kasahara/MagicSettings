@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyBindingListenerTest", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettingsTest", "MagicSettings\Tests\MagicSettingsTest\MagicSettingsTest.csproj", "{3022DD7E-A7D4-4A56-AB03-F12B99155243}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessManagerTest", "MagicSettings\Tests\ProcessManagerTest\ProcessManagerTest.csproj", "{EF7D09FF-7B75-4C3A-BFC4-EF5B24D71AB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessManagerTest", "MagicSettings\Tests\ProcessManagerTest\ProcessManagerTest.csproj", "{EF7D09FF-7B75-4C3A-BFC4-EF5B24D71AB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,11 +68,9 @@ Global
 		{3022DD7E-A7D4-4A56-AB03-F12B99155243}.Debug|x64.ActiveCfg = Debug|x64
 		{3022DD7E-A7D4-4A56-AB03-F12B99155243}.Debug|x64.Build.0 = Debug|x64
 		{3022DD7E-A7D4-4A56-AB03-F12B99155243}.Release|x64.ActiveCfg = Release|x64
-		{3022DD7E-A7D4-4A56-AB03-F12B99155243}.Release|x64.Build.0 = Release|x64
 		{EF7D09FF-7B75-4C3A-BFC4-EF5B24D71AB2}.Debug|x64.ActiveCfg = Debug|x64
 		{EF7D09FF-7B75-4C3A-BFC4-EF5B24D71AB2}.Debug|x64.Build.0 = Debug|x64
 		{EF7D09FF-7B75-4C3A-BFC4-EF5B24D71AB2}.Release|x64.ActiveCfg = Release|x64
-		{EF7D09FF-7B75-4C3A-BFC4-EF5B24D71AB2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

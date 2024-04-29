@@ -9,7 +9,19 @@ namespace ProcessManagerTest;
 public class ServerPipeTest
 {
     [Fact]
-    public void OpenPipe()
+    public void ServerPipe_PublicConstructor()
+    {
+        // Arrange
+
+        // Act
+        var exception = Record.Exception(() => new ServerPipe(MyProcesses.KeyBindingListener));
+
+        // Assert
+        Assert.Null(exception);
+    }
+
+    [Fact]
+    public void OpenPipeTest()
     {
         // Arrange
         var clientStub = new Mock<IClientPipe>();
@@ -24,7 +36,7 @@ public class ServerPipeTest
     }
 
     [Fact]
-    public void OpenPipe_TaskIsNotNull()
+    public void OpenPipeTest_TaskIsNotNull()
     {
         // Arrange
         var clientStub = new Mock<IClientPipe>();
@@ -40,7 +52,7 @@ public class ServerPipeTest
     }
 
     [Fact]
-    public void ClosePipe()
+    public void ClosePipeTest()
     {
         // Arrange
         var clientStub = new Mock<IClientPipe>();
@@ -57,7 +69,7 @@ public class ServerPipeTest
     }
 
     [Fact]
-    public void ClosePipe_Failed()
+    public void ClosePipeTest_Failed()
     {
         // Arrange
         var clientStub = new Mock<IClientPipe>();
@@ -73,7 +85,7 @@ public class ServerPipeTest
     }
 
     [Fact]
-    public void ClosePipe_TaskIsNull()
+    public void ClosePipeTest_TaskIsNull()
     {
         // Arrange
         var clientStub = new Mock<IClientPipe>();

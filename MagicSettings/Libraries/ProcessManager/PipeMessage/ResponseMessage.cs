@@ -16,9 +16,6 @@ internal class ResponseMessage
 
     public string ReturnParameters { get; set; } = string.Empty;
 
-    public static bool operator true(ResponseMessage x) => x.ReturnCode is 0;
-    public static bool operator false(ResponseMessage x) => x.ReturnCode is not 0;
-
     public string Serialize() => JsonSerializer.Serialize(this);
 
     public static ResponseMessage? Deserialize(string? serialized)
