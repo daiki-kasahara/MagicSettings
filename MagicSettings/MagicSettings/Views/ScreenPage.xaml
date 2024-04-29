@@ -12,7 +12,7 @@
     mc:Ignorable="d">
 
     <Grid>
-        <FontIcon Glyph="&#xE770;" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="300" Opacity="0.1" Margin="0,0,20,-20" />
+        <FontIcon Glyph="&#xE770;" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="300" Opacity="0.1" Margin="0,0,10,-30" />
         <StackPanel Margin="20">
             <TextBlock x:Uid="Screen_Title" FontSize="28" FontWeight="Bold"/>
 
