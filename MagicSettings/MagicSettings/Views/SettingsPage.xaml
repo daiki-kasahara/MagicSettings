@@ -22,19 +22,19 @@
 
             <TextBlock x:Uid="Settings_ThemeTitle" FontSize="18" FontWeight="Bold" Margin="0,20,0,0"/>
             <RadioButtons Margin="0,0,0,20">
-                <RadioButton Content="Dark" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Dark), Mode=OneWay}"
+                <RadioButton x:Uid="Settings_Dark" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Dark), Mode=OneWay}"
                          Checked="ThemeButtonCheckedAsync">
                     <RadioButton.Tag>
                         <models:AppTheme>Dark</models:AppTheme>
                     </RadioButton.Tag>
                 </RadioButton>
-                <RadioButton Content="Light" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Light), Mode=OneWay}"
+                <RadioButton x:Uid="Settings_Light" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.Light), Mode=OneWay}"
                          Checked="ThemeButtonCheckedAsync">
                     <RadioButton.Tag>
                         <models:AppTheme>Light</models:AppTheme>
                     </RadioButton.Tag>
                 </RadioButton>
-                <RadioButton Content="System" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.System), Mode=OneWay}"
+                <RadioButton x:Uid="Settings_System" IsChecked="{x:Bind CurrentThemeToCheckedConverter(_viewModel.Theme, models:AppTheme.System), Mode=OneWay}"
                          Checked="ThemeButtonCheckedAsync">
                     <RadioButton.Tag>
                         <models:AppTheme>System</models:AppTheme>

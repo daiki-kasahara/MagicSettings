@@ -222,6 +222,10 @@
   <data name="KeyBindDialog_Url.Text" xml:space="preserve">
     <value>URL (http:またはhttps:から始まるURLのみ)</value>
   </data>
+  <data name="Keyboard_Description.Text" xml:space="preserve">
+    <value>ここではキーボードの設定ができます。
+キーバインディングとはキーに機能を割り当てることです。</value>
+  </data>
   <data name="Keyboard_IsEnabledKeyBinding.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>キーバインディングを有効にする</value>
   </data>
@@ -270,8 +274,20 @@
   <data name="Screen_BlueLightBlocking_Degree.Header" xml:space="preserve">
     <value>軽減率 (%)</value>
   </data>
+  <data name="Screen_Description.Text" xml:space="preserve">
+    <value>ここではスクリーンの設定ができます。</value>
+  </data>
   <data name="Screen_Title.Text" xml:space="preserve">
     <value>スクリーン</value>
+  </data>
+  <data name="Settings_Dark.Content" xml:space="preserve">
+    <value>ダーク</value>
+  </data>
+  <data name="Settings_Light.Content" xml:space="preserve">
+    <value>ライト</value>
+  </data>
+  <data name="Settings_System.Content" xml:space="preserve">
+    <value>Systemの設定に合わせる</value>
   </data>
   <data name="Settings_ThemeTitle.Text" xml:space="preserve">
     <value>アプリのテーマ</value>
