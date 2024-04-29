@@ -199,7 +199,7 @@
     <value>URLが不正です。</value>
   </data>
   <data name="Error_PathIsEmpty.Message" xml:space="preserve">
-    <value>プログラムのパスが空です。</value>
+    <value>指定したファイルは存在しません。</value>
   </data>
   <data name="KeyBindDialog_Action.Text" xml:space="preserve">
     <value>アクション</value>

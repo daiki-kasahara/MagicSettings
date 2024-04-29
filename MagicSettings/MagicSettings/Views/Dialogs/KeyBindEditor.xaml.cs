@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -120,7 +121,7 @@ internal sealed partial class KeyBindEditor : UserControl
                     {
                         // StartProgramの場合、キーが重複しておらず path が空文字列ではないときのみ設定可能
                         // 更新の場合は、pathのチェックのみ
-                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && ViewModel.ProgramPath != string.Empty;
+                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && !IsFileNotExists(ViewModel.ProgramPath);
 
                         break;
                     }
@@ -128,7 +129,7 @@ internal sealed partial class KeyBindEditor : UserControl
                     {
                         // OpenUrlの場合、キーが重複しておらず url が特定の文字列で始まっているときのみ設定可能
                         // 更新の場合は、urlのチェックのみ
-                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && (ViewModel.UrlPath.StartsWith(Http) || ViewModel.UrlPath.StartsWith(Https));
+                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && !IsInvalidUrl(ViewModel.UrlPath);
 
                         break;
                     }
@@ -156,9 +157,9 @@ internal sealed partial class KeyBindEditor : UserControl
 
     private Visibility UrlVisibilityConverter(KeyboardActionType type) => type is KeyboardActionType.OpenUrl ? Visibility.Visible : Visibility.Collapsed;
 
-    private bool ProgramPathToBoolConverter(string path) => path == string.Empty;
+    private bool IsFileNotExists(string path) => !File.Exists(path);
 
-    private bool UrlToBoolConverter(string url) => !url.StartsWith(Http) && !url.StartsWith(Https);
+    private bool IsInvalidUrl(string url) => !url.StartsWith(Http) && !url.StartsWith(Https);
 
     private bool AlreadyExistsConverter(IList<VKeys> keyList, VKeys key) => keyList.Contains(key);
 
