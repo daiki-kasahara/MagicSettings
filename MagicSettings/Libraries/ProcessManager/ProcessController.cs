@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using ProcessManager.Contracts;
+using ProcessManager.Internal;
 using ProcessManager.PipeMessage;
 
 namespace ProcessManager;
@@ -8,7 +9,17 @@ public class ProcessController : IProcessController
 {
     private static readonly string DirPath = AppContext.BaseDirectory;
 
-    private readonly ClientPipe _pipe = new();
+    private readonly IClientPipe _pipe;
+
+    public ProcessController()
+    {
+        _pipe = new ClientPipe();
+    }
+
+    internal ProcessController(IClientPipe pipe)
+    {
+        _pipe = pipe;
+    }
 
     public async Task<bool> LaunchAsync(MyProcesses process)
     {

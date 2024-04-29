@@ -1,11 +1,12 @@
 ﻿using System.IO.Pipes;
 using System.Text.Json;
 using ProcessManager.Contracts;
+using ProcessManager.Internal;
 using ProcessManager.PipeMessage;
 
 namespace ProcessManager;
 
-public class ServerPipe(MyProcesses process)
+public class ServerPipe
 {
     private static readonly int PipeNumber = 1;
     private static readonly string CheckCmd = "Check";
@@ -14,10 +15,24 @@ public class ServerPipe(MyProcesses process)
 
     public Action<RequestMessage>? OnAction;
 
-    private readonly string _pipeName = $"MagicSettings-{process}";
-    private readonly MyProcesses _process = process;
+    private readonly string _pipeName;
+    private readonly MyProcesses _process;
     private Task? _pipeTask;
-    private readonly ClientPipe _clientPipe = new();
+    private readonly IClientPipe _clientPipe;
+
+    public ServerPipe(MyProcesses process)
+    {
+        _process = process;
+        _pipeName = $"MagicSettings-{process}";
+        _clientPipe = new ClientPipe();
+    }
+
+    internal ServerPipe(MyProcesses process, IClientPipe clientPipe)
+    {
+        _process = process;
+        _pipeName = $"MagicSettings-{process}";
+        _clientPipe = clientPipe;
+    }
 
     /// <summary>
     /// サーバーパイプを開く
