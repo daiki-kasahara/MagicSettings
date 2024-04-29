@@ -189,8 +189,17 @@
   <data name="ActionType_StartProgram" xml:space="preserve">
     <value>アプリの起動</value>
   </data>
+  <data name="Error_AlreadyExistsKey.Message" xml:space="preserve">
+    <value>同じキーバインディングが既に登録されています。</value>
+  </data>
   <data name="Error_FailedToSet.Message" xml:space="preserve">
     <value>設定に失敗しました</value>
+  </data>
+  <data name="Error_InvalidUrl.Message" xml:space="preserve">
+    <value>URLが不正です。</value>
+  </data>
+  <data name="Error_PathIsEmpty.Message" xml:space="preserve">
+    <value>プログラムのパスが空です。</value>
   </data>
   <data name="KeyBindDialog_Action.Text" xml:space="preserve">
     <value>アクション</value>

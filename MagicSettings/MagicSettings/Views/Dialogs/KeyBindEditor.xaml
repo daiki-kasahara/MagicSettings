@@ -11,8 +11,9 @@
     <ScrollViewer>
         <StackPanel Margin="5,0" Width="480">
             <TextBlock x:Uid="KeyBindDialog_Key" />
-            <TextBox x:Name="KeyInput" Text="{x:Bind ViewModel.Key, Mode=OneWay}" IsEnabled="{x:Bind ViewModel.IsEnabledKeyCustom, Mode=OneWay}"
-                     Margin="0,5,0,20" IsReadOnly="True" KeyDown="KeyInputKeyDown"/>
+            <InfoBar x:Uid="Error_AlreadyExistsKey" Severity="Error" IsClosable="False" IsOpen="{x:Bind AlreadyExistsConverter(ViewModel.KeyList, ViewModel.Key), Mode=OneWay}" Margin="0,5,0,5" />
+            <TextBox x:Name="KeyInput" Text="{x:Bind ViewModel.Key, Mode=OneWay}" IsEnabled="{x:Bind ViewModel.IsEnabledKeyCustom, Mode=OneWay}" 
+                     Margin="0,0,0,15" IsReadOnly="True" KeyDown="KeyInputKeyDown"/>
 
             <TextBlock x:Uid="KeyBindDialog_Action"/>
             <ComboBox x:Name="ActionComboBox" Margin="0,5,0,20"
@@ -21,14 +22,16 @@
 
             <StackPanel Margin="0,0,0,20" Visibility="{x:Bind ProgramVisibilityConverter(ViewModel.Action), Mode=OneWay}">
                 <TextBlock x:Uid="KeyBindDialog_Program"/>
-                <Button x:Name="PickAFileButton" x:Uid="KeyBindDialog_OpenFile" Margin="0,5,0,10"
+                <InfoBar x:Uid="Error_PathIsEmpty" Severity="Error" IsClosable="False" IsOpen="{x:Bind ProgramPathToBoolConverter(ViewModel.ProgramPath), Mode=OneWay}" Margin="0,5,0,5" />
+                <Button x:Name="PickAFileButton" x:Uid="KeyBindDialog_OpenFile" Margin="0,0,0,5"
                         Click="PickAFileButton_Click"/>
-                <TextBox Text="{x:Bind ViewModel.ProgramPath, Mode=TwoWay}" TextWrapping="Wrap"/>
+                <TextBox Text="{x:Bind ViewModel.ProgramPath, Mode=OneWay}" TextChanged="ProgramPath_Changed" TextWrapping="Wrap"/>
             </StackPanel>
 
             <StackPanel Visibility="{x:Bind UrlVisibilityConverter(ViewModel.Action), Mode=OneWay}">
                 <TextBlock x:Uid="KeyBindDialog_Url"/>
-                <TextBox Text="{x:Bind ViewModel.UrlPath, Mode=TwoWay}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                <InfoBar x:Uid="Error_InvalidUrl" Severity="Error" IsClosable="False" IsOpen="{x:Bind UrlToBoolConverter(ViewModel.UrlPath), Mode=OneWay}" Margin="0,5,0,0" />
+                <TextBox Text="{x:Bind ViewModel.UrlPath, Mode=OneWay}" TextChanged="Url_Changed" TextWrapping="Wrap" Margin="0,5,0,0"/>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

@@ -1,11 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using MagicSettings.Domains;
 using MagicSettings.Extensions;
 using MagicSettings.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Windows.Storage.Pickers;
 using Windows.System;
@@ -14,6 +18,9 @@ namespace MagicSettings.Views.Dialogs;
 
 internal sealed partial class KeyBindEditor : UserControl
 {
+    private static readonly string Http = "http:";
+    private static readonly string Https = "https:";
+
     public KeyBindEditorViewModel ViewModel { get; }
 
     public KeyBindEditor(KeyBindEditorViewModel viewModel)
@@ -21,6 +28,39 @@ internal sealed partial class KeyBindEditor : UserControl
         this.InitializeComponent();
         this.ViewModel = viewModel;
         this.ActionComboBox.ItemsSource = ViewModel.KeyboardActions.Values;
+
+        WeakReferenceMessenger.Default.Register<KeyBindEditor, PropertyChangedMessage<string>>(this, (recipient, message) =>
+        {
+            try
+            {
+                switch (message.PropertyName)
+                {
+                    case nameof(this.ViewModel.ProgramPath):
+                        {
+                            var popup = VisualTreeHelper.GetOpenPopupsForXamlRoot(this.XamlRoot).FirstOrDefault();
+                            if (popup is null || popup.Child is not ContentDialog dialog)
+                                return;
+
+                            dialog.IsPrimaryButtonEnabled = viewModel.Action != KeyboardActionType.StartProgram || ViewModel.ProgramPath != string.Empty;
+                            break;
+                        }
+                    case nameof(this.ViewModel.UrlPath):
+                        {
+                            var popup = VisualTreeHelper.GetOpenPopupsForXamlRoot(this.XamlRoot).FirstOrDefault();
+                            if (popup is null || popup.Child is not ContentDialog dialog)
+                                return;
+
+                            dialog.IsPrimaryButtonEnabled = viewModel.Action != KeyboardActionType.OpenUrl || (viewModel.UrlPath.StartsWith(Http) || viewModel.UrlPath.StartsWith(Https));
+                            break;
+                        }
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+            }
+        });
     }
 
     private void KeyInputKeyDown(object sender, KeyRoutedEventArgs e)
@@ -58,6 +98,22 @@ internal sealed partial class KeyBindEditor : UserControl
         ViewModel.Action = ViewModel.KeyboardActions.First(x => x.Value == selectedItem).Key;
     }
 
+    private void ProgramPath_Changed(object sender, TextChangedEventArgs e)
+    {
+        if (sender is not TextBox textBox)
+            return;
+
+        ViewModel.ProgramPath = textBox.Text;
+    }
+
+    private void Url_Changed(object sender, TextChangedEventArgs e)
+    {
+        if (sender is not TextBox textBox)
+            return;
+
+        ViewModel.UrlPath = textBox.Text;
+    }
+
     #region Converter
 
     private string EnumToStringConverter(KeyboardActionType type) => type.ToDisplayString(new ResourceLoader());
@@ -65,6 +121,12 @@ internal sealed partial class KeyBindEditor : UserControl
     private Visibility ProgramVisibilityConverter(KeyboardActionType type) => type is KeyboardActionType.StartProgram ? Visibility.Visible : Visibility.Collapsed;
 
     private Visibility UrlVisibilityConverter(KeyboardActionType type) => type is KeyboardActionType.OpenUrl ? Visibility.Visible : Visibility.Collapsed;
+
+    private bool ProgramPathToBoolConverter(string path) => path == string.Empty;
+
+    private bool UrlToBoolConverter(string url) => !url.StartsWith(Http) && !url.StartsWith(Https);
+
+    private bool AlreadyExistsConverter(IList<VKeys> keyList, VKeys key) => keyList.Contains(key);
 
     #endregion
 }
