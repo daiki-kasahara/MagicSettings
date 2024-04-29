@@ -136,4 +136,21 @@ public class KeyHookServiceTest
         // KeyUpしたときは処理が実行されないこと
         serviceStub.Verify(x => x.ActionAsync(It.IsAny<VKeys>()), Times.Never);
     }
+
+    [Theory]
+    [InlineData(VKeys.A)]
+    [InlineData(VKeys.Z)]
+    public void OnKeyUpTest_OtherKey(VKeys key)
+    {
+        // Arrange
+        var serviceStub = new Mock<IKeyboardActionService>();
+        serviceStub.Setup(x => x.ActionAsync(It.IsAny<VKeys>()));
+
+        // Act
+        var service = new KeyHookService(serviceStub.Object);
+        var exception = Record.Exception(() => service.OnKeyUp(null, new KeyboardHookEventArgs() { Key = key }));
+
+        // Assert
+        Assert.Null(exception);
+    }
 }
