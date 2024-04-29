@@ -1,6 +1,6 @@
 ﻿using ProcessManager.PipeMessage;
 
-namespace ProcessManagerTest;
+namespace ProcessManager;
 
 public class ResponseMessageTest
 {

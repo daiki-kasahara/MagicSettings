@@ -1,8 +1,7 @@
 ﻿using KeyBindingListener.Contracts;
-using KeyBindingListener.Factories;
 using MagicSettings.Domains;
 
-namespace KeyBindingListenerTest.Factories;
+namespace KeyBindingListener.Factories;
 
 public class ActionFactoryTest
 {

@@ -5,7 +5,7 @@ using Moq;
 using ProcessManager;
 using ProcessManager.Contracts;
 
-namespace MagicSettingsTest.Services;
+namespace MagicSettingsTest.MagicSettings.Services;
 
 public class KeyboardServiceTest
 {

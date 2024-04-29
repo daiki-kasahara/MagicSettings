@@ -1,10 +1,9 @@
 ﻿using System.Diagnostics;
 using Moq;
-using ProcessManager;
 using ProcessManager.Contracts;
 using ProcessManager.PipeMessage;
 
-namespace ProcessManagerTest;
+namespace ProcessManager;
 
 public class ServerPipeTest
 {

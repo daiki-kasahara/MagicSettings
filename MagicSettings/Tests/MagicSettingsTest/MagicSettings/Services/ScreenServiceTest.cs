@@ -7,7 +7,7 @@ using ProcessManager;
 using ProcessManager.Contracts;
 using ProcessManager.PipeMessage;
 
-namespace MagicSettingsTest.Services;
+namespace MagicSettingsTest.MagicSettings.Services;
 
 public class ScreenServiceTest
 {

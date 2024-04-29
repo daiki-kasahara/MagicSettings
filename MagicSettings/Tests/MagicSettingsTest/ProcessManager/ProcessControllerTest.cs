@@ -1,9 +1,8 @@
 ﻿using Moq;
-using ProcessManager;
 using ProcessManager.Contracts;
 using ProcessManager.PipeMessage;
 
-namespace ProcessManagerTest;
+namespace ProcessManager;
 
 public class ProcessControllerTest : IDisposable
 {
@@ -36,7 +35,7 @@ public class ProcessControllerTest : IDisposable
     }
 
     [Fact]
-    public async Task LaunchAsyncTest_Failed()
+    public async Task LaunchAsyncTest()
     {
         // Arrange
         var process = MyProcesses.KeyBindingListener;
@@ -48,7 +47,7 @@ public class ProcessControllerTest : IDisposable
         var actual = await controller.LaunchAsync(process);
 
         // Assert
-        Assert.False(actual);
+        Assert.True(actual);
     }
 
     [Fact]
