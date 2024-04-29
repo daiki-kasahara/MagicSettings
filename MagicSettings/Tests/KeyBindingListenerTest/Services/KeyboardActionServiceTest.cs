@@ -100,6 +100,30 @@ public class KeyboardActionServiceTest
     }
 
     [Fact]
+    public async Task ActionAsyncTest_ActionsIsNull()
+    {
+        // Arrange
+        var settings = new KeyboardBindingSettings
+        {
+            IsEnabledKeyboardBinding = true,
+            KeyboardActions = null,
+        };
+        var repositoryStub = new Mock<IKeyboardBindingRepository>();
+        repositoryStub.Setup(x => x.GetAsync()).ReturnsAsync(settings);
+
+        var factoryStub = new Mock<IActionFactory>();
+        factoryStub.Setup(x => x.Create(It.IsAny<KeyboardActionType>(), It.IsAny<string>()));
+
+        // Act
+        var service = new KeyboardActionService(repositoryStub.Object, factoryStub.Object);
+        var exception = await Record.ExceptionAsync(async () => await service.ActionAsync(VKeys.D));
+
+        // Assert
+        Assert.Null(exception);
+        factoryStub.Verify(x => x.Create(It.IsAny<KeyboardActionType>(), It.IsAny<string>()), Times.Never);
+    }
+
+    [Fact]
     public async Task ActionAsyncTest_DoNothing_FileNameIsNull()
     {
         // Arrange
