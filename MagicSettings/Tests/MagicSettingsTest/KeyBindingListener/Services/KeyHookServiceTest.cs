@@ -1,10 +1,9 @@
 ﻿using KeyBindingListener.Contracts;
 using KeyBindingListener.Events;
-using KeyBindingListener.Services;
 using MagicSettings.Domains;
 using Moq;
 
-namespace KeyBindingListenerTest.Services;
+namespace KeyBindingListener.Services;
 
 public class KeyHookServiceTest
 {

@@ -1,10 +1,9 @@
 ﻿using System.Text;
 using System.Text.Json;
 using MagicSettings.Domains;
-using MagicSettings.Repositories;
 using MagicSettings.Repositories.Models.SettingsFile;
 
-namespace MagicSettings.RepositoriesTest;
+namespace MagicSettings.Repositories;
 
 public class KeyboardBindingRepositoryTest
 {

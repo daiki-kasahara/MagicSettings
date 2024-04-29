@@ -4,7 +4,7 @@ using MagicSettings.Models.SettingsFile;
 using MagicSettings.ViewModels;
 using Moq;
 
-namespace MagicSettingsTest.ViewModels;
+namespace MagicSettingsTest.MagicSettings.ViewModels;
 
 public class ScreenPageViewModelTest
 {
@@ -184,7 +184,7 @@ public class ScreenPageViewModelTest
         // Act
         var viewModel = new ScreenPageViewModel(serviceStub.Object);
         viewModel.ReductionRate = (int)BlueLightBlocking.None;
-        var actual = await viewModel.SetBlueLightBlockingAsync((int)setValue);
+        var actual = await viewModel.SetBlueLightBlockingAsync(setValue);
 
         // Assert
         Assert.False(actual);

@@ -3,7 +3,7 @@ using MagicSettings.Repositories.Contracts;
 using MagicSettings.Services;
 using Moq;
 
-namespace MagicSettingsTest.Services;
+namespace MagicSettingsTest.MagicSettings.Services;
 
 public class ThemeServiceTest
 {

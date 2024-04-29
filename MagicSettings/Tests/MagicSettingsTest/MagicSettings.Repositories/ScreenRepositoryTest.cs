@@ -1,22 +1,20 @@
 ﻿using System.Text;
 using System.Text.Json;
 using MagicSettings.Domains;
-using MagicSettings.Repositories;
+using MagicSettings.Models.SettingsFile;
 
-namespace MagicSettings.RepositoriesTest;
+namespace MagicSettings.Repositories;
 
-public class ThemeRepositoryTest
+public class ScreenRepositoryTest
 {
-    private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "theme.json");
+    private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "screen.json");
 
     [Fact]
     public async Task GetAsyncTest()
     {
         // Arrange
-        var settings = new ThemeSetting
-        {
-            Theme = AppTheme.Light
-        };
+        var settings = new ScreenSettings();
+        settings.IsEnabledBlueLightBlocking = true;
         Directory.CreateDirectory(Directory.GetParent(FilePath)!.FullName);
 
         using (var createStream = File.Create(FilePath))
@@ -25,7 +23,7 @@ public class ThemeRepositoryTest
         }
 
         // Action
-        var repository = new ThemeRepository();
+        var repository = new ScreenRepository();
         var result = await repository.GetAsync();
 
         // Assert
@@ -40,11 +38,12 @@ public class ThemeRepositoryTest
             File.Delete(FilePath);
 
         // Action
-        var repository = new ThemeRepository();
+        var repository = new ScreenRepository();
         var result = await repository.GetAsync();
 
         // Assert
-        Assert.Equal(AppTheme.System, result);
+        Assert.False(result.IsEnabledBlueLightBlocking);
+        Assert.Equal(BlueLightBlocking.Twenty, result.BlueLightBlocking);
     }
 
     [Fact]
@@ -62,11 +61,12 @@ public class ThemeRepositoryTest
         }
 
         // Action
-        var repository = new ThemeRepository();
+        var repository = new ScreenRepository();
         var result = await repository.GetAsync();
 
         // Assert
-        Assert.Equal(AppTheme.System, result);
+        Assert.False(result.IsEnabledBlueLightBlocking);
+        Assert.Equal(BlueLightBlocking.Twenty, result.BlueLightBlocking);
     }
 
     [Fact]
@@ -76,17 +76,36 @@ public class ThemeRepositoryTest
         if (File.Exists(FilePath))
             File.Delete(FilePath);
 
-        var setValue = AppTheme.Light;
+        var setValue = BlueLightBlocking.Ten;
 
         // Action
-        var repository = new ThemeRepository();
+        var repository = new ScreenRepository();
         await repository.SaveAsync(setValue);
 
         // Assert
         using var openStream = File.OpenRead(FilePath);
-        var actual = await JsonSerializer.DeserializeAsync<ThemeSetting>(openStream);
+        var actual = await JsonSerializer.DeserializeAsync<ScreenSettings>(openStream);
 
         Assert.NotNull(actual);
-        Assert.Equal(setValue, actual.Theme);
+        Assert.Equal(setValue, actual.BlueLightBlocking);
+    }
+
+    [Fact]
+    public async Task SaveAsyncTest_IsEnabled()
+    {
+        // Arrange
+        if (File.Exists(FilePath))
+            File.Delete(FilePath);
+
+        // Action
+        var repository = new ScreenRepository();
+        await repository.SaveAsync(true);
+
+        // Assert
+        using var openStream = File.OpenRead(FilePath);
+        var actual = await JsonSerializer.DeserializeAsync<ScreenSettings>(openStream);
+
+        Assert.NotNull(actual);
+        Assert.True(actual.IsEnabledBlueLightBlocking);
     }
 }

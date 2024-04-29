@@ -1,11 +1,10 @@
 ﻿using KeyBindingListener.Contracts;
-using KeyBindingListener.Services;
 using MagicSettings.Domains;
 using MagicSettings.Repositories.Contracts;
 using MagicSettings.Repositories.Models.SettingsFile;
 using Moq;
 
-namespace KeyBindingListenerTest.Services;
+namespace KeyBindingListener.Services;
 
 public class KeyboardActionServiceTest
 {
