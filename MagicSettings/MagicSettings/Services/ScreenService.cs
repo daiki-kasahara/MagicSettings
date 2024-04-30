@@ -28,4 +28,6 @@ internal class ScreenService(IScreenRepository repository, IProcessController co
         return isEnabled ? await _controller.LaunchAsync(MyProcesses.ScreenController) :
             await _controller.TerminateAsync(MyProcesses.ScreenController);
     }
+
+    public async Task UpdateSettingAsync() => await _screenRepository.SaveAsync(_controller.IsExistsProcess(MyProcesses.ScreenController));
 }

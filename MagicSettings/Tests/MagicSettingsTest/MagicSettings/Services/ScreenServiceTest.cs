@@ -120,4 +120,23 @@ public class ScreenServiceTest
         Assert.False(ret);
         repositoryStub.Verify(x => x.SaveAsync(value), Times.Once);
     }
+
+    [Fact]
+    public async Task UpdateSettingAsync()
+    {
+        // Arrange
+        var isExists = true;
+        var repositoryStub = new Mock<IScreenRepository>();
+        repositoryStub.Setup(x => x.SaveAsync(isExists));
+        var controllerStub = new Mock<IProcessController>();
+        controllerStub.Setup(x => x.IsExistsProcess(MyProcesses.ScreenController))
+            .Returns(isExists);
+
+        // Act
+        var service = new ScreenService(repositoryStub.Object, controllerStub.Object);
+        var exception = await Record.ExceptionAsync(service.UpdateSettingAsync);
+
+        // Assert
+        Assert.Null(exception);
+    }
 }

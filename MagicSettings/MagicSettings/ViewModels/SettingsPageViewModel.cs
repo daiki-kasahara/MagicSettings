@@ -1,13 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using MagicSettings.Contracts.Services;
 using MagicSettings.Domains;
 using MagicSettings.Repositories.Contracts;
 using MagicSettings.Repositories.Models;
+using MagicSettings.Repositories.Models.SettingsFile;
 
 namespace MagicSettings.ViewModels;
 
-internal partial class SettingsPageViewModel(IThemeService themeService, IAssemblyInfoRepository assemblyInfoRepository) : ObservableObject
+internal partial class SettingsPageViewModel(IThemeService themeService, IAssemblyInfoRepository assemblyInfoRepository, IOSSRepository ossRepository) : ObservableObject
 {
     [ObservableProperty]
     private AppTheme _theme;
@@ -15,13 +17,18 @@ internal partial class SettingsPageViewModel(IThemeService themeService, IAssemb
     [ObservableProperty]
     private About? _about;
 
+    [ObservableProperty]
+    private List<OSSProperty>? _oss;
+
     private readonly IThemeService _themeService = themeService;
     private readonly IAssemblyInfoRepository _assemblyInfoRepository = assemblyInfoRepository;
+    private readonly IOSSRepository _ossRepository = ossRepository;
 
     public async Task InitializeAsync()
     {
         Theme = await _themeService.GetCurrentThemeAsync();
         About = await _assemblyInfoRepository.GetAsync();
+        Oss = (await _ossRepository.GetAsync())?.OSS;
     }
 
     public async Task SetCurrentThemeAsync(AppTheme theme)

@@ -1,5 +1,7 @@
-﻿using Moq;
+﻿using System.Diagnostics;
+using Moq;
 using ProcessManager.Contracts;
+using ProcessManager.Internal;
 using ProcessManager.PipeMessage;
 
 namespace ProcessManager;
@@ -32,6 +34,44 @@ public class ProcessControllerTest : IDisposable
 
         // Assert
         Assert.Null(exception);
+    }
+
+    [Fact]
+    public void IsExistsProcessTest()
+    {
+        // Arrange
+        using var proc = new Process();
+        proc.StartInfo = new ProcessStartInfo()
+        {
+            FileName = Path.Combine(AppContext.BaseDirectory, $"MagicSettings.KeyBindingListener.exe"),
+            UseShellExecute = true,
+            CreateNoWindow = true,
+            WindowStyle = ProcessWindowStyle.Hidden,
+            WorkingDirectory = AppContext.BaseDirectory,
+        };
+        proc.Start();
+
+        // Act
+        var controller = new ProcessController(new ClientPipe());
+
+        var actual = controller.IsExistsProcess(MyProcesses.KeyBindingListener);
+
+        // Assert
+        Assert.True(actual);
+    }
+
+    [Fact]
+    public void IsExistsProcessTest_NotExists()
+    {
+        // Arrange
+
+        // Act
+        var controller = new ProcessController(new ClientPipe());
+
+        var actual = controller.IsExistsProcess(MyProcesses.KeyBindingListener);
+
+        // Assert
+        Assert.False(actual);
     }
 
     [Fact]

@@ -11,4 +11,6 @@ internal interface IScreenService
     public Task<bool> SetBlueLightBlockingAsync(BlueLightBlocking value);
 
     public Task<ScreenSettings> GetScreenSettingsAsync();
+
+    public Task UpdateSettingAsync();
 }

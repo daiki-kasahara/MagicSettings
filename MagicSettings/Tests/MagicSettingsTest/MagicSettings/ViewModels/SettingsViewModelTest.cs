@@ -2,6 +2,7 @@
 using MagicSettings.Domains;
 using MagicSettings.Repositories.Contracts;
 using MagicSettings.Repositories.Models;
+using MagicSettings.Repositories.Models.SettingsFile;
 using MagicSettings.Repositories.Repositories;
 using MagicSettings.ViewModels;
 using Moq;
@@ -22,12 +23,34 @@ public class SettingsViewModelTest
         repositoryStub.Setup(x => x.GetAsync()).ReturnsAsync(expectedAbout);
 
         // Act
-        var viewModel = new SettingsPageViewModel(serviceStub.Object, repositoryStub.Object);
+        var viewModel = new SettingsPageViewModel(serviceStub.Object, repositoryStub.Object, new OSSRepository());
         await viewModel.InitializeAsync();
 
         // Assert
         Assert.Equal(expectedTheme, viewModel.Theme);
         Assert.Equal(expectedAbout, viewModel.About);
+        Assert.NotNull(viewModel.Oss);
+    }
+
+    [Fact]
+    public async Task InitializeAsyncTest_OssIsNull()
+    {
+        // Arrange
+        var expectedTheme = AppTheme.Light;
+        var expectedAbout = new About("TestName", "1.0.1000.0", "Copyright");
+        var serviceStub = new Mock<IThemeService>();
+        serviceStub.Setup(x => x.GetCurrentThemeAsync()).ReturnsAsync(expectedTheme);
+        var repositoryStub = new Mock<IAssemblyInfoRepository>();
+        repositoryStub.Setup(x => x.GetAsync()).ReturnsAsync(expectedAbout);
+        var ossRepositoryStub = new Mock<IOSSRepository>();
+        ossRepositoryStub.Setup(x => x.GetAsync()).ReturnsAsync(default(OSSFile?));
+
+        // Act
+        var viewModel = new SettingsPageViewModel(serviceStub.Object, repositoryStub.Object, ossRepositoryStub.Object);
+        await viewModel.InitializeAsync();
+
+        // Assert
+        Assert.Null(viewModel.Oss);
     }
 
     [Theory]
@@ -41,7 +64,7 @@ public class SettingsViewModelTest
         serviceStub.Setup(x => x.SetCurrentThemeAsync(setValue));
 
         // Act
-        var viewModel = new SettingsPageViewModel(serviceStub.Object, new AssemblyInfoRepository());
+        var viewModel = new SettingsPageViewModel(serviceStub.Object, new AssemblyInfoRepository(), new OSSRepository());
         await viewModel.SetCurrentThemeAsync(setValue);
 
         // Assert

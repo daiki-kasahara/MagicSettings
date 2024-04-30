@@ -105,4 +105,23 @@ public class KeyboardServiceTest
         Assert.True(actual);
         repositoryStub.Verify(x => x.DeleteAsync(saveKey), Times.Once);
     }
+
+    [Fact]
+    public async Task UpdateSettingAsync()
+    {
+        // Arrange
+        var isExists = true;
+        var repositoryStub = new Mock<IKeyboardBindingRepository>();
+        repositoryStub.Setup(x => x.SaveAsync(isExists));
+        var controllerStub = new Mock<IProcessController>();
+        controllerStub.Setup(x => x.IsExistsProcess(MyProcesses.ScreenController))
+            .Returns(isExists);
+
+        // Act
+        var service = new KeyboardService(repositoryStub.Object, controllerStub.Object);
+        var exception = await Record.ExceptionAsync(service.UpdateSettingAsync);
+
+        // Assert
+        Assert.Null(exception);
+    }
 }
