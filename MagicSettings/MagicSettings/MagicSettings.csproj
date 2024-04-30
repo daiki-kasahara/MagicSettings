@@ -47,6 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Assets\Movies\BlueLightBlocking.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="Assets\Movies\KeyTyping.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
