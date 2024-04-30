@@ -6,7 +6,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using MagicSettings.Domains;
 using MagicSettings.Extensions;
-using MagicSettings.Models;
 using MagicSettings.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -151,8 +150,6 @@ internal sealed partial class KeyBindEditor : UserControl
     }
 
     #region Converter
-
-    private string EnumToKeyDisplayConverter(VKeys key) => CustomDisplayKeys.Keys.TryGetValue((int)key, out var keyString) ? keyString : key.ToString();
 
     private string EnumToStringConverter(KeyboardActionType type) => type.ToDisplayString(new ResourceLoader());
 

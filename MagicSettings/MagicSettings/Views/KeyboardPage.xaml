@@ -9,9 +9,12 @@
     xmlns:tkcontrols="using:CommunityToolkit.WinUI.Controls"
     xmlns:models="using:MagicSettings.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:cv="using:MagicSettings.Views.Converters"
     Loaded="PageLoadedAsync"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <cv:EnumToKeyDisplayConverter x:Key="EnumToKeyDisplayConverter"/>
+    </Page.Resources>
     <Grid>
         <FontIcon Glyph="&#xE765;" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="300" Opacity="0.1" Margin="0,0,10,-45" />
 
@@ -73,7 +76,7 @@
                                                     CornerRadius="8"
                                                     Margin="0,0,20,0"
                                                     MinWidth="40" MinHeight="40">
-                                                <TextBlock x:Name="KeyText" Text="{x:Bind VirtualKey, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0" />
+                                                <TextBlock x:Name="KeyText" Text="{x:Bind VirtualKey, Mode=OneWay, Converter={StaticResource EnumToKeyDisplayConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0" />
                                             </Border>
                                             <TextBlock x:Name="KeyBindItemHeader" Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, UrlPath), Mode=OneWay}" VerticalAlignment="Center"/>
                                         </StackPanel>
