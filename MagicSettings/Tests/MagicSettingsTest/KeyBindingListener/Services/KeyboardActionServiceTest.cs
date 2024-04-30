@@ -1,11 +1,10 @@
 ﻿using KeyBindingListener.Contracts;
-using KeyBindingListener.Services;
 using MagicSettings.Domains;
 using MagicSettings.Repositories.Contracts;
 using MagicSettings.Repositories.Models.SettingsFile;
 using Moq;
 
-namespace KeyBindingListenerTest.Services;
+namespace KeyBindingListener.Services;
 
 public class KeyboardActionServiceTest
 {
@@ -83,6 +82,30 @@ public class KeyboardActionServiceTest
             {
                 { 0x41, new KeyboardAction(){ ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" } },
             }
+        };
+        var repositoryStub = new Mock<IKeyboardBindingRepository>();
+        repositoryStub.Setup(x => x.GetAsync()).ReturnsAsync(settings);
+
+        var factoryStub = new Mock<IActionFactory>();
+        factoryStub.Setup(x => x.Create(It.IsAny<KeyboardActionType>(), It.IsAny<string>()));
+
+        // Act
+        var service = new KeyboardActionService(repositoryStub.Object, factoryStub.Object);
+        var exception = await Record.ExceptionAsync(async () => await service.ActionAsync(VKeys.D));
+
+        // Assert
+        Assert.Null(exception);
+        factoryStub.Verify(x => x.Create(It.IsAny<KeyboardActionType>(), It.IsAny<string>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task ActionAsyncTest_ActionsIsNull()
+    {
+        // Arrange
+        var settings = new KeyboardBindingSettings
+        {
+            IsEnabledKeyboardBinding = true,
+            KeyboardActions = null,
         };
         var repositoryStub = new Mock<IKeyboardBindingRepository>();
         repositoryStub.Setup(x => x.GetAsync()).ReturnsAsync(settings);

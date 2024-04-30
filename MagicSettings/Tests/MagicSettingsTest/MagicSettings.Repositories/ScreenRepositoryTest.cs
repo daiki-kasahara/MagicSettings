@@ -1,17 +1,13 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using MagicSettings.Domains;
 using MagicSettings.Models.SettingsFile;
-using MagicSettings.Repositories;
 
-namespace MagicSettings.RepositoriesTest;
+namespace MagicSettings.Repositories;
 
 public class ScreenRepositoryTest
 {
     private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "screen.json");
-    private class TestJsonObject
-    {
-        public int TestInt { get; set; }
-    }
 
     [Fact]
     public async Task GetAsyncTest()
@@ -51,15 +47,17 @@ public class ScreenRepositoryTest
     }
 
     [Fact]
-    public async Task GetAsyncTest_NotTargetString()
+    public async Task GetAsyncTest_InvalidJson()
     {
         // Arrange
-        var settings = new TestJsonObject();
         Directory.CreateDirectory(Directory.GetParent(FilePath)!.FullName);
 
-        using (var createStream = File.Create(FilePath))
+        using (var createStream = File.Create(FilePath)) { }
+
+        var enc = Encoding.UTF8;
+        using (var writer = new StreamWriter(FilePath, false, enc))
         {
-            await JsonSerializer.SerializeAsync(createStream, settings);
+            writer.WriteLine("InvalidJson");
         }
 
         // Action

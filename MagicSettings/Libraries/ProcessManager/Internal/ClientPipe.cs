@@ -4,9 +4,9 @@ using System.Text.Json;
 using ProcessManager.Contracts;
 using ProcessManager.PipeMessage;
 
-namespace ProcessManager;
+namespace ProcessManager.Internal;
 
-internal class ClientPipe
+internal class ClientPipe : IClientPipe
 {
     public async Task<bool> CheckExistedMessageAsync(MyProcesses process) =>
         await SendMessageToServerAsync(process, new("Check"), 10000);

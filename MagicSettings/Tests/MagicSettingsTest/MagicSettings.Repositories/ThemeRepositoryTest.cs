@@ -1,16 +1,12 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using MagicSettings.Domains;
-using MagicSettings.Repositories;
 
-namespace MagicSettings.RepositoriesTest;
+namespace MagicSettings.Repositories;
 
 public class ThemeRepositoryTest
 {
     private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "theme.json");
-    private class TestJsonObject
-    {
-        public int TestInt { get; set; }
-    }
 
     [Fact]
     public async Task GetAsyncTest()
@@ -51,15 +47,17 @@ public class ThemeRepositoryTest
     }
 
     [Fact]
-    public async Task GetAsyncTest_NotTargetString()
+    public async Task GetAsyncTest_InvalidJson()
     {
         // Arrange
-        var settings = new TestJsonObject();
         Directory.CreateDirectory(Directory.GetParent(FilePath)!.FullName);
 
-        using (var createStream = File.Create(FilePath))
+        using (var createStream = File.Create(FilePath)) { }
+
+        var enc = Encoding.UTF8;
+        using (var writer = new StreamWriter(FilePath, false, enc))
         {
-            await JsonSerializer.SerializeAsync(createStream, settings);
+            writer.WriteLine("InvalidJson");
         }
 
         // Action

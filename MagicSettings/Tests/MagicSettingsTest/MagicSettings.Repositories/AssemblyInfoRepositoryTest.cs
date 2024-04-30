@@ -1,6 +1,6 @@
 ﻿using MagicSettings.Repositories.Repositories;
 
-namespace MagicSettings.RepositoriesTest;
+namespace MagicSettings.Repositories;
 
 public class AssemblyInfoRepositoryTest
 {

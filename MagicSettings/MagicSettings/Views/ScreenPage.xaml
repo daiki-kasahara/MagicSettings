@@ -11,27 +11,39 @@
     Loaded="PageLoadedAsync"
     mc:Ignorable="d">
 
-    <StackPanel Margin="20">
-        <TextBlock x:Uid="Screen_Title" FontSize="28" FontWeight="Bold"/>
+    <Grid>
+        <FontIcon Glyph="&#xE770;" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="300" Opacity="0.1" Margin="0,0,10,-30" />
+        <StackPanel Margin="20">
+            <TextBlock x:Uid="Screen_Title" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
 
-        <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.HasError, Mode=TwoWay}" Margin="0,10,0,10"/>
-        <tkcontrols:SettingsExpander x:Name="BlueLightBlockingSetting"
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="ms-appx:///Assets/Movies/BlueLightBlocking.gif" MaxWidth="400" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="1" x:Uid="Screen_Description" Margin="20,0,0,0" />
+            </Grid>
+
+            <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.HasError, Mode=TwoWay}" Margin="0,10,0,10"/>
+            <tkcontrols:SettingsExpander x:Name="BlueLightBlockingSetting"
                                      x:Uid="Screen_BlueLightBlockingExpander"
                                      HeaderIcon="{ui:FontIcon Glyph=&#xF08C;}"
                                      Margin="0,0,0,2"
                                      IsExpanded="True">
-            <ToggleSwitch MinWidth="0"
+                <ToggleSwitch MinWidth="0"
                           IsOn="{x:Bind _viewModel.IsEnabledBlueLightBlocking, Mode=OneWay}"
                           IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
                           Toggled="BlueLightBlockingToggled"/>
-            <tkcontrols:SettingsExpander.Items>
-                <tkcontrols:SettingsCard x:Uid="Screen_BlueLightBlocking_Degree">
-                    <Slider Minimum="10" Maximum="100" StepFrequency="10" Width="250"
+                <tkcontrols:SettingsExpander.Items>
+                    <tkcontrols:SettingsCard x:Uid="Screen_BlueLightBlocking_Degree">
+                        <Slider Minimum="10" Maximum="100" StepFrequency="10" Width="250"
                             IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledBlueLightBlocking, _viewModel.CanExecute), Mode=OneWay}"
                             Value="{x:Bind _viewModel.ReductionRate, Mode=OneWay}"
                             ValueChanged="BlueLightBlockingValueChanged"/>
-                </tkcontrols:SettingsCard>
-            </tkcontrols:SettingsExpander.Items>
-        </tkcontrols:SettingsExpander>
-    </StackPanel>
+                    </tkcontrols:SettingsCard>
+                </tkcontrols:SettingsExpander.Items>
+            </tkcontrols:SettingsExpander>
+        </StackPanel>
+    </Grid>
 </Page>

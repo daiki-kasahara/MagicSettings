@@ -6,7 +6,7 @@ using MagicSettings.Repositories.Repositories;
 using MagicSettings.ViewModels;
 using Moq;
 
-namespace MagicSettingsTest.ViewModels;
+namespace MagicSettingsTest.MagicSettings.ViewModels;
 
 public class SettingsViewModelTest
 {

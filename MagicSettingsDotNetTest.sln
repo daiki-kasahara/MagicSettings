@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettings", "MagicSetti
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackgroundProcesses", "BackgroundProcesses", "{DD18BDBE-E4CF-481B-B9E3-1495520A7BAF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScreenController", "MagicSettings\BackgroundProcesses\ScreenController\ScreenController.vcxproj", "{E23A719C-B592-48A8-A32E-07662819AEF4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{32AAFD78-88AA-4CE3-974D-68E361A3B405}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicSettings.Repositories", "MagicSettings\Libraries\MagicSettings.Repositories\MagicSettings.Repositories.csproj", "{D38A1FB6-886E-4460-9044-C7851338AAD3}"
@@ -33,10 +31,6 @@ Global
 		{74F9D127-BC90-4192-BA9C-64A89CC9E4D7}.Debug|x64.Build.0 = Debug|x64
 		{74F9D127-BC90-4192-BA9C-64A89CC9E4D7}.Release|x64.ActiveCfg = Release|x64
 		{74F9D127-BC90-4192-BA9C-64A89CC9E4D7}.Release|x64.Build.0 = Release|x64
-		{E23A719C-B592-48A8-A32E-07662819AEF4}.Debug|x64.ActiveCfg = Debug|x64
-		{E23A719C-B592-48A8-A32E-07662819AEF4}.Debug|x64.Build.0 = Debug|x64
-		{E23A719C-B592-48A8-A32E-07662819AEF4}.Release|x64.ActiveCfg = Release|x64
-		{E23A719C-B592-48A8-A32E-07662819AEF4}.Release|x64.Build.0 = Release|x64
 		{D38A1FB6-886E-4460-9044-C7851338AAD3}.Debug|x64.ActiveCfg = Debug|x64
 		{D38A1FB6-886E-4460-9044-C7851338AAD3}.Debug|x64.Build.0 = Debug|x64
 		{D38A1FB6-886E-4460-9044-C7851338AAD3}.Release|x64.ActiveCfg = Release|x64
@@ -56,12 +50,12 @@ Global
 		{3022DD7E-A7D4-4A56-AB03-F12B99155243}.Debug|x64.ActiveCfg = Debug|x64
 		{3022DD7E-A7D4-4A56-AB03-F12B99155243}.Debug|x64.Build.0 = Debug|x64
 		{3022DD7E-A7D4-4A56-AB03-F12B99155243}.Release|x64.ActiveCfg = Release|x64
+		{3022DD7E-A7D4-4A56-AB03-F12B99155243}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{E23A719C-B592-48A8-A32E-07662819AEF4} = {DD18BDBE-E4CF-481B-B9E3-1495520A7BAF}
 		{D38A1FB6-886E-4460-9044-C7851338AAD3} = {32AAFD78-88AA-4CE3-974D-68E361A3B405}
 		{9518A66A-C893-43BC-A405-637E1B06A700} = {32AAFD78-88AA-4CE3-974D-68E361A3B405}
 		{BD4581C0-B900-4F2B-B821-17A427E42385} = {32AAFD78-88AA-4CE3-974D-68E361A3B405}

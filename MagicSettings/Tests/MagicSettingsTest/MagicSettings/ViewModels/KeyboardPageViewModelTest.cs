@@ -6,7 +6,7 @@ using MagicSettings.Repositories.Models.SettingsFile;
 using MagicSettings.ViewModels;
 using Moq;
 
-namespace MagicSettingsTest.ViewModels;
+namespace MagicSettingsTest.MagicSettings.ViewModels;
 
 public class KeyboardPageViewModelTest
 {
@@ -19,9 +19,9 @@ public class KeyboardPageViewModelTest
             IsEnabledKeyboardBinding = true,
             KeyboardActions = new Dictionary<int, KeyboardAction>()
             {
-                { 1, new KeyboardAction(){ ActionType = MagicSettings.Domains.KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" } },
-                { 2, new KeyboardAction(){ ActionType = MagicSettings.Domains.KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" } },
-                { 3, new KeyboardAction(){ ActionType = MagicSettings.Domains.KeyboardActionType.MicrosoftStore, IsEnabled = false } },
+                { 1, new KeyboardAction(){ ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" } },
+                { 2, new KeyboardAction(){ ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" } },
+                { 3, new KeyboardAction(){ ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false } },
             }
         };
         var serviceStub = new Mock<IKeyboardService>();
@@ -121,9 +121,9 @@ public class KeyboardPageViewModelTest
 
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
-                new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = MagicSettings.Domains.KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = MagicSettings.Domains.KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
-                new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = MagicSettings.Domains.KeyboardActionType.MicrosoftStore, IsEnabled = false },
+                new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
         var serviceStub = new Mock<IKeyboardService>();
@@ -158,9 +158,9 @@ public class KeyboardPageViewModelTest
 
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
-                new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = MagicSettings.Domains.KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = MagicSettings.Domains.KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
-                new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = MagicSettings.Domains.KeyboardActionType.MicrosoftStore, IsEnabled = false },
+                new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
         var serviceStub = new Mock<IKeyboardService>();
@@ -230,9 +230,9 @@ public class KeyboardPageViewModelTest
 
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
-                new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = MagicSettings.Domains.KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = MagicSettings.Domains.KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
-                new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = MagicSettings.Domains.KeyboardActionType.MicrosoftStore, IsEnabled = false },
+                new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
         var serviceStub = new Mock<IKeyboardService>();

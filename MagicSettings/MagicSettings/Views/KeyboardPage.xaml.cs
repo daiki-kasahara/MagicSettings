@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using CommunityToolkit.WinUI.Controls;
 using MagicSettings.Models;
 using MagicSettings.ViewModels;
@@ -33,13 +34,15 @@ public sealed partial class KeyboardPage : Page
     private async void AddKeyBindButton_Click(object sender, RoutedEventArgs e)
     {
         var resourceLoader = new ResourceLoader();
-
+        var content = App.Provider.GetRequiredService<KeyBindEditor>();
+        content.ViewModel.KeyList = _viewModel.KeyActions.Select(x => x.VirtualKey).ToList();
         var dialog = new ContentDialog
         {
-            Content = App.Provider.GetRequiredService<KeyBindEditor>(),
+            Content = content,
             CloseButtonText = resourceLoader.GetString("KeyBindDialog_Cancel"),
             PrimaryButtonText = resourceLoader.GetString("KeyBindDialog_Add"),
             PrimaryButtonStyle = (Style)Application.Current.Resources["AccentButtonStyle"],
+            IsPrimaryButtonEnabled = false,
             RequestedTheme = this.ActualTheme,
             Title = resourceLoader.GetString("KeyBindDialog_Add_Title"),
             XamlRoot = this.XamlRoot,
