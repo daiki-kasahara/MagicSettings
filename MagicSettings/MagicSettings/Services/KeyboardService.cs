@@ -8,7 +8,7 @@ using ProcessManager.Contracts;
 namespace MagicSettings.Services;
 
 /// <summary>
-/// キーボード設定をするサービス
+/// キーボードの設定をするサービス
 /// </summary>
 /// <param name="keyboardRepository"></param>
 /// <param name="controller"></param>
