@@ -108,7 +108,7 @@ public class ServerPipe
                     continue;
                 }
             }
-            catch (IOException ofex)
+            catch (IOException)
             {
                 // クライアントが切断
             }

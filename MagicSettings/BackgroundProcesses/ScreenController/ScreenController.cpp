@@ -103,7 +103,6 @@ auto InitInstance(HINSTANCE hInstance, int nCmdShow) -> bool
         return false;
     }
 
-
     auto hWnd = CreateWindowW(g_szWindowClass, nullptr, WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
     if (!hWnd)
@@ -165,11 +164,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
     case WM_CUSTOM_EXIT_MESSAGE:
     {
+        // アプリを終了する
         DestroyWindow(hWnd);
         break;
     }
     case WM_CUSTOM_UPDATE_MESSAGE:
     {
+        // フィルタの再設定
         return g_screenFilter.Set(GetFilterValue()) ? 0 : 1;
     }
     case WM_PAINT:
