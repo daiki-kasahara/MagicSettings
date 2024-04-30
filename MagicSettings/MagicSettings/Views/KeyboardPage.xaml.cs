@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.WinUI.Controls;
 using MagicSettings.Models;
 using MagicSettings.ViewModels;
@@ -73,6 +74,35 @@ public sealed partial class KeyboardPage : Page
         if (sender is not SettingsCard settingsCard || settingsCard.DataContext is not KeyBindAction updateAction)
             return;
 
+        await UpdateItemAsync(updateAction);
+    }
+
+    private async void EditMenuItemButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not MenuFlyoutItem settingsCard || settingsCard.DataContext is not KeyBindAction updateAction)
+            return;
+
+        await UpdateItemAsync(updateAction);
+    }
+
+    private async void RemoveKeyBindButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not MenuFlyoutItem menuFlyoutItem || menuFlyoutItem.DataContext is not KeyBindAction action)
+            return;
+
+        await _viewModel.RemoveActionAsync(action.VirtualKey);
+    }
+
+    private async void IsEnabledKeyBindItem_Toggled(object sender, RoutedEventArgs e)
+    {
+        if (sender is not ToggleSwitch toggleSwitch || toggleSwitch.DataContext is not KeyBindAction action)
+            return;
+
+        await _viewModel.UpdateActionEnabledAsync(action.VirtualKey, toggleSwitch.IsOn);
+    }
+
+    private async Task UpdateItemAsync(KeyBindAction updateAction)
+    {
         var resourceLoader = new ResourceLoader();
         var content = App.Provider.GetRequiredService<KeyBindEditor>();
 
@@ -111,22 +141,6 @@ public sealed partial class KeyboardPage : Page
         };
 
         await _viewModel.UpdateActionAsync(newAction);
-    }
-
-    private async void RemoveKeyBindButton_Click(object sender, RoutedEventArgs e)
-    {
-        if (sender is not MenuFlyoutItem menuFlyoutItem || menuFlyoutItem.DataContext is not KeyBindAction action)
-            return;
-
-        await _viewModel.RemoveActionAsync(action.VirtualKey);
-    }
-
-    private async void IsEnabledKeyBindItem_Toggled(object sender, RoutedEventArgs e)
-    {
-        if (sender is not ToggleSwitch toggleSwitch || toggleSwitch.DataContext is not KeyBindAction action)
-            return;
-
-        await _viewModel.UpdateActionEnabledAsync(action.VirtualKey, toggleSwitch.IsOn);
     }
 
     #region Converter

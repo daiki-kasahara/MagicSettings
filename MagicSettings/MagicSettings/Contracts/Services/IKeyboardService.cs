@@ -12,4 +12,6 @@ internal interface IKeyboardService
     public Task<bool> SetKeyBindingActionAsync(int key, KeyboardAction action);
 
     public Task<bool> DeleteKeyBindingActionAsync(int key);
+
+    public Task UpdateSettingAsync();
 }

@@ -6,13 +6,16 @@
     xmlns:local="using:MagicSettings.Views.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cv="using:MagicSettings.Views.Converters"
     mc:Ignorable="d">
-
+    <UserControl.Resources>
+        <cv:EnumToKeyDisplayConverter x:Key="EnumToKeyDisplayConverter"/>
+    </UserControl.Resources>
     <ScrollViewer>
         <StackPanel Margin="5,0" Width="480">
             <TextBlock x:Uid="KeyBindDialog_Key" />
             <InfoBar x:Uid="Error_AlreadyExistsKey" Severity="Error" IsClosable="False" IsOpen="{x:Bind AlreadyExistsConverter(ViewModel.KeyList, ViewModel.Key), Mode=OneWay}" Margin="0,5,0,5" />
-            <TextBox x:Name="KeyInput" Text="{x:Bind EnumToKeyDisplayConverter(ViewModel.Key), Mode=OneWay}" IsEnabled="{x:Bind ViewModel.IsEnabledKeyCustom, Mode=OneWay}" 
+            <TextBox x:Name="KeyInput" Text="{x:Bind ViewModel.Key, Mode=OneWay, Converter={StaticResource EnumToKeyDisplayConverter}}" IsEnabled="{x:Bind ViewModel.IsEnabledKeyCustom, Mode=OneWay}" 
                      Margin="0,0,0,15" IsReadOnly="True" KeyDown="KeyInputKeyDown"/>
 
             <TextBlock x:Uid="KeyBindDialog_Action"/>

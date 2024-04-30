@@ -16,6 +16,7 @@ public class KeyHookServiceTest
         // キー押しフラグをリセットする
         service.OnKeyUp(null, new KeyboardHookEventArgs() { Key = VKeys.LWin });
         service.OnKeyUp(null, new KeyboardHookEventArgs() { Key = VKeys.LMenu });
+        Thread.Sleep(100);
     }
 
     // 代表のキーでいくつかチェックする

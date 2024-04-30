@@ -22,12 +22,13 @@ public class SettingsViewModelTest
         repositoryStub.Setup(x => x.GetAsync()).ReturnsAsync(expectedAbout);
 
         // Act
-        var viewModel = new SettingsPageViewModel(serviceStub.Object, repositoryStub.Object);
+        var viewModel = new SettingsPageViewModel(serviceStub.Object, repositoryStub.Object, new OSSRepository());
         await viewModel.InitializeAsync();
 
         // Assert
         Assert.Equal(expectedTheme, viewModel.Theme);
         Assert.Equal(expectedAbout, viewModel.About);
+        Assert.NotNull(viewModel.Oss);
     }
 
     [Theory]
@@ -41,7 +42,7 @@ public class SettingsViewModelTest
         serviceStub.Setup(x => x.SetCurrentThemeAsync(setValue));
 
         // Act
-        var viewModel = new SettingsPageViewModel(serviceStub.Object, new AssemblyInfoRepository());
+        var viewModel = new SettingsPageViewModel(serviceStub.Object, new AssemblyInfoRepository(), new OSSRepository());
         await viewModel.SetCurrentThemeAsync(setValue);
 
         // Assert

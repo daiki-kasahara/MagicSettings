@@ -9,31 +9,36 @@
     xmlns:tkcontrols="using:CommunityToolkit.WinUI.Controls"
     xmlns:models="using:MagicSettings.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:cv="using:MagicSettings.Views.Converters"
     Loaded="PageLoadedAsync"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <cv:EnumToKeyDisplayConverter x:Key="EnumToKeyDisplayConverter"/>
+    </Page.Resources>
     <Grid>
         <FontIcon Glyph="&#xE765;" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="300" Opacity="0.1" Margin="0,0,10,-45" />
 
         <Grid Margin="20,20,10,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock x:Uid="Keyboard_Title" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="ms-appx:///Assets/Movies/KeyTyping.gif" MaxWidth="400" HorizontalAlignment="Left"/>
-                <TextBlock Grid.Column="1" x:Uid="Keyboard_Description" Margin="20,0,0,0" />
-            </Grid>
-            <ScrollViewer Grid.Row="2">
+            <ScrollViewer Grid.Row="1">
                 <StackPanel Margin="0,0,10,0">
+                    <!-- ページ説明 -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="ms-appx:///Assets/Movies/KeyTyping.gif" MaxWidth="400" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" x:Uid="Keyboard_Description" Margin="20,0,0,0" />
+                    </Grid>
+                    
                     <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.EnabledError, Mode=TwoWay}" Margin="0,10,0,10"/>
 
+                    <!-- キーバインディングの有効無効設定 -->
                     <tkcontrols:SettingsCard x:Uid="Keyboard_IsEnabledKeyBindingTitle" HeaderIcon="{ui:FontIcon Glyph=&#xE945;}">
                         <ToggleSwitch x:Uid="Keyboard_IsEnabledKeyBinding"
                                       IsOn="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
@@ -45,6 +50,7 @@
 
                     <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.KeyBindError, Mode=TwoWay}" Margin="0,10"/>
 
+                    <!-- キーバインディングの設定 -->
                     <tkcontrols:SettingsCard x:Name="KeyBindingSetting"
                                              x:Uid="Keyboard_KeyBinding_Enabled"
                                              HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}"
@@ -73,7 +79,7 @@
                                                     CornerRadius="8"
                                                     Margin="0,0,20,0"
                                                     MinWidth="40" MinHeight="40">
-                                                <TextBlock x:Name="KeyText" Text="{x:Bind VirtualKey, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0" />
+                                                <TextBlock x:Name="KeyText" Text="{x:Bind VirtualKey, Mode=OneWay, Converter={StaticResource EnumToKeyDisplayConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0" />
                                             </Border>
                                             <TextBlock x:Name="KeyBindItemHeader" Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, UrlPath), Mode=OneWay}" VerticalAlignment="Center"/>
                                         </StackPanel>
@@ -94,6 +100,9 @@
                                                 Background="Transparent">
                                             <Button.Flyout>
                                                 <MenuFlyout>
+                                                    <MenuFlyoutItem x:Uid="Keyboard_KeyBinding_EditItem"
+                                                                    Click="EditMenuItemButton_Click"
+                                                                    Icon="{ui:FontIcon Glyph=&#xE70F;}" />
                                                     <MenuFlyoutItem x:Uid="Keyboard_KeyBinding_RemoveItem"
                                                                     Click="RemoveKeyBindButton_Click"
                                                                     Icon="{ui:FontIcon Glyph=&#xE74D;}" />
