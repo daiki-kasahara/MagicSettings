@@ -39,7 +39,7 @@ internal partial class ScreenPageViewModel(IScreenService service) : ObservableO
     }
 
     /// <summary>
-    /// ブルーライトカットの有効無効設定
+    /// ブルーライトカットの有効無効を設定する
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
@@ -66,7 +66,7 @@ internal partial class ScreenPageViewModel(IScreenService service) : ObservableO
     }
 
     /// <summary>
-    /// 軽減率の設定
+    /// 軽減率を設定する
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>

@@ -37,7 +37,7 @@ internal partial class SettingsPageViewModel(IThemeService themeService,
     }
 
     /// <summary>
-    /// テーマ設定
+    /// テーマを設定する
     /// </summary>
     /// <param name="theme">設定するテーマ</param>
     /// <returns></returns>

@@ -85,7 +85,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
     }
 
     /// <summary>
-    /// 新しいキーバインディングを追加
+    /// 新しいキーバインディングを追加する
     /// </summary>
     /// <param name="keyBindAction"></param>
     /// <returns></returns>
@@ -124,7 +124,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
     }
 
     /// <summary>
-    /// キーバインディングの更新
+    /// キーバインディングの更新する
     /// </summary>
     /// <param name="keyBindAction"></param>
     /// <returns></returns>
@@ -169,7 +169,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
     }
 
     /// <summary>
-    /// 各キーバインディングの有効無効設定
+    /// 各キーバインディングの有効無効を設定する
     /// </summary>
     /// <param name="key"></param>
     /// <param name="isEnabled"></param>
