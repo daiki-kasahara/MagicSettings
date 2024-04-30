@@ -21,22 +21,24 @@
         <Grid Margin="20,20,10,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock x:Uid="Keyboard_Title" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="ms-appx:///Assets/Movies/KeyTyping.gif" MaxWidth="400" HorizontalAlignment="Left"/>
-                <TextBlock Grid.Column="1" x:Uid="Keyboard_Description" Margin="20,0,0,0" />
-            </Grid>
-            <ScrollViewer Grid.Row="2">
+            <ScrollViewer Grid.Row="1">
                 <StackPanel Margin="0,0,10,0">
+                    <!-- ページ説明 -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="ms-appx:///Assets/Movies/KeyTyping.gif" MaxWidth="400" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Column="1" x:Uid="Keyboard_Description" Margin="20,0,0,0" />
+                    </Grid>
+                    
                     <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.EnabledError, Mode=TwoWay}" Margin="0,10,0,10"/>
 
+                    <!-- キーバインディングの有効無効設定 -->
                     <tkcontrols:SettingsCard x:Uid="Keyboard_IsEnabledKeyBindingTitle" HeaderIcon="{ui:FontIcon Glyph=&#xE945;}">
                         <ToggleSwitch x:Uid="Keyboard_IsEnabledKeyBinding"
                                       IsOn="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
@@ -48,6 +50,7 @@
 
                     <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.KeyBindError, Mode=TwoWay}" Margin="0,10"/>
 
+                    <!-- キーバインディングの設定 -->
                     <tkcontrols:SettingsCard x:Name="KeyBindingSetting"
                                              x:Uid="Keyboard_KeyBinding_Enabled"
                                              HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}"
