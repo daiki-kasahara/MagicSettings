@@ -189,8 +189,17 @@
   <data name="ActionType_StartProgram" xml:space="preserve">
     <value>アプリの起動</value>
   </data>
+  <data name="Error_AlreadyExistsKey.Message" xml:space="preserve">
+    <value>同じキーバインディングが既に登録されています。</value>
+  </data>
   <data name="Error_FailedToSet.Message" xml:space="preserve">
     <value>設定に失敗しました</value>
+  </data>
+  <data name="Error_InvalidUrl.Message" xml:space="preserve">
+    <value>URLが不正です。</value>
+  </data>
+  <data name="Error_PathIsEmpty.Message" xml:space="preserve">
+    <value>指定したファイルは存在しません。</value>
   </data>
   <data name="KeyBindDialog_Action.Text" xml:space="preserve">
     <value>アクション</value>
@@ -205,7 +214,7 @@
     <value>キャンセル</value>
   </data>
   <data name="KeyBindDialog_Key.Text" xml:space="preserve">
-    <value>キー (A~Zのみ)</value>
+    <value>キー割り当て (Alt, Esc, Fn, Tab, Win, その他一部キーは割り当てることができません)</value>
   </data>
   <data name="KeyBindDialog_OpenFile.Content" xml:space="preserve">
     <value>ファイルを開く</value>
@@ -221,6 +230,10 @@
   </data>
   <data name="KeyBindDialog_Url.Text" xml:space="preserve">
     <value>URL (http:またはhttps:から始まるURLのみ)</value>
+  </data>
+  <data name="Keyboard_Description.Text" xml:space="preserve">
+    <value>ここではキーボードの設定ができます。
+キーバインディングとはキーに機能を割り当てることです。</value>
   </data>
   <data name="Keyboard_IsEnabledKeyBinding.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>キーバインディングを有効にする</value>
@@ -270,8 +283,20 @@
   <data name="Screen_BlueLightBlocking_Degree.Header" xml:space="preserve">
     <value>軽減率 (%)</value>
   </data>
+  <data name="Screen_Description.Text" xml:space="preserve">
+    <value>ここではスクリーンの設定ができます。</value>
+  </data>
   <data name="Screen_Title.Text" xml:space="preserve">
     <value>スクリーン</value>
+  </data>
+  <data name="Settings_Dark.Content" xml:space="preserve">
+    <value>ダーク</value>
+  </data>
+  <data name="Settings_Light.Content" xml:space="preserve">
+    <value>ライト</value>
+  </data>
+  <data name="Settings_System.Content" xml:space="preserve">
+    <value>Systemの設定に合わせる</value>
   </data>
   <data name="Settings_ThemeTitle.Text" xml:space="preserve">
     <value>アプリのテーマ</value>

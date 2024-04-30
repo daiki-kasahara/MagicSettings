@@ -14,16 +14,18 @@ public class KeyHookServiceTest
         var service = new KeyHookService(serviceStub.Object);
 
         // キー押しフラグをリセットする
-        service.OnKeyUp(null, new KeyboardHookEventArgs() { Key = VKeys.LeftWindows });
-        service.OnKeyUp(null, new KeyboardHookEventArgs() { Key = VKeys.LeftMenu });
+        service.OnKeyUp(null, new KeyboardHookEventArgs() { Key = VKeys.LWin });
+        service.OnKeyUp(null, new KeyboardHookEventArgs() { Key = VKeys.LMenu });
     }
 
     // 代表のキーでいくつかチェックする
     [Theory]
-    [InlineData(VKeys.A, VKeys.LeftWindows, VKeys.LeftMenu)]
-    [InlineData(VKeys.B, VKeys.RightWindows, VKeys.LeftMenu)]
-    [InlineData(VKeys.Y, VKeys.RightWindows, VKeys.RightMenu)]
-    [InlineData(VKeys.Z, VKeys.LeftWindows, VKeys.RightMenu)]
+    [InlineData(VKeys.A, VKeys.LWin, VKeys.LMenu)]
+    [InlineData(VKeys.B, VKeys.RWin, VKeys.LMenu)]
+    [InlineData(VKeys.W, VKeys.LWin, VKeys.Menu)]
+    [InlineData(VKeys.X, VKeys.RWin, VKeys.Menu)]
+    [InlineData(VKeys.Y, VKeys.RWin, VKeys.RMenu)]
+    [InlineData(VKeys.Z, VKeys.LWin, VKeys.RMenu)]
     public void OnKeyDownTest(VKeys key, VKeys win, VKeys alt)
     {
         // Arrange
@@ -61,8 +63,8 @@ public class KeyHookServiceTest
     }
 
     [Theory]
-    [InlineData(VKeys.LeftWindows)]
-    [InlineData(VKeys.RightWindows)]
+    [InlineData(VKeys.LWin)]
+    [InlineData(VKeys.RWin)]
     public void OnKeyDownTest_OnlyWinKey(VKeys key)
     {
         // Arrange
@@ -79,8 +81,9 @@ public class KeyHookServiceTest
     }
 
     [Theory]
-    [InlineData(VKeys.LeftMenu)]
-    [InlineData(VKeys.RightMenu)]
+    [InlineData(VKeys.Menu)]
+    [InlineData(VKeys.LMenu)]
+    [InlineData(VKeys.RMenu)]
     public void OnKeyDownTest_OnlyAltKey(VKeys key)
     {
         // Arrange
@@ -97,8 +100,9 @@ public class KeyHookServiceTest
     }
 
     [Theory]
-    [InlineData(VKeys.LeftMenu)]
-    [InlineData(VKeys.RightMenu)]
+    [InlineData(VKeys.Menu)]
+    [InlineData(VKeys.LMenu)]
+    [InlineData(VKeys.RMenu)]
     public void OnKeyUpTest_WithAlt(VKeys key)
     {
         // Arrange
@@ -107,7 +111,7 @@ public class KeyHookServiceTest
 
         // Act
         var service = new KeyHookService(serviceStub.Object);
-        service.OnKeyDown(null, new KeyboardHookEventArgs() { Key = VKeys.RightWindows });
+        service.OnKeyDown(null, new KeyboardHookEventArgs() { Key = VKeys.RWin });
         service.OnKeyUp(null, new KeyboardHookEventArgs() { Key = key });
         service.OnKeyDown(null, new KeyboardHookEventArgs() { Key = VKeys.A });
 
@@ -117,8 +121,8 @@ public class KeyHookServiceTest
     }
 
     [Theory]
-    [InlineData(VKeys.LeftWindows)]
-    [InlineData(VKeys.RightWindows)]
+    [InlineData(VKeys.LWin)]
+    [InlineData(VKeys.RWin)]
     public void OnKeyUpTest_WithWin(VKeys key)
     {
         // Arrange
@@ -127,7 +131,7 @@ public class KeyHookServiceTest
 
         // Act
         var service = new KeyHookService(serviceStub.Object);
-        service.OnKeyDown(null, new KeyboardHookEventArgs() { Key = VKeys.RightMenu });
+        service.OnKeyDown(null, new KeyboardHookEventArgs() { Key = VKeys.RMenu });
         service.OnKeyUp(null, new KeyboardHookEventArgs() { Key = key });
         service.OnKeyDown(null, new KeyboardHookEventArgs() { Key = VKeys.A });
 

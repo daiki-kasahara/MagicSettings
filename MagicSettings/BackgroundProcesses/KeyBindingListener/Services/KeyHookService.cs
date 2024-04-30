@@ -23,13 +23,13 @@ public class KeyHookService(IKeyboardActionService keyboardActionService)
     {
         switch (ea.Key)
         {
-            case VKeys.LeftWindows or VKeys.RightWindows:
+            case VKeys.LWin or VKeys.RWin:
                 {
                     // フラグを立てる
                     IsWinKey = true;
                     break;
                 }
-            case VKeys.LeftMenu or VKeys.RightMenu:
+            case VKeys.LMenu or VKeys.RMenu or VKeys.Menu:
                 {
                     // フラグを立てる
                     IsAltKey = true;
@@ -61,13 +61,13 @@ public class KeyHookService(IKeyboardActionService keyboardActionService)
     {
         switch (ea.Key)
         {
-            case VKeys.LeftWindows or VKeys.RightWindows:
+            case VKeys.LWin or VKeys.RWin:
                 {
                     // フラグを降ろす
                     IsWinKey = false;
                     break;
                 }
-            case VKeys.LeftMenu or VKeys.RightMenu:
+            case VKeys.LMenu or VKeys.RMenu or VKeys.Menu:
                 {
                     // フラグを降ろす
                     IsAltKey = false;
