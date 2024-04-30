@@ -27,20 +27,20 @@
 
             <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.HasError, Mode=TwoWay}" Margin="0,10,0,10"/>
             <tkcontrols:SettingsExpander x:Name="BlueLightBlockingSetting"
-                                     x:Uid="Screen_BlueLightBlockingExpander"
-                                     HeaderIcon="{ui:FontIcon Glyph=&#xF08C;}"
-                                     Margin="0,0,0,2"
-                                     IsExpanded="True">
+                                         x:Uid="Screen_BlueLightBlockingExpander"
+                                         HeaderIcon="{ui:FontIcon Glyph=&#xF08C;}"
+                                         Margin="0,0,0,2"
+                                         IsExpanded="True">
                 <ToggleSwitch MinWidth="0"
-                          IsOn="{x:Bind _viewModel.IsEnabledBlueLightBlocking, Mode=OneWay}"
-                          IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
-                          Toggled="BlueLightBlockingToggled"/>
+                              IsOn="{x:Bind _viewModel.IsEnabledBlueLightBlocking, Mode=OneWay}"
+                              IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
+                              Toggled="BlueLightBlockingToggled"/>
                 <tkcontrols:SettingsExpander.Items>
                     <tkcontrols:SettingsCard x:Uid="Screen_BlueLightBlocking_Degree">
                         <Slider Minimum="10" Maximum="100" StepFrequency="10" Width="250"
-                            IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledBlueLightBlocking, _viewModel.CanExecute), Mode=OneWay}"
-                            Value="{x:Bind _viewModel.ReductionRate, Mode=OneWay}"
-                            ValueChanged="BlueLightBlockingValueChanged"/>
+                                IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledBlueLightBlocking, _viewModel.CanExecute), Mode=OneWay}"
+                                Value="{x:Bind _viewModel.ReductionRate, Mode=OneWay}"
+                                ValueChanged="BlueLightBlockingValueChanged"/>
                     </tkcontrols:SettingsCard>
                 </tkcontrols:SettingsExpander.Items>
             </tkcontrols:SettingsExpander>
