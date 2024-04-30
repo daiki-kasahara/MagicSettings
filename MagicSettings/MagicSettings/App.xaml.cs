@@ -36,11 +36,16 @@ public partial class App : Application
         this.InitializeComponent();
     }
 
+    /// <summary>
+    /// アプリ起動時に実行する処理
+    /// </summary>
+    /// <param name="args">アクティベートした時の引数</param>
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         var mainInstance = AppInstance.FindOrRegisterForKey("MagicSettings");
         if (!mainInstance.IsCurrent)
         {
+            // すでにアプリが起動している場合は、そのアプリをアクティブにして自分自身は終了する
             var activatedEventArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
             await mainInstance.RedirectActivationToAsync(activatedEventArgs);
 
@@ -48,6 +53,7 @@ public partial class App : Application
             return;
         }
 
+        // Windowの用意
         _window = Provider.GetRequiredService<MainWindow>();
         WindowHelper.TrackWindow(_window);
         WindowHelper.SetMinWindowSize(_window);
@@ -58,6 +64,7 @@ public partial class App : Application
 
     private void MainInstance_Activated(object? sender, AppActivationArguments e)
     {
+        // 前面に表示する
         _dispatcherQueue.TryEnqueue(() =>
         {
             _window?.Activate();

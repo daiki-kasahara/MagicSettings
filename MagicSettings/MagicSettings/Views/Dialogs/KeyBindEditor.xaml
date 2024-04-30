@@ -13,16 +13,19 @@
     </UserControl.Resources>
     <ScrollViewer>
         <StackPanel Margin="5,0" Width="480">
+            <!-- キー入力 -->
             <TextBlock x:Uid="KeyBindDialog_Key" />
             <InfoBar x:Uid="Error_AlreadyExistsKey" Severity="Error" IsClosable="False" IsOpen="{x:Bind AlreadyExistsConverter(ViewModel.KeyList, ViewModel.Key), Mode=OneWay}" Margin="0,5,0,5" />
             <TextBox x:Name="KeyInput" Text="{x:Bind ViewModel.Key, Mode=OneWay, Converter={StaticResource EnumToKeyDisplayConverter}}" IsEnabled="{x:Bind ViewModel.IsEnabledKeyCustom, Mode=OneWay}" 
                      Margin="0,0,0,15" IsReadOnly="True" KeyDown="KeyInputKeyDown"/>
 
+            <!-- アクション選択 -->
             <TextBlock x:Uid="KeyBindDialog_Action"/>
             <ComboBox x:Name="ActionComboBox" Margin="0,5,0,20"
                       SelectedItem="{x:Bind EnumToStringConverter(ViewModel.Action), Mode=OneWay}"
                       SelectionChanged="ActionComboBox_SelectionChanged"/>
 
+            <!-- プログラムパスの設定 -->
             <StackPanel Margin="0,0,0,20" Visibility="{x:Bind ProgramVisibilityConverter(ViewModel.Action), Mode=OneWay}">
                 <TextBlock x:Uid="KeyBindDialog_Program"/>
                 <InfoBar x:Uid="Error_PathIsEmpty" Severity="Error" IsClosable="False" IsOpen="{x:Bind IsFileNotExists(ViewModel.ProgramPath), Mode=OneWay}" Margin="0,5,0,5" />
@@ -31,6 +34,7 @@
                 <TextBox Text="{x:Bind ViewModel.ProgramPath, Mode=OneWay}" TextChanged="ProgramPath_Changed" TextWrapping="Wrap"/>
             </StackPanel>
 
+            <!-- Urlの設定 -->
             <StackPanel Visibility="{x:Bind UrlVisibilityConverter(ViewModel.Action), Mode=OneWay}">
                 <TextBlock x:Uid="KeyBindDialog_Url"/>
                 <InfoBar x:Uid="Error_InvalidUrl" Severity="Error" IsClosable="False" IsOpen="{x:Bind IsInvalidUrl(ViewModel.UrlPath), Mode=OneWay}" Margin="0,5,0,0" />
