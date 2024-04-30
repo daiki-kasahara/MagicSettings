@@ -244,6 +244,9 @@
   <data name="Keyboard_IsEnabledKeyBindingTitle.Header" xml:space="preserve">
     <value>キーバインディングを有効にする</value>
   </data>
+  <data name="Keyboard_KeyBinding_EditItem.Text" xml:space="preserve">
+    <value>編集</value>
+  </data>
   <data name="Keyboard_KeyBinding_Enabled.Description" xml:space="preserve">
     <value>Win キー + Alt キー + 指定したキーでキーバインディングを作成する。</value>
   </data>

@@ -97,6 +97,9 @@
                                                 Background="Transparent">
                                             <Button.Flyout>
                                                 <MenuFlyout>
+                                                    <MenuFlyoutItem x:Uid="Keyboard_KeyBinding_EditItem"
+                                                                    Click="EditMenuItemButton_Click"
+                                                                    Icon="{ui:FontIcon Glyph=&#xE70F;}" />
                                                     <MenuFlyoutItem x:Uid="Keyboard_KeyBinding_RemoveItem"
                                                                     Click="RemoveKeyBindButton_Click"
                                                                     Icon="{ui:FontIcon Glyph=&#xE74D;}" />
