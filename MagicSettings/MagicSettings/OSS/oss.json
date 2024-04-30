@@ -1,0 +1,48 @@
+{
+    "OSS" : [
+        {
+            "Name": "CommunityToolkit.Mvvm",
+            "Path": "CommunityToolkit.Mvvm.txt"
+        },
+        {
+            "Name": "CommunityToolkit.WinUI.Controls.SettingsControls",
+            "Path": "CommunityToolkit.WinUI.Controls.SettingsControls.txt"
+        },
+        {
+            "Name": "coverlet.collector",
+            "Path": "coverlet.collector.txt"
+        },
+        {
+            "Name": "Microsoft.Extensions.DependencyInjection",
+            "Path": "Microsoft.Extensions.DependencyInjection.txt"
+        },
+        {
+            "Name": "Microsoft.NET.Test.Sdk",
+            "Path": "Microsoft.NET.Test.Sdk.txt"
+        },
+        {
+            "Name": "Microsoft.Windows.SDK.BuildTools",
+            "Path": "Microsoft.Windows.SDK.BuildTools.txt"
+        },
+        {
+            "Name": "Microsoft.WindowsAppSDK",
+            "Path": "Microsoft.WindowsAppSDK.txt"
+        },
+        {
+            "Name": "Moq",
+            "Path": "Moq.txt"
+        },
+        {
+            "Name": "nlohmann.json",
+            "Path": "nlohmann.json.txt"
+        },
+        {
+            "Name": "xunit",
+            "Path": "xunit.txt"
+        },
+        {
+            "Name": "xunit.runner.visualstudio",
+            "Path": "xunit.runner.visualstudio.txt"
+        }
+    ]
+}

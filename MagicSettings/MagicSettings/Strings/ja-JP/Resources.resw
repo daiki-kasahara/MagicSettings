@@ -298,6 +298,9 @@
   <data name="Settings_Light.Content" xml:space="preserve">
     <value>ライト</value>
   </data>
+  <data name="Settings_OSSTitle.Text" xml:space="preserve">
+    <value>OSS ライセンス</value>
+  </data>
   <data name="Settings_System.Content" xml:space="preserve">
     <value>Systemの設定に合わせる</value>
   </data>

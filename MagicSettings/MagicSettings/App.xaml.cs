@@ -81,6 +81,7 @@ public partial class App : Application
         services.AddTransient<KeyBindEditorViewModel>();
 
         // Add Model
+        services.AddTransient<IOSSRepository, OSSRepository>();
         services.AddTransient<IAssemblyInfoRepository, AssemblyInfoRepository>();
         services.AddTransient<IKeyboardBindingRepository, KeyboardBindingRepository>();
         services.AddTransient<IScreenRepository, ScreenRepository>();
