@@ -36,9 +36,9 @@
 
                     <tkcontrols:SettingsCard x:Uid="Keyboard_IsEnabledKeyBindingTitle" HeaderIcon="{ui:FontIcon Glyph=&#xE945;}">
                         <ToggleSwitch x:Uid="Keyboard_IsEnabledKeyBinding"
-                                  IsOn="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
-                                  IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
-                                  Toggled="KeyBindingToggled"/>
+                                      IsOn="{x:Bind _viewModel.IsEnabledKeyBinding, Mode=OneWay}"
+                                      IsEnabled="{x:Bind _viewModel.CanExecute, Mode=OneWay}"
+                                      Toggled="KeyBindingToggled"/>
                     </tkcontrols:SettingsCard>
 
                     <Border Height="1" BorderThickness="1" BorderBrush="{ThemeResource ButtonBorderThemeBrush}" Margin="5,25,5,5" />
@@ -46,34 +46,34 @@
                     <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.KeyBindError, Mode=TwoWay}" Margin="0,10"/>
 
                     <tkcontrols:SettingsCard x:Name="KeyBindingSetting"
-                                         x:Uid="Keyboard_KeyBinding_Enabled"
-                                         HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}"
-                                         IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledKeyBinding, _viewModel.CanExecute), Mode=OneWay}"
-                                         Margin="0,0,0,2">
+                                             x:Uid="Keyboard_KeyBinding_Enabled"
+                                             HeaderIcon="{ui:FontIcon Glyph=&#xEDA7;}"
+                                             IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledKeyBinding, _viewModel.CanExecute), Mode=OneWay}"
+                                             Margin="0,0,0,2">
                         <Button x:Uid="Keyboard_KeyBingind_New"
-                            HorizontalAlignment="Right"
-                            Click="AddKeyBindButton_Click"
-                            Style="{StaticResource AccentButtonStyle}" />
+                                HorizontalAlignment="Right"
+                                Click="AddKeyBindButton_Click"
+                                Style="{StaticResource AccentButtonStyle}" />
                     </tkcontrols:SettingsCard>
                     <ItemsControl HorizontalAlignment="Stretch"
-                              AutomationProperties.Name="{Binding ElementName=KeyBindingSetting, Path=Header}"
-                              IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledKeyBinding, _viewModel.CanExecute), Mode=OneWay}"
-                              IsTabStop="False"
-                              ItemsSource="{x:Bind _viewModel.KeyActions, Mode=OneWay}">
+                                  AutomationProperties.Name="{Binding ElementName=KeyBindingSetting, Path=Header}"
+                                  IsEnabled="{x:Bind MultiBoolConverter(_viewModel.IsEnabledKeyBinding, _viewModel.CanExecute), Mode=OneWay}"
+                                  IsTabStop="False"
+                                  ItemsSource="{x:Bind _viewModel.KeyActions, Mode=OneWay}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="models:KeyBindAction">
                                 <tkcontrols:SettingsCard Margin="0,0,0,2"
-                                                     Click="UpdateKeyBindButton_Click"
-                                                     IsActionIconVisible="False"
-                                                     IsClickEnabled="True">
+                                                         Click="UpdateKeyBindButton_Click"
+                                                         IsActionIconVisible="False"
+                                                         IsClickEnabled="True">
                                     <tkcontrols:SettingsCard.Header>
                                         <StackPanel Orientation="Horizontal">
                                             <Border BorderThickness="2"
-                                                BorderBrush="{ThemeResource TextFillColorDisabledBrush}"
-                                                CornerRadius="8"
-                                                Margin="0,0,20,0"
-                                                Width="40" Height="40">
-                                                <TextBlock x:Name="KeyText" Text="{x:Bind VirtualKey, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    BorderBrush="{ThemeResource TextFillColorDisabledBrush}"
+                                                    CornerRadius="8"
+                                                    Margin="0,0,20,0"
+                                                    MinWidth="40" MinHeight="40">
+                                                <TextBlock x:Name="KeyText" Text="{x:Bind VirtualKey, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0" />
                                             </Border>
                                             <TextBlock x:Name="KeyBindItemHeader" Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, UrlPath), Mode=OneWay}" VerticalAlignment="Center"/>
                                         </StackPanel>
@@ -84,19 +84,19 @@
                                     </tkcontrols:SettingsCard.Resources>
                                     <StackPanel Orientation="Horizontal">
                                         <ToggleSwitch x:Uid="Keyboard_KeyBinding_IsEnabled"
-                                                  IsOn="{x:Bind IsEnabled, Mode=OneWay}"
-                                                  Toggled="IsEnabledKeyBindItem_Toggled"
-                                                  OffContent="" OnContent="" Margin="0,0,15,0"/>
+                                                      IsOn="{x:Bind IsEnabled, Mode=OneWay}"
+                                                      Toggled="IsEnabledKeyBindItem_Toggled"
+                                                      OffContent="" OnContent="" Margin="0,0,15,0"/>
 
                                         <Button x:Uid="More_Options_Button"
-                                            VerticalAlignment="Center"
-                                            BorderBrush="Transparent"
-                                            Background="Transparent">
+                                                VerticalAlignment="Center"
+                                                BorderBrush="Transparent"
+                                                Background="Transparent">
                                             <Button.Flyout>
                                                 <MenuFlyout>
                                                     <MenuFlyoutItem x:Uid="Keyboard_KeyBinding_RemoveItem"
-                                                                Click="RemoveKeyBindButton_Click"
-                                                                Icon="{ui:FontIcon Glyph=&#xE74D;}" />
+                                                                    Click="RemoveKeyBindButton_Click"
+                                                                    Icon="{ui:FontIcon Glyph=&#xE74D;}" />
                                                 </MenuFlyout>
                                             </Button.Flyout>
                                             <Button.Content>

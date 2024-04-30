@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using MagicSettings.Domains;
 using MagicSettings.Extensions;
+using MagicSettings.Models;
 using MagicSettings.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -59,7 +60,7 @@ internal sealed partial class KeyBindEditor : UserControl
     private void KeyInputKeyDown(object sender, KeyRoutedEventArgs e)
     {
         if (!Enum.IsDefined(typeof(VKeys), (int)e.Key) ||
-            e.Key is VirtualKey.LeftWindows or VirtualKey.RightWindows or VirtualKey.LeftMenu or VirtualKey.RightMenu)
+            e.Key is VirtualKey.LeftWindows or VirtualKey.RightWindows or VirtualKey.LeftMenu or VirtualKey.RightMenu or VirtualKey.Menu)
             return;
 
         ViewModel.Key = (VKeys)e.Key;
@@ -150,6 +151,8 @@ internal sealed partial class KeyBindEditor : UserControl
     }
 
     #region Converter
+
+    private string EnumToKeyDisplayConverter(VKeys key) => CustomDisplayKeys.Keys.TryGetValue((int)key, out var keyString) ? keyString : key.ToString();
 
     private string EnumToStringConverter(KeyboardActionType type) => type.ToDisplayString(new ResourceLoader());
 
