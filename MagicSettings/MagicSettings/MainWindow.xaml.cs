@@ -18,7 +18,7 @@ internal sealed partial class MainWindow : Window
     private readonly MainWindowViewModel _viewModel;
     private readonly IThemeService _themeService;
 
-    public MainWindow(MainWindowViewModel viewModel, IThemeService themeService)
+    public MainWindow(MainWindowViewModel viewModel, IThemeService themeService, IKeyboardService keyboardService, IScreenService screenService)
     {
         this.InitializeComponent();
 
@@ -27,6 +27,9 @@ internal sealed partial class MainWindow : Window
 
         var loader = new ResourceLoader();
         Title = loader.GetString("Window_Title");
+
+        keyboardService.UpdateSettingAsync();
+        screenService.UpdateSettingAsync();
     }
 
     private void NavigationView_ItemInvoked(NavigationView _, NavigationViewItemInvokedEventArgs args)

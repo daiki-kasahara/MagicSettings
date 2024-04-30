@@ -14,18 +14,19 @@ public partial class App : Application
     // DIコンテナ
     public static ServiceProvider Provider { get; } = GetServiceProvider();
 
-    private Mutex? _mutex;
+    public static Mutex? Mutex;
+
     private Window? _window;
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
-        _mutex = new Mutex(false, "MagicSettings.KeyBindingListener");
+        Mutex = new Mutex(false, "MagicSettings.KeyBindingListener");
 
-        if (!_mutex.WaitOne(0, false))
+        if (!Mutex.WaitOne(0, false))
         {
             // すでにプロセスが起動している場合は終了する
-            _mutex.Close();
-            _mutex = null;
+            Mutex.Close();
+            Mutex = null;
 
             this.Shutdown();
         }

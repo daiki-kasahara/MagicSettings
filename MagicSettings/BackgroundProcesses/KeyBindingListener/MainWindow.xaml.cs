@@ -61,6 +61,9 @@ public partial class MainWindow : Window
         _serverPipe.ClosePipe();
 
         // 終了時は設定を無効にする
-        Task.Run(() => _keyboardBindingRepository.SaveAsync(false)).Wait();
+        if (App.Mutex is not null)
+        {
+            Task.Run(() => _keyboardBindingRepository.SaveAsync(false)).Wait();
+        }
     }
 }

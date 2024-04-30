@@ -21,6 +21,8 @@ public class ProcessController : IProcessController
         _pipe = pipe;
     }
 
+    public bool IsExistsProcess(MyProcesses process) => Process.GetProcessesByName($"MagicSettings.{process}").Length > 0;
+
     public async Task<bool> LaunchAsync(MyProcesses process)
     {
         try
