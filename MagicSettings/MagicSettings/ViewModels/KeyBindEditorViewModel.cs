@@ -26,7 +26,7 @@ internal partial class KeyBindEditorViewModel : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    private string _urlPath = string.Empty;
+    private string _url = string.Empty;
 
     [ObservableProperty]
     private bool _isEnabledKeyCustom = true;

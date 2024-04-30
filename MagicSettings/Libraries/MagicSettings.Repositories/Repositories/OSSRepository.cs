@@ -4,11 +4,18 @@ using MagicSettings.Repositories.Models.SettingsFile;
 
 namespace MagicSettings.Repositories.Repositories;
 
+/// <summary>
+/// OSSのリポジトリ
+/// </summary>
 public class OSSRepository : IOSSRepository
 {
     private static readonly string DirPath = Path.Combine(AppContext.BaseDirectory, "OSS");
     private static readonly string FilePath = Path.Combine(DirPath, "oss.json");
 
+    /// <summary>
+    /// 取得する
+    /// </summary>
+    /// <returns></returns>
     public async Task<OSSFile?> GetAsync()
     {
         try

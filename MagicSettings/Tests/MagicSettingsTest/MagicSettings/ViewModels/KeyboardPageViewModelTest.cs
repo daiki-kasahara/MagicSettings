@@ -20,7 +20,7 @@ public class KeyboardPageViewModelTest
             KeyboardActions = new Dictionary<int, KeyboardAction>()
             {
                 { 1, new KeyboardAction(){ ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" } },
-                { 2, new KeyboardAction(){ ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" } },
+                { 2, new KeyboardAction(){ ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" } },
                 { 3, new KeyboardAction(){ ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false } },
             }
         };
@@ -39,7 +39,7 @@ public class KeyboardPageViewModelTest
             Assert.True(settings.KeyboardActions.ContainsKey((int)actual.VirtualKey));
             Assert.Equal(settings.KeyboardActions[(int)actual.VirtualKey].ActionType, actual.ActionType);
             Assert.Equal(settings.KeyboardActions[(int)actual.VirtualKey].ProgramPath, actual.ProgramPath);
-            Assert.Equal(settings.KeyboardActions[(int)actual.VirtualKey].UrlPath, actual.UrlPath);
+            Assert.Equal(settings.KeyboardActions[(int)actual.VirtualKey].Url, actual.Url);
         }
     }
 
@@ -116,13 +116,13 @@ public class KeyboardPageViewModelTest
             IsEnabled = true,
             ActionType = KeyboardActionType.StartProgram,
             ProgramPath = "C:\\Test.test",
-            UrlPath = "https:\\Test.test"
+            Url = "https:\\Test.test"
         };
 
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -132,7 +132,7 @@ public class KeyboardPageViewModelTest
         // Act
         var viewModel = new KeyboardPageViewModel(serviceStub.Object);
         viewModel.KeyActions = keyActions;
-        await viewModel.AddNewActionAsync(keyBindAction);
+        await viewModel.AddNewKeyBindingAsync(keyBindAction);
 
         // Assert
         Assert.True(viewModel.CanExecute);
@@ -153,13 +153,13 @@ public class KeyboardPageViewModelTest
             IsEnabled = true,
             ActionType = KeyboardActionType.StartProgram,
             ProgramPath = "C:\\Test.test",
-            UrlPath = "https:\\Test.test"
+            Url = "https:\\Test.test"
         };
 
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -169,7 +169,7 @@ public class KeyboardPageViewModelTest
         // Act
         var viewModel = new KeyboardPageViewModel(serviceStub.Object);
         viewModel.KeyActions = keyActions;
-        await viewModel.AddNewActionAsync(keyBindAction);
+        await viewModel.AddNewKeyBindingAsync(keyBindAction);
 
         // Assert
         Assert.True(viewModel.KeyBindError);
@@ -188,13 +188,13 @@ public class KeyboardPageViewModelTest
             IsEnabled = true,
             ActionType = KeyboardActionType.StartProgram,
             ProgramPath = "C:\\Test.test",
-            UrlPath = "https:\\Test.test"
+            Url = "https:\\Test.test"
         };
 
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -204,7 +204,7 @@ public class KeyboardPageViewModelTest
         // Act
         var viewModel = new KeyboardPageViewModel(serviceStub.Object);
         viewModel.KeyActions = keyActions;
-        await viewModel.AddNewActionAsync(keyBindAction);
+        await viewModel.AddNewKeyBindingAsync(keyBindAction);
 
         // Assert
         Assert.True(viewModel.CanExecute);
@@ -225,13 +225,13 @@ public class KeyboardPageViewModelTest
             IsEnabled = false,
             ActionType = KeyboardActionType.OpenUrl,
             ProgramPath = "C:\\TestUpdate.test",
-            UrlPath = "https:\\TestUpdate.test"
+            Url = "https:\\TestUpdate.test"
         };
 
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -252,7 +252,7 @@ public class KeyboardPageViewModelTest
         Assert.Equal(keyBindAction.IsEnabled, actual.IsEnabled);
         Assert.Equal(keyBindAction.ActionType, actual.ActionType);
         Assert.Equal(keyBindAction.ProgramPath, actual.ProgramPath);
-        Assert.Equal(keyBindAction.UrlPath, actual.UrlPath);
+        Assert.Equal(keyBindAction.Url, actual.Url);
     }
 
     [Fact]
@@ -267,13 +267,13 @@ public class KeyboardPageViewModelTest
             IsEnabled = true,
             ActionType = KeyboardActionType.StartProgram,
             ProgramPath = "C:\\Test.test",
-            UrlPath = "https:\\Test.test"
+            Url = "https:\\Test.test"
         };
 
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -302,13 +302,13 @@ public class KeyboardPageViewModelTest
             IsEnabled = false,
             ActionType = KeyboardActionType.OpenUrl,
             ProgramPath = "C:\\TestUpdate.test",
-            UrlPath = "https:\\TestUpdate.test"
+            Url = "https:\\TestUpdate.test"
         };
 
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -329,7 +329,7 @@ public class KeyboardPageViewModelTest
         Assert.NotEqual(keyBindAction.IsEnabled, actual.IsEnabled);
         Assert.NotEqual(keyBindAction.ActionType, actual.ActionType);
         Assert.NotEqual(keyBindAction.ProgramPath, actual.ProgramPath);
-        Assert.NotEqual(keyBindAction.UrlPath, actual.UrlPath);
+        Assert.NotEqual(keyBindAction.Url, actual.Url);
     }
 
     [Theory]
@@ -343,7 +343,7 @@ public class KeyboardPageViewModelTest
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = !setValue, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -375,7 +375,7 @@ public class KeyboardPageViewModelTest
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -403,7 +403,7 @@ public class KeyboardPageViewModelTest
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = setValue, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -431,7 +431,7 @@ public class KeyboardPageViewModelTest
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = !setValue, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -461,7 +461,7 @@ public class KeyboardPageViewModelTest
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -490,7 +490,7 @@ public class KeyboardPageViewModelTest
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 
@@ -516,7 +516,7 @@ public class KeyboardPageViewModelTest
         var keyActions = new ObservableCollection<KeyBindAction>()
             {
                 new KeyBindAction(){ VirtualKey = VKeys.Z, ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" },
-                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" },
+                new KeyBindAction() { VirtualKey = VKeys.Y, ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" },
                 new KeyBindAction(){ VirtualKey = VKeys.X, ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = false },
             };
 

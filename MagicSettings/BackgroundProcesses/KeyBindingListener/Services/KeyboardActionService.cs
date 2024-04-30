@@ -34,7 +34,7 @@ public class KeyboardActionService(IKeyboardBindingRepository repository, IActio
         }
         else if (keyboardAction.ActionType is KeyboardActionType.OpenUrl)
         {
-            fileName = keyboardAction.UrlPath;
+            fileName = keyboardAction.Url;
         }
 
         // アクション情報が null もしくは、Disableの場合、何もしない

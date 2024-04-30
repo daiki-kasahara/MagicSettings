@@ -21,7 +21,7 @@ public class KeyboardActionServiceTest
             KeyboardActions = new Dictionary<int, KeyboardAction>()
             {
                 { 0x41, new KeyboardAction(){ ActionType = KeyboardActionType.StartProgram, IsEnabled = true, ProgramPath = "C:\\TestPath" } },
-                { 0x42, new KeyboardAction(){ ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, UrlPath = "https:\\test.test" } },
+                { 0x42, new KeyboardAction(){ ActionType = KeyboardActionType.OpenUrl, IsEnabled = true, Url = "https:\\test.test" } },
                 { 0x43, new KeyboardAction(){ ActionType = KeyboardActionType.MicrosoftStore, IsEnabled = true } },
             }
         };

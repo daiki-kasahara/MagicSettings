@@ -6,6 +6,9 @@
 #include <thread>
 #include <functional>
 
+/// <summary>
+/// パイプサーバー
+/// </summary>
 class PipeServer
 {
 private:
@@ -23,7 +26,16 @@ public:
     PipeServer(HWND hWnd) : _hWnd(hWnd) {}
 
 public:
+    /// <summary>
+    /// パイプを開く
+    /// </summary>
+    /// <returns></returns>
     auto OpenPipe() noexcept -> bool;
+
+    /// <summary>
+    /// パイプを閉じる
+    /// </summary>
+    /// <returns></returns>
     auto ClosePipe() noexcept -> bool;
 
 private:

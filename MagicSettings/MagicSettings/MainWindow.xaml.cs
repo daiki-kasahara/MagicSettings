@@ -18,7 +18,8 @@ internal sealed partial class MainWindow : Window
     private readonly MainWindowViewModel _viewModel;
     private readonly IThemeService _themeService;
 
-    public MainWindow(MainWindowViewModel viewModel, IThemeService themeService, IKeyboardService keyboardService, IScreenService screenService)
+    public MainWindow(MainWindowViewModel viewModel, IThemeService themeService,
+                      IKeyboardService keyboardService, IScreenService screenService)
     {
         this.InitializeComponent();
 
@@ -28,6 +29,7 @@ internal sealed partial class MainWindow : Window
         var loader = new ResourceLoader();
         Title = loader.GetString("Window_Title");
 
+        // 設定ファイルの更新
         keyboardService.UpdateSettingAsync();
         screenService.UpdateSettingAsync();
     }
@@ -36,38 +38,48 @@ internal sealed partial class MainWindow : Window
     {
         if (args.IsSettingsInvoked)
         {
+            // 設定ページに遷移
             ContentFrame.Navigate(typeof(SettingsPage));
         }
 
         if (args.InvokedItemContainer.Tag is not Tag tag)
             return;
 
+        // 各ページに遷移
         switch (tag)
         {
             case Tag.Keyboard:
-                ContentFrame.Navigate(typeof(KeyboardPage));
-                break;
+                {
+                    ContentFrame.Navigate(typeof(KeyboardPage));
+                    break;
+                }
             case Tag.Screen:
-                ContentFrame.Navigate(typeof(ScreenPage));
-                break;
+                {
+                    ContentFrame.Navigate(typeof(ScreenPage));
+                    break;
+                }
             default:
                 return;
         }
     }
 
+    /// <summary>
+    /// ウィンドウが表示されたときに実行する処理
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="__"></param>
     private async void MainRootLoadedAsync(object _, RoutedEventArgs __)
     {
         var theme = await _themeService.GetCurrentThemeAsync();
 
-        var requestedTheme = theme switch
+        // テーマの設定
+        WindowHelper.RootTheme = theme switch
         {
             AppTheme.Dark => ElementTheme.Dark,
             AppTheme.Light => ElementTheme.Light,
             AppTheme.System => ElementTheme.Default,
             _ => ElementTheme.Default,
         };
-
-        WindowHelper.RootTheme = requestedTheme;
 
         ContentFrame.Navigate(typeof(KeyboardPage));
         NavView.SelectedItem = _viewModel.NavigationMenuItems[0];

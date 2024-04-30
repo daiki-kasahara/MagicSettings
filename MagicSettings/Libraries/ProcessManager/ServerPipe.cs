@@ -6,6 +6,9 @@ using ProcessManager.PipeMessage;
 
 namespace ProcessManager;
 
+/// <summary>
+/// パイプサーバー
+/// </summary>
 public class ServerPipe
 {
     private static readonly int PipeNumber = 1;
@@ -105,10 +108,9 @@ public class ServerPipe
                     continue;
                 }
             }
-            catch (IOException ofex)
+            catch (IOException)
             {
                 // クライアントが切断
-                Console.WriteLine(ofex.Message);
             }
         }
     }
