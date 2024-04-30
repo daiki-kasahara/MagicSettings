@@ -81,7 +81,7 @@
                                                     MinWidth="40" MinHeight="40">
                                                 <TextBlock x:Name="KeyText" Text="{x:Bind VirtualKey, Mode=OneWay, Converter={StaticResource EnumToKeyDisplayConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0" />
                                             </Border>
-                                            <TextBlock x:Name="KeyBindItemHeader" Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, UrlPath), Mode=OneWay}" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="KeyBindItemHeader" Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, Url), Mode=OneWay}" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </tkcontrols:SettingsCard.Header>
                                     <tkcontrols:SettingsCard.Resources>

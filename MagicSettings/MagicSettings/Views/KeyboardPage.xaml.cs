@@ -80,11 +80,11 @@ public sealed partial class KeyboardPage : Page
             ActionType = keyBindEditor.ViewModel.Action,
             IsEnabled = true,
             ProgramPath = keyBindEditor.ViewModel.ProgramPath,
-            UrlPath = keyBindEditor.ViewModel.UrlPath,
+            Url = keyBindEditor.ViewModel.Url,
             VirtualKey = keyBindEditor.ViewModel.Key,
         };
 
-        await _viewModel.AddNewActionAsync(newAction);
+        await _viewModel.AddNewKeyBindingAsync(newAction);
     }
 
     /// <summary>
@@ -154,7 +154,7 @@ public sealed partial class KeyboardPage : Page
         content.ViewModel.IsEnabledKeyCustom = false;
         content.ViewModel.Key = updateAction.VirtualKey;
         content.ViewModel.ProgramPath = updateAction.ProgramPath ?? string.Empty;
-        content.ViewModel.UrlPath = updateAction.UrlPath ?? string.Empty;
+        content.ViewModel.Url = updateAction.Url ?? string.Empty;
 
         var dialog = new ContentDialog
         {
@@ -182,7 +182,7 @@ public sealed partial class KeyboardPage : Page
             IsEnabled = true,
             VirtualKey = keyBindEditor.ViewModel.Key,
             ProgramPath = keyBindEditor.ViewModel.ProgramPath,
-            UrlPath = keyBindEditor.ViewModel.UrlPath,
+            Url = keyBindEditor.ViewModel.Url,
         };
 
         await _viewModel.UpdateActionAsync(newAction);

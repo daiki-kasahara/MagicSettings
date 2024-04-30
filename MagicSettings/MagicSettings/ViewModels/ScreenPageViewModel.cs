@@ -22,6 +22,10 @@ internal partial class ScreenPageViewModel(IScreenService service) : ObservableO
 
     private readonly IScreenService _screenService = service;
 
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
+    /// <returns></returns>
     public async Task InitializeAsync()
     {
         CanExecute = false;
@@ -34,6 +38,11 @@ internal partial class ScreenPageViewModel(IScreenService service) : ObservableO
         CanExecute = true;
     }
 
+    /// <summary>
+    /// ブルーライトカットの有効無効設定
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public async Task<bool> SetEnabledBlueLightBlockingAsync(bool value)
     {
         // 設定する値が現在と同じ場合何もせず成功を返す
@@ -56,6 +65,11 @@ internal partial class ScreenPageViewModel(IScreenService service) : ObservableO
         return true;
     }
 
+    /// <summary>
+    /// 軽減率の設定
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public async Task<bool> SetBlueLightBlockingAsync(int value)
     {
         // 設定する値が現在と同じ場合何もせず成功を返す

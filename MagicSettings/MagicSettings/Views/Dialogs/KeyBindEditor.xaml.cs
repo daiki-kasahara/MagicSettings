@@ -36,7 +36,7 @@ internal sealed partial class KeyBindEditor : UserControl
             switch (message.PropertyName)
             {
                 case nameof(this.ViewModel.ProgramPath):
-                case nameof(this.ViewModel.UrlPath):
+                case nameof(this.ViewModel.Url):
                     {
                         UpdatePrimaryButton();
                         break;
@@ -127,7 +127,7 @@ internal sealed partial class KeyBindEditor : UserControl
         if (sender is not TextBox textBox)
             return;
 
-        ViewModel.UrlPath = textBox.Text;
+        ViewModel.Url = textBox.Text;
     }
 
     /// <summary>
@@ -155,7 +155,7 @@ internal sealed partial class KeyBindEditor : UserControl
                     {
                         // OpenUrlの場合、キーが重複しておらず url が特定の文字列で始まっているときのみ設定可能
                         // 更新の場合は、urlのチェックのみ
-                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && !IsInvalidUrl(ViewModel.UrlPath);
+                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && !IsInvalidUrl(ViewModel.Url);
 
                         break;
                     }

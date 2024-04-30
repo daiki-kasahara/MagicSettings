@@ -37,8 +37,8 @@
             <!-- Urlの設定 -->
             <StackPanel Visibility="{x:Bind UrlVisibilityConverter(ViewModel.Action), Mode=OneWay}">
                 <TextBlock x:Uid="KeyBindDialog_Url"/>
-                <InfoBar x:Uid="Error_InvalidUrl" Severity="Error" IsClosable="False" IsOpen="{x:Bind IsInvalidUrl(ViewModel.UrlPath), Mode=OneWay}" Margin="0,5,0,0" />
-                <TextBox Text="{x:Bind ViewModel.UrlPath, Mode=OneWay}" TextChanged="Url_Changed" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                <InfoBar x:Uid="Error_InvalidUrl" Severity="Error" IsClosable="False" IsOpen="{x:Bind IsInvalidUrl(ViewModel.Url), Mode=OneWay}" Margin="0,5,0,0" />
+                <TextBox Text="{x:Bind ViewModel.Url, Mode=OneWay}" TextChanged="Url_Changed" TextWrapping="Wrap" Margin="0,5,0,0"/>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

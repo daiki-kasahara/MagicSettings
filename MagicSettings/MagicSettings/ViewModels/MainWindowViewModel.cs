@@ -12,6 +12,7 @@ internal class MainWindowViewModel
     {
         var loader = new ResourceLoader();
 
+        // メニューの構成
         NavigationMenuItems =
         [
             new(loader.GetString($"MainMenu_{Tag.Keyboard}"), "\xE765", Tag.Keyboard),

@@ -27,6 +27,10 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
 
     private readonly IKeyboardService _keyboardService = service;
 
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
+    /// <returns></returns>
     public async Task InitializeAsync()
     {
         CanExecute = false;
@@ -44,7 +48,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
                     ActionType = item.Value.ActionType,
                     IsEnabled = item.Value.IsEnabled,
                     ProgramPath = item.Value.ProgramPath,
-                    UrlPath = item.Value.UrlPath,
+                    Url = item.Value.Url,
                 });
             }
         }
@@ -53,6 +57,11 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
         CanExecute = true;
     }
 
+    /// <summary>
+    /// キーバインディングの有効無効を設定する
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public async Task<bool> SetEnabledKeyBindingAsync(bool value)
     {
         // 設定する値が現在と同じ場合何もせず成功を返す
@@ -75,8 +84,14 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
         return true;
     }
 
-    public async Task AddNewActionAsync(KeyBindAction keyBindAction)
+    /// <summary>
+    /// 新しいキーバインディングを追加
+    /// </summary>
+    /// <param name="keyBindAction"></param>
+    /// <returns></returns>
+    public async Task AddNewKeyBindingAsync(KeyBindAction keyBindAction)
     {
+        // すでにキーが登録されている場合はエラー
         if (KeyActions.Count(x => x.VirtualKey == keyBindAction.VirtualKey) is 1)
         {
             KeyBindError = true;
@@ -91,7 +106,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
                 ActionType = keyBindAction.ActionType,
                 IsEnabled = keyBindAction.IsEnabled,
                 ProgramPath = keyBindAction.ProgramPath,
-                UrlPath = keyBindAction.UrlPath
+                Url = keyBindAction.Url
             });
 
         if (isSucceeded)
@@ -108,10 +123,16 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
         CanExecute = true;
     }
 
+    /// <summary>
+    /// キーバインディングの更新
+    /// </summary>
+    /// <param name="keyBindAction"></param>
+    /// <returns></returns>
     public async Task UpdateActionAsync(KeyBindAction keyBindAction)
     {
         var target = KeyActions.FirstOrDefault(x => x.VirtualKey == keyBindAction.VirtualKey);
 
+        // 更新するキーが存在しない場合はエラー
         if (target is null)
         {
             KeyBindError = true;
@@ -126,7 +147,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
                 ActionType = keyBindAction.ActionType,
                 IsEnabled = keyBindAction.IsEnabled,
                 ProgramPath = keyBindAction.ProgramPath,
-                UrlPath = keyBindAction.UrlPath
+                Url = keyBindAction.Url
             });
 
         if (isSucceeded)
@@ -134,7 +155,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
             target.ActionType = keyBindAction.ActionType;
             target.IsEnabled = keyBindAction.IsEnabled;
             target.ProgramPath = keyBindAction.ProgramPath;
-            target.UrlPath = keyBindAction.UrlPath;
+            target.Url = keyBindAction.Url;
 
             KeyBindError = false;
         }
@@ -147,10 +168,17 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
 
     }
 
+    /// <summary>
+    /// 各キーバインディングの有効無効設定
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="isEnabled"></param>
+    /// <returns></returns>
     public async Task UpdateActionEnabledAsync(VKeys key, bool isEnabled)
     {
         var target = KeyActions.FirstOrDefault(x => x.VirtualKey == key);
 
+        // 更新するキーが存在しない場合はエラー
         if (target is null)
         {
             KeyBindError = true;
@@ -169,7 +197,7 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
                 ActionType = target.ActionType,
                 IsEnabled = isEnabled,
                 ProgramPath = target.ProgramPath,
-                UrlPath = target.UrlPath
+                Url = target.Url
             });
 
         if (isSucceeded)
@@ -186,9 +214,16 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
         CanExecute = true;
     }
 
+    /// <summary>
+    /// 登録されているキーを削除する
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task RemoveActionAsync(VKeys key)
     {
         var target = KeyActions.FirstOrDefault(x => x.VirtualKey == key);
+
+        // 削除対象のキーが存在しない場合はエラー
         if (target is null)
         {
             KeyBindError = true;
@@ -211,6 +246,10 @@ internal partial class KeyboardPageViewModel(IKeyboardService service) : Observa
         CanExecute = true;
     }
 
+    /// <summary>
+    /// 仮想キーコード順に並び替える
+    /// </summary>
+    /// <param name="list">仮想キー</param>
     private static void InsertionSort(IList<KeyBindAction> list)
     {
         for (var i = 1; i < list.Count; i++)

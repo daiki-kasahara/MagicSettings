@@ -9,7 +9,8 @@ using MagicSettings.Repositories.Models.SettingsFile;
 
 namespace MagicSettings.ViewModels;
 
-internal partial class SettingsPageViewModel(IThemeService themeService, IAssemblyInfoRepository assemblyInfoRepository, IOSSRepository ossRepository) : ObservableObject
+internal partial class SettingsPageViewModel(IThemeService themeService,
+    IAssemblyInfoRepository assemblyInfoRepository, IOSSRepository ossRepository) : ObservableObject
 {
     [ObservableProperty]
     private AppTheme _theme;
@@ -24,6 +25,10 @@ internal partial class SettingsPageViewModel(IThemeService themeService, IAssemb
     private readonly IAssemblyInfoRepository _assemblyInfoRepository = assemblyInfoRepository;
     private readonly IOSSRepository _ossRepository = ossRepository;
 
+    /// <summary>
+    /// 初期化処理
+    /// </summary>
+    /// <returns></returns>
     public async Task InitializeAsync()
     {
         Theme = await _themeService.GetCurrentThemeAsync();
@@ -31,10 +36,14 @@ internal partial class SettingsPageViewModel(IThemeService themeService, IAssemb
         Oss = (await _ossRepository.GetAsync())?.OSS;
     }
 
+    /// <summary>
+    /// テーマ設定
+    /// </summary>
+    /// <param name="theme">設定するテーマ</param>
+    /// <returns></returns>
     public async Task SetCurrentThemeAsync(AppTheme theme)
     {
         Theme = theme;
         await _themeService.SetCurrentThemeAsync(theme);
     }
-
 }

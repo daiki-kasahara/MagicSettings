@@ -17,5 +17,5 @@ public class KeyboardAction
 
     public string? ProgramPath { get; set; }
 
-    public string? UrlPath { get; set; }
+    public string? Url { get; set; }
 }
