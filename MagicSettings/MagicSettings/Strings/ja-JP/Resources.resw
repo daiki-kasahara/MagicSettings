@@ -214,10 +214,11 @@
     <value>キャンセル</value>
   </data>
   <data name="KeyBindDialog_Key.Text" xml:space="preserve">
-    <value>キー割り当て (Alt, Esc, Fn, Tab, Win, その他一部キーは割り当てることができません)</value>
+    <value>割り当てるキーを入力してください
+(Alt, Esc, Fn, Tab, Win, その他一部キーは割り当てることができません)</value>
   </data>
   <data name="KeyBindDialog_OpenFile.Content" xml:space="preserve">
-    <value>ファイルを開く</value>
+    <value>ファイルを選択する</value>
   </data>
   <data name="KeyBindDialog_Program.Text" xml:space="preserve">
     <value>プログラムのパス</value>

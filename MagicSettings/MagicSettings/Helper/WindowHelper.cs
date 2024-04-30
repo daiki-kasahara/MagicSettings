@@ -12,7 +12,7 @@ internal static class WindowHelper
 {
     // 最小ウィンドウの大きさ
     private static readonly int MinWidth = 800;
-    private static readonly int MinHeight = 500;
+    private static readonly int MinHeight = 555;
 
     public static ElementTheme RootTheme
     {
