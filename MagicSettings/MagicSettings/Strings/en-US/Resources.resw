@@ -234,7 +234,7 @@
   </data>
   <data name="Keyboard_Description.Text" xml:space="preserve">
     <value>ここではキーボードの設定ができます。
-キーバインディングとはキーに機能を割り当てることです。</value>
+キーバインディングとはキーにアクションを割り当てることです。</value>
   </data>
   <data name="Keyboard_IsEnabledKeyBinding.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>キーバインディングを有効にする</value>
@@ -261,7 +261,7 @@
     <value>削除</value>
   </data>
   <data name="Keyboard_KeyBingind_New.Content" xml:space="preserve">
-    <value>新しいショートカットの追加</value>
+    <value>新しいキーバインディングの追加</value>
   </data>
   <data name="Keyboard_Title.Text" xml:space="preserve">
     <value>キーボード</value>
@@ -288,7 +288,8 @@
     <value>軽減率 (%)</value>
   </data>
   <data name="Screen_Description.Text" xml:space="preserve">
-    <value>ここではスクリーンの設定ができます。</value>
+    <value>ここではスクリーンの設定ができます。
+ブルーライトカットを有効にすると、すべてのディスプレイの青色配色を軽減します。</value>
   </data>
   <data name="Screen_Title.Text" xml:space="preserve">
     <value>スクリーン</value>
