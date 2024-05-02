@@ -199,7 +199,7 @@
     <value>URLが不正です。</value>
   </data>
   <data name="Error_PathIsEmpty.Message" xml:space="preserve">
-    <value>指定したファイルは存在しません。</value>
+    <value>指定したアプリは存在しません。</value>
   </data>
   <data name="KeyBindDialog_Action.Text" xml:space="preserve">
     <value>アクション</value>
@@ -218,7 +218,7 @@
 (Alt, Esc, Fn, Tab, Win, その他一部キーは割り当てることができません)</value>
   </data>
   <data name="KeyBindDialog_OpenFile.Content" xml:space="preserve">
-    <value>ファイルを選択する</value>
+    <value>アプリを選択する</value>
   </data>
   <data name="KeyBindDialog_Program.Text" xml:space="preserve">
     <value>アプリのパス</value>
