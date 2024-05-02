@@ -1,5 +1,4 @@
-﻿using MagicSettings.Contracts.Services;
-using MagicSettings.Domains;
+﻿using MagicSettings.Domains;
 using MagicSettings.Helper;
 using MagicSettings.Models.Navigation;
 using MagicSettings.ViewModels;
@@ -16,22 +15,15 @@ namespace MagicSettings;
 internal sealed partial class MainWindow : Window
 {
     private readonly MainWindowViewModel _viewModel;
-    private readonly IThemeService _themeService;
 
-    public MainWindow(MainWindowViewModel viewModel, IThemeService themeService,
-                      IKeyboardService keyboardService, IScreenService screenService)
+    public MainWindow(MainWindowViewModel viewModel)
     {
         this.InitializeComponent();
 
         _viewModel = viewModel;
-        _themeService = themeService;
 
         var loader = new ResourceLoader();
         Title = loader.GetString("Window_Title");
-
-        // 設定ファイルの更新
-        keyboardService.UpdateSettingAsync();
-        screenService.UpdateSettingAsync();
     }
 
     private void NavigationView_ItemInvoked(NavigationView _, NavigationViewItemInvokedEventArgs args)
@@ -70,7 +62,7 @@ internal sealed partial class MainWindow : Window
     /// <param name="__"></param>
     private async void MainRootLoadedAsync(object _, RoutedEventArgs __)
     {
-        var theme = await _themeService.GetCurrentThemeAsync();
+        var theme = await _viewModel.GetCurrentThemeAsync();
 
         // テーマの設定
         WindowHelper.RootTheme = theme switch
