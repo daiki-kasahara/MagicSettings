@@ -20,6 +20,8 @@
 - [6. 開発環境](#6-開発環境)
   - [6.1. PC](#61-pc)
   - [6.2. ツール](#62-ツール)
+- [7. OSS ライセンスについて](#7-oss-ライセンスについて)
+- [8. CI](#8-ci)
 
 <!-- /TOC -->
 
@@ -421,7 +423,7 @@ MagicSettings.exe が利用する。
   - ホスティングサービスは Github
   - Ci のために Github Actions を使用
 
-## OSS ライセンスについて
+## 7. OSS ライセンスについて
 
 利用している OSS は下記の通り。
 
@@ -438,3 +440,9 @@ MagicSettings.exe が利用する。
 | nlohmann.json                                    | C++プロジェクトで json オブジェクトを扱うために利用          |
 | xunit                                            | 単体テストを実施するために利用                               |
 | xunit.runner.visualstudio                        | 単体テストを実施するために利用                               |
+
+## 8. CI
+
+Github Actions を利用して、main ブランチへマージされた際に、成果物を作成するパイプラインを実行する。  
+パイプラインは下記。  
+[パイプライン](./.github/workflows/main.yml)
