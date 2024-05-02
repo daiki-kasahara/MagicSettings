@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using WinRT.Interop;
 
 namespace MagicSettings.Helper;
 
+/// <summary>
+/// ウィンドウの設定をするヘルパー
+/// </summary>
 internal static class WindowHelper
 {
     // 最小ウィンドウの大きさ
     private static readonly int MinWidth = 800;
-    private static readonly int MinHeight = 500;
+    private static readonly int MinHeight = 555;
 
     public static ElementTheme RootTheme
     {
@@ -52,28 +53,6 @@ internal static class WindowHelper
             _activeWindows.Remove(window);
         };
         _activeWindows.Add(window);
-    }
-
-    public static AppWindow GetAppWindow(Window window)
-    {
-        IntPtr hWnd = WindowNative.GetWindowHandle(window);
-        var wndId = Win32Interop.GetWindowIdFromWindow(hWnd);
-        return AppWindow.GetFromWindowId(wndId);
-    }
-
-    public static Window? GetWindowForElement(UIElement element)
-    {
-        if (element.XamlRoot != null)
-        {
-            foreach (var window in _activeWindows)
-            {
-                if (element.XamlRoot == window.Content.XamlRoot)
-                {
-                    return window;
-                }
-            }
-        }
-        return null;
     }
 
     public static void SetForeground(Window? window)

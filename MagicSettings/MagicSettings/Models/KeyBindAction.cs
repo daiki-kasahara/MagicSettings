@@ -21,7 +21,7 @@ internal partial class KeyBindAction : ObservableObject
     private string? _programPath;
 
     [ObservableProperty]
-    private string? _urlPath;
+    private string? _url;
 
     #region Converter
 

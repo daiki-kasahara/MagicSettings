@@ -33,7 +33,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Image Source="ms-appx:///Assets/Movies/KeyTyping.gif" MaxWidth="400" HorizontalAlignment="Left"/>
-                        <TextBlock Grid.Column="1" x:Uid="Keyboard_Description" Margin="20,0,0,0" />
+                        <TextBlock Grid.Column="1" x:Uid="Keyboard_Description" TextWrapping="Wrap" Margin="20,0,0,0" />
                     </Grid>
                     
                     <InfoBar x:Uid="Error_FailedToSet" Severity="Error" IsClosable="True" IsOpen="{x:Bind _viewModel.EnabledError, Mode=TwoWay}" Margin="0,10,0,10"/>
@@ -81,7 +81,7 @@
                                                     MinWidth="40" MinHeight="40">
                                                 <TextBlock x:Name="KeyText" Text="{x:Bind VirtualKey, Mode=OneWay, Converter={StaticResource EnumToKeyDisplayConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0" />
                                             </Border>
-                                            <TextBlock x:Name="KeyBindItemHeader" Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, UrlPath), Mode=OneWay}" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="KeyBindItemHeader" Text="{x:Bind ActionTextConverter(ActionType, ProgramPath, Url), Mode=OneWay}" VerticalAlignment="Center"/>
                                         </StackPanel>
                                     </tkcontrols:SettingsCard.Header>
                                     <tkcontrols:SettingsCard.Resources>

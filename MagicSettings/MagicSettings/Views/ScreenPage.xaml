@@ -23,7 +23,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Image Source="ms-appx:///Assets/Movies/BlueLightBlocking.gif" MaxWidth="400" HorizontalAlignment="Left"/>
-                <TextBlock Grid.Column="1" x:Uid="Screen_Description" Margin="20,0,0,0" />
+                <TextBlock Grid.Column="1" x:Uid="Screen_Description" TextWrapping="Wrap" Margin="20,0,0,0" />
             </Grid>
 
             <!-- ブルーライトカット設定 -->

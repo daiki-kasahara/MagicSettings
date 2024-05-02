@@ -30,12 +30,13 @@ internal sealed partial class KeyBindEditor : UserControl
         this.ViewModel = viewModel;
         this.ActionComboBox.ItemsSource = ViewModel.KeyboardActions.Values;
 
+        // ViewModelの状態に応じてボタンの有効無効を切り替える
         WeakReferenceMessenger.Default.Register<KeyBindEditor, PropertyChangedMessage<string>>(this, (recipient, message) =>
         {
             switch (message.PropertyName)
             {
                 case nameof(this.ViewModel.ProgramPath):
-                case nameof(this.ViewModel.UrlPath):
+                case nameof(this.ViewModel.Url):
                     {
                         UpdatePrimaryButton();
                         break;
@@ -56,8 +57,14 @@ internal sealed partial class KeyBindEditor : UserControl
         });
     }
 
-    private void KeyInputKeyDown(object sender, KeyRoutedEventArgs e)
+    /// <summary>
+    /// キー入力の設定
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="e"></param>
+    private void KeyInputKeyDown(object _, KeyRoutedEventArgs e)
     {
+        // 定義されていないキーや特定のキーは設定しない
         if (!Enum.IsDefined(typeof(VKeys), (int)e.Key) ||
             e.Key is VirtualKey.LeftWindows or VirtualKey.RightWindows or VirtualKey.LeftMenu or VirtualKey.RightMenu or VirtualKey.Menu)
             return;
@@ -68,22 +75,28 @@ internal sealed partial class KeyBindEditor : UserControl
     private async void PickAFileButton_Click(object sender, RoutedEventArgs e)
     {
         var openPicker = new FileOpenPicker();
-
         var hWnd = App.GetWindowHandle();
-
         WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
 
         openPicker.ViewMode = PickerViewMode.Thumbnail;
         openPicker.FileTypeFilter.Add("*");
 
+        // ファイルピッカーを開く
         var file = await openPicker.PickSingleFileAsync();
+
+        // キャンセルの場合何もしない
         if (file is null)
             return;
 
         ViewModel.ProgramPath = file.Path;
     }
 
-    private void ActionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    /// <summary>
+    /// アクションの設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="_"></param>
+    private void ActionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs _)
     {
         if (sender is not ComboBox comboBox || comboBox.SelectedItem is not string selectedItem)
             return;
@@ -91,7 +104,12 @@ internal sealed partial class KeyBindEditor : UserControl
         ViewModel.Action = ViewModel.KeyboardActions.First(x => x.Value == selectedItem).Key;
     }
 
-    private void ProgramPath_Changed(object sender, TextChangedEventArgs e)
+    /// <summary>
+    /// プログラムパスの設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="_"></param>
+    private void ProgramPath_Changed(object sender, TextChangedEventArgs _)
     {
         if (sender is not TextBox textBox)
             return;
@@ -99,14 +117,22 @@ internal sealed partial class KeyBindEditor : UserControl
         ViewModel.ProgramPath = textBox.Text;
     }
 
-    private void Url_Changed(object sender, TextChangedEventArgs e)
+    /// <summary>
+    /// Urlの設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="_"></param>
+    private void Url_Changed(object sender, TextChangedEventArgs _)
     {
         if (sender is not TextBox textBox)
             return;
 
-        ViewModel.UrlPath = textBox.Text;
+        ViewModel.Url = textBox.Text;
     }
 
+    /// <summary>
+    /// ダイアログのボタンの有効無効状態を更新
+    /// </summary>
     private void UpdatePrimaryButton()
     {
         try
@@ -129,7 +155,7 @@ internal sealed partial class KeyBindEditor : UserControl
                     {
                         // OpenUrlの場合、キーが重複しておらず url が特定の文字列で始まっているときのみ設定可能
                         // 更新の場合は、urlのチェックのみ
-                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && !IsInvalidUrl(ViewModel.UrlPath);
+                        dialog.IsPrimaryButtonEnabled = (!ViewModel.KeyList.Contains(ViewModel.Key) || !ViewModel.IsEnabledKeyCustom) && !IsInvalidUrl(ViewModel.Url);
 
                         break;
                     }

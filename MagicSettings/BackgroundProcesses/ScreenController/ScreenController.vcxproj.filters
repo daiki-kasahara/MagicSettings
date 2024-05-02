@@ -51,9 +51,6 @@
     <ClInclude Include="Repositories\ScreenSettingsRepository.h">
       <Filter>ヘッダー ファイル\Repositories</Filter>
     </ClInclude>
-    <ClInclude Include="ScreenSettings.h">
-      <Filter>ヘッダー ファイル\Domains</Filter>
-    </ClInclude>
     <ClInclude Include="Domains\BlueLightBlockingFilter.h">
       <Filter>ヘッダー ファイル\Domains</Filter>
     </ClInclude>

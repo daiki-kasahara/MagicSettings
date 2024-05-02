@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml;
 namespace MagicSettings.Helper;
 
 /// <summary>
-/// 処理の開始タイミングを指定した時間遅延させるクラス
+/// 処理の開始タイミングを指定した時間遅延させるヘルパー
 /// </summary>
 internal class ProcedureThrottle
 {

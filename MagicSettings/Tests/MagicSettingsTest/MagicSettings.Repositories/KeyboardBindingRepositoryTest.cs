@@ -81,7 +81,7 @@ public class KeyboardBindingRepositoryTest
         setAction.ActionType = KeyboardActionType.StartProgram;
         setAction.IsEnabled = true;
         setAction.ProgramPath = "C:\\TestPath";
-        setAction.UrlPath = "https:\\test.test";
+        setAction.Url = "https:\\test.test";
         var filePath = Path.Combine(AppContext.BaseDirectory, "Settings", "keybinding.json");
 
         // Action
@@ -97,7 +97,7 @@ public class KeyboardBindingRepositoryTest
         Assert.Equal(setAction.ActionType, actualAction.ActionType);
         Assert.Equal(setAction.IsEnabled, actualAction.IsEnabled);
         Assert.Equal(setAction.ProgramPath, actualAction.ProgramPath);
-        Assert.Equal(setAction.UrlPath, actualAction.UrlPath);
+        Assert.Equal(setAction.Url, actualAction.Url);
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public class KeyboardBindingRepositoryTest
         setAction.ActionType = KeyboardActionType.StartProgram;
         setAction.IsEnabled = true;
         setAction.ProgramPath = "C:\\TestPath";
-        setAction.UrlPath = "https:\\test.test";
+        setAction.Url = "https:\\test.test";
         var filePath = Path.Combine(AppContext.BaseDirectory, "Settings", "keybinding.json");
 
         // Action
@@ -129,7 +129,7 @@ public class KeyboardBindingRepositoryTest
         Assert.Equal(setAction.ActionType, actualAction.ActionType);
         Assert.Equal(setAction.IsEnabled, actualAction.IsEnabled);
         Assert.Equal(setAction.ProgramPath, actualAction.ProgramPath);
-        Assert.Equal(setAction.UrlPath, actualAction.UrlPath);
+        Assert.Equal(setAction.Url, actualAction.Url);
     }
 
     [Fact]

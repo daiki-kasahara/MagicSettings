@@ -17,9 +17,19 @@ public sealed partial class SettingsPage : Page
         _viewModel = App.Provider.GetRequiredService<SettingsPageViewModel>();
     }
 
-    private async void PageLoadedAsync(object sender, RoutedEventArgs e) => await _viewModel.InitializeAsync();
+    /// <summary>
+    /// ページを表示した時に実行する処理
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="__"></param>
+    private async void PageLoadedAsync(object _, RoutedEventArgs __) => await _viewModel.InitializeAsync();
 
-    private async void ThemeButtonCheckedAsync(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    /// <summary>
+    /// テーマ設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="_"></param>
+    private async void ThemeButtonCheckedAsync(object sender, RoutedEventArgs _)
     {
         if (sender is not RadioButton radioButton)
             return;
@@ -43,7 +53,7 @@ public sealed partial class SettingsPage : Page
 
     #region Converter
 
-    internal bool CurrentThemeToCheckedConverter(AppTheme currentTheme, AppTheme theme) => currentTheme == theme;
+    private bool CurrentThemeToCheckedConverter(AppTheme currentTheme, AppTheme theme) => currentTheme == theme;
 
     #endregion
 }

@@ -5,10 +5,17 @@ using MagicSettings.Repositories.Models.SettingsFile;
 
 namespace MagicSettings.Repositories;
 
+/// <summary>
+/// キーバインディングのリポジトリ
+/// </summary>
 public class KeyboardBindingRepository : IKeyboardBindingRepository
 {
     private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "keybinding.json");
 
+    /// <summary>
+    /// 取得する
+    /// </summary>
+    /// <returns></returns>
     public async Task<KeyboardBindingSettings> GetAsync()
     {
         try
@@ -26,6 +33,12 @@ public class KeyboardBindingRepository : IKeyboardBindingRepository
         }
     }
 
+    /// <summary>
+    /// キーバインディングを保存する
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
     public async Task SaveAsync(int key, KeyboardAction action)
     {
         try
@@ -50,6 +63,11 @@ public class KeyboardBindingRepository : IKeyboardBindingRepository
         }
     }
 
+    /// <summary>
+    /// キーバインディングの有効無効を保存する
+    /// </summary>
+    /// <param name="isEnabled"></param>
+    /// <returns></returns>
     public async Task SaveAsync(bool isEnabled)
     {
         try
@@ -68,6 +86,11 @@ public class KeyboardBindingRepository : IKeyboardBindingRepository
         }
     }
 
+    /// <summary>
+    /// キーバインディングを削除する
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public async Task DeleteAsync(int key)
     {
         try

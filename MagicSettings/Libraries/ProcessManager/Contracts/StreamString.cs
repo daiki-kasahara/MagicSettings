@@ -2,11 +2,19 @@
 
 namespace ProcessManager.Contracts;
 
+/// <summary>
+/// パイプ通信でやり取りするメッセージを加工するクラス
+/// </summary>
+/// <param name="ioStream"></param>
 internal class StreamString(Stream ioStream)
 {
     private readonly Stream ioStream = ioStream;
     private readonly UTF8Encoding streamEncoding = new();
 
+    /// <summary>
+    /// ストリームから読み込む
+    /// </summary>
+    /// <returns></returns>
     public string ReadString()
     {
         var len = ioStream.ReadByte() * 256;
@@ -17,6 +25,11 @@ internal class StreamString(Stream ioStream)
         return streamEncoding.GetString(inBuffer);
     }
 
+    /// <summary>
+    /// ストリームに書き込む
+    /// </summary>
+    /// <param name="outString"></param>
+    /// <returns></returns>
     public int WriteString(string outString)
     {
         var outBuffer = streamEncoding.GetBytes(outString);

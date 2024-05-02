@@ -22,9 +22,19 @@ public sealed partial class KeyboardPage : Page
         _viewModel = App.Provider.GetRequiredService<KeyboardPageViewModel>();
     }
 
+    /// <summary>
+    /// ページが表示されたときに実行する処理
+    /// </summary>
+    /// <param name="_"></param>
+    /// <param name="__"></param>
     private async void PageLoadedAsync(object _, RoutedEventArgs __) => await _viewModel.InitializeAsync();
 
-    private async void KeyBindingToggled(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    /// <summary>
+    /// キーバインディングの有効無効設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="_"></param>
+    private async void KeyBindingToggled(object sender, RoutedEventArgs _)
     {
         if (sender is not ToggleSwitch toggleSwitch)
             return;
@@ -32,18 +42,25 @@ public sealed partial class KeyboardPage : Page
         await _viewModel.SetEnabledKeyBindingAsync(toggleSwitch.IsOn);
     }
 
+    /// <summary>
+    /// キーバインディングの追加
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private async void AddKeyBindButton_Click(object sender, RoutedEventArgs e)
     {
+        // キー設定ダイアログを表示
         var resourceLoader = new ResourceLoader();
         var content = App.Provider.GetRequiredService<KeyBindEditor>();
         content.ViewModel.KeyList = _viewModel.KeyActions.Select(x => x.VirtualKey).ToList();
+
         var dialog = new ContentDialog
         {
             Content = content,
             CloseButtonText = resourceLoader.GetString("KeyBindDialog_Cancel"),
+            IsPrimaryButtonEnabled = false,
             PrimaryButtonText = resourceLoader.GetString("KeyBindDialog_Add"),
             PrimaryButtonStyle = (Style)Application.Current.Resources["AccentButtonStyle"],
-            IsPrimaryButtonEnabled = false,
             RequestedTheme = this.ActualTheme,
             Title = resourceLoader.GetString("KeyBindDialog_Add_Title"),
             XamlRoot = this.XamlRoot,
@@ -51,6 +68,7 @@ public sealed partial class KeyboardPage : Page
 
         var ret = await dialog.ShowAsync();
 
+        // キャンセルの時は何もしない
         if (ret != ContentDialogResult.Primary)
             return;
 
@@ -61,15 +79,20 @@ public sealed partial class KeyboardPage : Page
         {
             ActionType = keyBindEditor.ViewModel.Action,
             IsEnabled = true,
-            VirtualKey = keyBindEditor.ViewModel.Key,
             ProgramPath = keyBindEditor.ViewModel.ProgramPath,
-            UrlPath = keyBindEditor.ViewModel.UrlPath,
+            Url = keyBindEditor.ViewModel.Url,
+            VirtualKey = keyBindEditor.ViewModel.Key,
         };
 
-        await _viewModel.AddNewActionAsync(newAction);
+        await _viewModel.AddNewKeyBindingAsync(newAction);
     }
 
-    private async void UpdateKeyBindButton_Click(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// アイテムのカードをクリックした時の処理
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="_"></param>
+    private async void UpdateKeyBindButton_Click(object sender, RoutedEventArgs _)
     {
         if (sender is not SettingsCard settingsCard || settingsCard.DataContext is not KeyBindAction updateAction)
             return;
@@ -77,7 +100,12 @@ public sealed partial class KeyboardPage : Page
         await UpdateItemAsync(updateAction);
     }
 
-    private async void EditMenuItemButton_Click(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// 編集ボタンをクリックした時の処理
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="_"></param>
+    private async void EditMenuItemButton_Click(object sender, RoutedEventArgs _)
     {
         if (sender is not MenuFlyoutItem settingsCard || settingsCard.DataContext is not KeyBindAction updateAction)
             return;
@@ -85,7 +113,12 @@ public sealed partial class KeyboardPage : Page
         await UpdateItemAsync(updateAction);
     }
 
-    private async void RemoveKeyBindButton_Click(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// 削除ボタンを押した時の処理
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="_"></param>
+    private async void RemoveKeyBindButton_Click(object sender, RoutedEventArgs _)
     {
         if (sender is not MenuFlyoutItem menuFlyoutItem || menuFlyoutItem.DataContext is not KeyBindAction action)
             return;
@@ -93,7 +126,12 @@ public sealed partial class KeyboardPage : Page
         await _viewModel.RemoveActionAsync(action.VirtualKey);
     }
 
-    private async void IsEnabledKeyBindItem_Toggled(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// 各キーバインディングの有効無効設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="_"></param>
+    private async void IsEnabledKeyBindItem_Toggled(object sender, RoutedEventArgs _)
     {
         if (sender is not ToggleSwitch toggleSwitch || toggleSwitch.DataContext is not KeyBindAction action)
             return;
@@ -101,16 +139,22 @@ public sealed partial class KeyboardPage : Page
         await _viewModel.UpdateActionEnabledAsync(action.VirtualKey, toggleSwitch.IsOn);
     }
 
+    /// <summary>
+    /// 既存キーバインディングの更新
+    /// </summary>
+    /// <param name="updateAction"></param>
+    /// <returns></returns>
     private async Task UpdateItemAsync(KeyBindAction updateAction)
     {
+        // キー設定ダイアログを表示
         var resourceLoader = new ResourceLoader();
         var content = App.Provider.GetRequiredService<KeyBindEditor>();
 
         content.ViewModel.Action = updateAction.ActionType ?? Domains.KeyboardActionType.StartProgram;
+        content.ViewModel.IsEnabledKeyCustom = false;
         content.ViewModel.Key = updateAction.VirtualKey;
         content.ViewModel.ProgramPath = updateAction.ProgramPath ?? string.Empty;
-        content.ViewModel.UrlPath = updateAction.UrlPath ?? string.Empty;
-        content.ViewModel.IsEnabledKeyCustom = false;
+        content.ViewModel.Url = updateAction.Url ?? string.Empty;
 
         var dialog = new ContentDialog
         {
@@ -125,6 +169,7 @@ public sealed partial class KeyboardPage : Page
 
         var ret = await dialog.ShowAsync();
 
+        // キャンセルの時は何もしない
         if (ret != ContentDialogResult.Primary)
             return;
 
@@ -137,7 +182,7 @@ public sealed partial class KeyboardPage : Page
             IsEnabled = true,
             VirtualKey = keyBindEditor.ViewModel.Key,
             ProgramPath = keyBindEditor.ViewModel.ProgramPath,
-            UrlPath = keyBindEditor.ViewModel.UrlPath,
+            Url = keyBindEditor.ViewModel.Url,
         };
 
         await _viewModel.UpdateActionAsync(newAction);
@@ -145,7 +190,7 @@ public sealed partial class KeyboardPage : Page
 
     #region Converter
 
-    bool MultiBoolConverter(bool b1, bool b2) => b1 && b2;
+    private bool MultiBoolConverter(bool b1, bool b2) => b1 && b2;
 
     #endregion
 }

@@ -5,6 +5,9 @@ using ProcessManager.PipeMessage;
 
 namespace ProcessManager;
 
+/// <summary>
+/// プロセスの起動や終了をするプロセス管理クラス
+/// </summary>
 public class ProcessController : IProcessController
 {
     private static readonly string DirPath = AppContext.BaseDirectory;
@@ -21,8 +24,18 @@ public class ProcessController : IProcessController
         _pipe = pipe;
     }
 
+    /// <summary>
+    /// 起動中のプロセスが存在するか
+    /// </summary>
+    /// <param name="process"></param>
+    /// <returns></returns>
     public bool IsExistsProcess(MyProcesses process) => Process.GetProcessesByName($"MagicSettings.{process}").Length > 0;
 
+    /// <summary>
+    /// プロセスを起動する
+    /// </summary>
+    /// <param name="process"></param>
+    /// <returns></returns>
     public async Task<bool> LaunchAsync(MyProcesses process)
     {
         try
@@ -46,7 +59,18 @@ public class ProcessController : IProcessController
         }
     }
 
+    /// <summary>
+    /// プロセスにメッセージを送信する
+    /// </summary>
+    /// <param name="process"></param>
+    /// <param name="requestMessage"></param>
+    /// <returns></returns>
     public async Task<bool> SendMessageAsync(MyProcesses process, RequestMessage requestMessage) => await _pipe.SendRequestMessageAsync(process, requestMessage);
 
+    /// <summary>
+    /// プロセスを終了させる
+    /// </summary>
+    /// <param name="process"></param>
+    /// <returns></returns>
     public async Task<bool> TerminateAsync(MyProcesses process) => await _pipe.SendTerminateMessageAsync(process);
 }

@@ -4,6 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace ProcessManager.PipeMessage;
 
+/// <summary>
+/// レスポンスメッセージ
+/// </summary>
 internal class ResponseMessage
 {
     [JsonIgnore]

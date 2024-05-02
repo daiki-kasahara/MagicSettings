@@ -6,10 +6,17 @@ using MagicSettings.Repositories.Helper;
 
 namespace MagicSettings.Repositories;
 
+/// <summary>
+/// スクリーンのリポジトリ
+/// </summary>
 public class ScreenRepository : IScreenRepository
 {
     private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "screen.json");
 
+    /// <summary>
+    /// 取得する
+    /// </summary>
+    /// <returns></returns>
     public async Task<ScreenSettings> GetAsync()
     {
         try
@@ -27,6 +34,11 @@ public class ScreenRepository : IScreenRepository
         }
     }
 
+    /// <summary>
+    /// 軽減率を保存する
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public async Task SaveAsync(BlueLightBlocking value)
     {
         try
@@ -45,6 +57,11 @@ public class ScreenRepository : IScreenRepository
         }
     }
 
+    /// <summary>
+    /// 有効無効を保存する
+    /// </summary>
+    /// <param name="isEnabled"></param>
+    /// <returns></returns>
     public async Task SaveAsync(bool isEnabled)
     {
         try

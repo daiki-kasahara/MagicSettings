@@ -5,10 +5,17 @@ using MagicSettings.Repositories.Helper;
 
 namespace MagicSettings.Repositories;
 
+/// <summary>
+/// テーマのリポジトリ
+/// </summary>
 public class ThemeRepository : IThemeRepository
 {
     private static readonly string FilePath = Path.Combine(AppContext.BaseDirectory, "Settings", "theme.json");
 
+    /// <summary>
+    /// 取得する
+    /// </summary>
+    /// <returns></returns>
     public async Task<AppTheme> GetAsync()
     {
         try
@@ -26,6 +33,11 @@ public class ThemeRepository : IThemeRepository
         }
     }
 
+    /// <summary>
+    /// テーマを保存する
+    /// </summary>
+    /// <param name="theme"></param>
+    /// <returns></returns>
     public async Task SaveAsync(AppTheme theme)
     {
         try

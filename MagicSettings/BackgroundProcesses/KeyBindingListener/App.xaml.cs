@@ -18,6 +18,11 @@ public partial class App : Application
 
     private Window? _window;
 
+    /// <summary>
+    /// アプリ起動時に実行する処理
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         Mutex = new Mutex(false, "MagicSettings.KeyBindingListener");
@@ -35,6 +40,10 @@ public partial class App : Application
         _window.Show();
     }
 
+    /// <summary>
+    /// インスタンスの管理をする
+    /// </summary>
+    /// <returns></returns>
     private static ServiceProvider GetServiceProvider()
     {
         var services = new ServiceCollection();
