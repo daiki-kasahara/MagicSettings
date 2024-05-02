@@ -420,3 +420,21 @@ MagicSettings.exe が利用する。
 - Git
   - ホスティングサービスは Github
   - Ci のために Github Actions を使用
+
+## OSS ライセンスについて
+
+利用している OSS は下記の通り。
+
+| OSS                                              | 利用用途                                                     |
+| ------------------------------------------------ | :----------------------------------------------------------- |
+| CommunityToolkit.Mvvm                            | データバインディングを実現するために利用                     |
+| CommunityToolkit.WinUI.Controls.SettingsControls | UI のコントロールのために利用                                |
+| coverlet.collector                               | 単体テストのカバレッジを集計するために利用                   |
+| Microsoft.Extensions.DependencyInjection         | Dependency Injection (依存性の注入), DI コンテナのために利用 |
+| Microsoft.NET.Test.Sdk                           | 単体テストを実施するために利用                               |
+| Microsoft.Windows.SDK.BuildTools                 | WinUI3 アプリケーションを開発するのに利用                    |
+| Microsoft.WindowsAppSDK                          | WinUI3 アプリケーションを開発するのに利用                    |
+| Moq                                              | 単体テストでモックやスタブを作成するのに利用                 |
+| nlohmann.json                                    | C++プロジェクトで json オブジェクトを扱うために利用          |
+| xunit                                            | 単体テストを実施するために利用                               |
+| xunit.runner.visualstudio                        | 単体テストを実施するために利用                               |
